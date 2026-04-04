@@ -1,0 +1,329 @@
+export default {
+  nav: {
+    home: "Home",
+    localTours: "Local Tours",
+    national: "National",
+    international: "International",
+    hotels: "Hotels",
+    travelInfo: "Travel Info",
+    about: "About",
+    contact: "Contact",
+    shopping: "Shopping in Manado",
+    food: "Food & Cuisine in Manado",
+    transport: "Transportation in Manado",
+    history: "History & Culture in Manado",
+    guide: "Manado Guide",
+  },
+  hero: {
+    title: "DISCOVER THE",
+    subtitle: "UNEXPECTED",
+    description:
+      "From the vibrant coral reefs of Bunaken to the majestic peaks of North Sulawesi. Embark on a journey that transcends boundaries and creates lifelong memories.",
+    explore: "EXPLORE MANADO",
+    nationalTours: "NATIONAL TOURS",
+  },
+  home: {
+    local: {
+      badge: "Local Paradise",
+      title1: "MANADO",
+      title2: "TREASURES",
+      description:
+        "Dive into the world-renowned marine biodiversity and explore the volcanic landscapes that make North Sulawesi a unique global destination.",
+      allPackages: "All Packages",
+    },
+    national: {
+      badge: "Across Indonesia",
+      title1: "National",
+      title2: "Destinations",
+      description:
+        "Experience the soul of Indonesia. From the spiritual heart of Bali to the ancient dragons of Komodo Island.",
+      exploreArchipelago: "Explore Archipelago",
+    },
+    international: {
+      badge: "Global Journeys",
+      title1: "WORLDWIDE",
+      title2: "ADVENTURES",
+      description:
+        "Expand your horizons with our curated international tours. Discover iconic landmarks and diverse cultures across the globe.",
+      goInternational: "Go International",
+    },
+    cta: {
+      title: "Ready for your next <br /> adventure?",
+      description:
+        "Our travel experts are ready to help you plan the perfect getaway. Let's make it happen!",
+      bookNow: "Book Now",
+      chatWA: "Chat WhatsApp",
+    },
+  },
+  food: {
+    title: "Food & Cuisine in Manado",
+    description:
+      "Manado's local food, also known as Minahasan food, is famous for its bold flavors and blazingly spicy taste. From fresh seafood to exotic meats, explore the unique culinary heritage of North Sulawesi.",
+    categories: {
+      main: "Main Menu",
+      breakfast: "Breakfast Menu",
+      dessert: "Dessert & Snacks",
+      drinks: "Drinks",
+    },
+    items: {
+      seafood: "Seafood",
+      seafood_desc:
+        "Fresh seafood is a staple in Manado. Favorites include Grilled Gala Shrimp and Grilled Spicy Grouper, typically served with Sambal Dabu-Dabu.",
+      crab: "Coconut Crab",
+      crab_desc:
+        "The largest land-living arthropod, considered a delicacy with a taste similar to lobster. Available in Padang Spicy, Oyster, or Coconut Milk Sauce.",
+      woku: "Ikan Woku Belanga",
+      woku_desc:
+        "Grouper fish cooked in a pot with rich spices like lemon basil, turmeric leaf, lemongrass, tomato, and blazingly spicy chili peppers.",
+      cakalang: "Cakalang Pampis",
+      cakalang_desc:
+        "Shredded Skipjack Tuna (Tuna Floss) ala Manado, perfect with warm rice or as a filling for Panada.",
+      kuah_asam: "Kuah Asam",
+      kuah_asam_desc:
+        "A fresh and nutritious sour fish soup using red snapper or other fish, flavored with tomatoes and lemon juice.",
+      tude: "Ikan Tude Woku Daun",
+      tude_desc:
+        "Fresh Tude fish wrapped in banana leaves and cooked with an abundance of local spices.",
+      roa: "Rica Ikan Roa (Sambel Roa)",
+      roa_desc:
+        "Smoked Roa fish mixed with chili and tomatoes. Usually served with Tinutuan or fried plantains.",
+      tinutuan: "Tinutuan (Bubur Manado)",
+      tinutuan_desc:
+        "A healthy porridge made from rice, spinach, cassava, pumpkin, and corn. Often served with Nike savory chips or fried Cakalang.",
+      nasi_kuning: "Nasi Kuning (Yellow Rice)",
+      nasi_kuning_desc:
+        "Rice cooked with coconut milk and turmeric, served with shredded cakalang, beef, and boiled egg, traditionally wrapped in palm leaves.",
+      klappertart: "Klappertart",
+      klappertart_desc:
+        "A legendary coconut cake made with young coconut, milk, vanilla, and toppings like raisins, walnuts, or cheese.",
+      es_kacang: "Es Kacang Merah",
+      es_kacang_desc:
+        "A refreshing mix of red beans and fruits served on shaved ice—a perfect treat for red bean lovers.",
+      pisang_goreng: "Fried Banana (Pisang Goreng)",
+      pisang_goreng_desc:
+        "A unique Manadonese habit: enjoying crispy fried bananas dipped in spicy chili paste (sambal).",
+      panada: "Panada",
+      panada_desc:
+        "A popular snack similar to empanadas, filled with spicy shredded Skipjack tuna.",
+      lalampa: "Lalampa",
+      lalampa_desc:
+        "Traditional glutinous rice rolls filled with shredded tuna, similar to lemper but with a distinct spicy kick.",
+      cap_tikus: "Cap Tikus",
+      cap_tikus_desc:
+        "A traditional high-alcohol drink processed from palm tree sap (saguer), a signature spirit of the Minahasa region.",
+    },
+  },
+  shopping: {
+    title: "Shopping in Manado",
+    categories: {
+      center: "City Shopping Center",
+      souvenir: "Souvenir Shop & Handicrafts",
+      minahasa: "Minahasa (Tinoor, Pulutan, Tomohon)",
+    },
+    items: {
+      megamall: "Mega Mall",
+      megamall_desc:
+        "The first mall in Manado built in 2004, providing various family needs in one place.",
+      mantos: "Manado Town Square (Mantos)",
+      mantos_desc:
+        "The most complete shopping center with various branded shops, restaurants, and entertainment.",
+      itcenter: "IT Center Manado",
+      itcenter_desc:
+        "The most complete center for electronics, cellphones, and laptops at affordable prices.",
+      merciful: "Grand Merciful Building",
+      merciful_desc:
+        "The largest and most comprehensive gift shop, from handicrafts to special food.",
+      kawanua: "UD Kawanua",
+      kawanua_desc:
+        "Typical Manado souvenir shop since 1989, providing Klappertaart and various cakes.",
+      tinoor: "Tinoor Village",
+      tinoor_desc:
+        "Place for bamboo and wood craftsmen along the way to Tomohon.",
+      tomohon: "Tomohon Extreme Market",
+      tomohon_desc:
+        "The largest traditional market in Minahasa, famous for its extreme meat section.",
+    },
+  },
+  footer: {
+    description:
+      "Your premier gateway to the unparalleled beauty of North Sulawesi and beyond. We provide high-quality travel experiences with professional service and local expertise.",
+    quickLinks: "Quick Links",
+    getInTouch: "Get in Touch",
+    rights: "All rights reserved.",
+  },
+  about: {
+    hero: {
+      title1: "About",
+      title2: "Us",
+      subtitle:
+        "Your gateway to the hidden paradises of Indonesia and the world.",
+    },
+    story: {
+      title1: "Our",
+      title2: "Story",
+      p1: "WelcomeManado was founded with a simple yet powerful vision: to showcase the unparalleled beauty of North Sulawesi to the world while providing travelers with seamless, unforgettable experiences.",
+      p2: "Over the years, we have expanded our reach beyond the shores of Manado, curating exclusive journeys across the Indonesian archipelago and international destinations. Our team of local experts and professional guides are dedicated to ensuring every trip is more than just a vacation—it's a lifelong memory.",
+      exp_years: "10+ Years Experience",
+      happy_travelers: "5k+ Happy Travelers",
+      since: "Since 2014",
+      pioneering: "Pioneering Travel",
+    },
+    why: {
+      title1: "Why",
+      title2: "Choose Us",
+      features: {
+        expert: {
+          title: "Expert Local Knowledge",
+          desc: "Our deep roots in Manado and Sulawesi mean we know the best-kept secrets that regular tours miss.",
+        },
+        professional: {
+          title: "Professional Service",
+          desc: "From initial booking to your final departure, we handle every detail with precision and care.",
+        },
+        personalized: {
+          title: "Personalized Experience",
+          desc: "We believe in quality over quantity, offering small group tours and customized itineraries.",
+        },
+      },
+    },
+  },
+  transport: {
+    hero: {
+      badge: "Transportation",
+      title1: "TRANSPORT IN",
+      title2: "MANADO",
+      description:
+        "There are many ways to arrive at Manado. By land, sea, and air, Manado City is very easy to reach. Our 'Manado Transportation Guide' will tell you about travelling in and around Manado.",
+    },
+    section: {
+      title: "Getting Around",
+    },
+    items: {
+      air: "By Air",
+      air_desc:
+        "Sam Ratulangi International Airport Manado. There are many domestic and international flight to connecting Manado and the other big cities in Indonesia and other countries.",
+      land: "By Land",
+      land_desc:
+        "Long distance buses and local minibus operates in three terminals that are run in reasonably orderly fashion. Malalayang terminal, Paal 2 Terminal, and Karombasan Terminal.",
+      sea_manado: "By Sea (Port Manado)",
+      sea_manado_desc:
+        "Port of Manado usually served by smaller ships. This is because the location is quite shallow waters and location adjacent to the protected Bunaken Marine Park.",
+      sea_bitung: "By Sea (Port Bitung)",
+      sea_bitung_desc:
+        "Port of Bitung consist of the passenger port and container port. PT. PELNI using the Port of Bitung because it has deep water.",
+      around: "Getting Around Manado",
+      around_desc:
+        "The most popular mode of transport in Manado is the microlet (blue mini bus). Taxis, car rentals, and online motorcycle taxis (Gojek, Grab) are also abundant.",
+      explore: "Explore",
+    },
+  },
+  culture: {
+    hero: {
+      badge: "History & Culture",
+      title1: "HISTORY &",
+      title2: "CULTURE",
+      description:
+        "Manado history and culture is another thing that is unique and very interesting to explore. You will find many of statues that telling history and folk tales in Manado.",
+    },
+    section: {
+      title: "Cultural Heritage",
+    },
+    items: {
+      kabasaran: "KABASARAN DANCE",
+      kabasaran_desc:
+        "Kabasaran is war dance of Minahasa, accompanied by the sound of Tambour/small gong.",
+      katrili: "KATRILI DANCE",
+      katrili_desc:
+        "Katrili is a Heritage dance of Portuguese and Spanish Colonial since 16th century ago.",
+      maengket: "MAENGKET DANCE",
+      maengket_desc:
+        "Maengket is an original traditional dance of Minahasa which is performed while harvesting crops.",
+      kolintang: "KOLINTANG MUSIC",
+      kolintang_desc:
+        "Music is traditional music minahasa Kolintang made ​​of wood that can produce unique musical sound.",
+      malalayang: "MALALAYANG BEACH",
+      malalayang_desc:
+        "This black sand beach has the beautiful view of Manado Tua Island, Bunaken Island, even Siladen Island.",
+      jesus: "STATUE OF JESUS BLESSING",
+      jesus_desc:
+        "Statue of Jesus Blessing in Manado is the 1st biggest in Asia & the 3rd biggest in the world.",
+    },
+  },
+  guide: {
+    hero: {
+      badge: "Manado Guide",
+      title1: "TRAVEL",
+      title2: "INFO",
+      description:
+        "Discover the top destinations, historical sites, and nature reserves in North Sulawesi. Your ultimate guide to unlocking the wonders of Manado.",
+    },
+    section: {
+      title: "Top Destinations",
+    },
+    items: {
+      bunaken: "Bunaken & Siladen Island",
+      bunaken_desc:
+        "Bunaken National Marine Park has some of the highest levels of marine biodiversity in the world. Best time: May - August.",
+      lembeh: "Lembeh Straits",
+      lembeh_desc:
+        "A real macro paradise and a great place to do scuba diving with rare and special critters.",
+      temple: "Chinese Temple Ban Hin Kiong",
+      temple_desc:
+        "The oldest Buddhist temple in Eastern Indonesia, center of the attractive annual festival Toa Peh Kong.",
+      linow: "Linow Lake",
+      linow_desc:
+        "A unique lake where the waters can change colors between blue, green, and red. Perfect for relaxing.",
+      tangkoko: "Tangkoko Nature Reserve",
+      tangkoko_desc:
+        "Home to Tarsiers (the smallest primate in the world) and the endemic Sulawesi black apes.",
+      tondano: "Tondano Lake",
+      tondano_desc:
+        "A famous tourist destination located 600 meters above sea level with awesome mountain views.",
+      tunan: "Waterfall Tunan",
+      tunan_desc:
+        "A beautiful 86-meter high waterfall surrounded by natural forest in North Minahasa.",
+      ekayana: "Pagoda Ekayana",
+      ekayana_desc:
+        "A unique temple with many sculptures and a large Pagoda Tower overlooking Mount Lokon.",
+      makatete: "Makatete Hills",
+      makatete_desc:
+        "A hilltop area with spectacular views of Manado City and the surrounding islands.",
+      jesus_lembeh: "Statue of Jesus (Lembeh)",
+      jesus_lembeh_desc:
+        "Lembeh Island stands the Brazilian-style twin Statue of Jesus Blessing.",
+      trikora: "Trikora Monument",
+      trikora_desc:
+        "A monument erected to commemorate the action of Three People's Commands in Lembeh Island.",
+      alamanda: "Alamanda Chapel",
+      alamanda_desc:
+        "Also known as Chapel Mother of Mary, located on the highland of Tomohon with peaceful retreats.",
+      kasih: "The Hill of Love",
+      kasih_desc:
+        "A spiritual center where 5 different religious houses of worship stand together on one hill.",
+      mahawu: "Mount Mahawu",
+      mahawu_desc:
+        "An adventure trekking to the craters of Mount Mahawu with awesome steaming crater lakes view.",
+      woloan: "Woloan Village",
+      woloan_desc:
+        "Center for traditional Minahasan knockdown wooden houses industry.",
+      waruga: "WARUGA (Stone Graves)",
+      waruga_desc:
+        "Ancient stone graves or sarcophagi of Minahasan ancestors dating back to the Megalithic Age.",
+      rafting: "Rafting Timbukar",
+      rafting_desc:
+        "One of the most spectacular and exciting adventure sports in North Sulawesi.",
+      golf: "Golf Resort Kawanua",
+      golf_desc:
+        "International golf resort with a great view of Klabat Mountain near the airport.",
+      museum: "The Provincial Museum",
+      museum_desc:
+        "Houses historical, cultural and other artefacts from several Indonesian ethnic groups.",
+      cave: "Japanese Cave",
+      cave_desc:
+        "Historical site built during World War II by the Japanese between Kawangkoan and Kiawa.",
+    },
+  },
+  common: {
+    explore: "Explore",
+  },
+};

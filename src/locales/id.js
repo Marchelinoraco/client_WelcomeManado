@@ -1,0 +1,328 @@
+export default {
+  nav: {
+    home: "Beranda",
+    localTours: "Wisata Lokal",
+    national: "Nasional",
+    international: "Internasional",
+    hotels: "Hotel",
+    travelInfo: "Informasi Perjalanan",
+    about: "Tentang",
+    contact: "Kontak",
+    shopping: "Belanja di Manado",
+    food: "Makanan & Kuliner di Manado",
+    transport: "Transportasi di Manado",
+    history: "Sejarah & Budaya di Manado",
+    guide: "Panduan Manado",
+  },
+  hero: {
+    title: "TEMUKAN HAL",
+    subtitle: "YANG TAK TERDUGA",
+    description:
+      "Dari terumbu karang Bunaken yang semarak hingga puncak Sulawesi Utara yang megah. Mulailah perjalanan yang melampaui batas dan ciptakan kenangan seumur hidup.",
+    explore: "JELAJAHI MANADO",
+    nationalTours: "TUR NASIONAL",
+  },
+  home: {
+    local: {
+      badge: "Surga Lokal",
+      title1: "HARTA KARUN",
+      title2: "MANADO",
+      description:
+        "Selami keanekaragaman hayati laut yang terkenal di dunia dan jelajahi lanskap vulkanik yang menjadikan Sulawesi Utara destinasi global yang unik.",
+      allPackages: "Semua Paket",
+    },
+    national: {
+      badge: "Seluruh Indonesia",
+      title1: "Destinasi",
+      title2: "Nasional",
+      description:
+        "Rasakan jiwa Indonesia. Dari jantung spiritual Bali hingga naga kuno Pulau Komodo.",
+      exploreArchipelago: "Jelajahi Nusantara",
+    },
+    international: {
+      badge: "Perjalanan Global",
+      title1: "PETUALANGAN",
+      title2: "DUNIA",
+      description:
+        "Perluas cakrawala Anda dengan tur internasional pilihan kami. Temukan landmark ikonik dan beragam budaya di seluruh dunia.",
+      goInternational: "Pergi Internasional",
+    },
+    cta: {
+      title: "Siap untuk petualangan <br /> Anda berikutnya?",
+      description:
+        "Pakar perjalanan kami siap membantu Anda merencanakan liburan yang sempurna. Ayo wujudkan!",
+      bookNow: "Pesan Sekarang",
+      chatWA: "Chat WhatsApp",
+    },
+  },
+  food: {
+    title: "Makanan & Kuliner di Manado",
+    description:
+      "Makanan lokal Manado, juga dikenal sebagai makanan Minahasa, terkenal dengan rasa yang berani dan sangat pedas. Dari seafood segar hingga daging eksotis, jelajahi warisan kuliner unik Sulawesi Utara.",
+    categories: {
+      main: "Menu Utama",
+      breakfast: "Menu Sarapan",
+      dessert: "Pencuci Mulut & Camilan",
+      drinks: "Minuman",
+    },
+    items: {
+      seafood: "Seafood",
+      seafood_desc:
+        "Seafood segar adalah makanan pokok di Manado. Favoritnya termasuk Udang Gala Bakar dan Kerapu Bakar Pedas, biasanya disajikan dengan Sambal Dabu-Dabu.",
+      crab: "Kepiting Kenari",
+      crab_desc:
+        "Arthropoda darat terbesar, dianggap sebagai hidangan mewah dengan rasa mirip lobster. Tersedia dalam Saus Padang, Saus Tiram, atau Saus Santan.",
+      woku: "Ikan Woku Belanga",
+      woku_desc:
+        "Ikan kerapu yang dimasak dalam belanga dengan rempah melimpah seperti kemangi, daun kunyit, serai, tomat, dan cabai yang sangat pedas.",
+      cakalang: "Cakalang Pampis",
+      cakalang_desc:
+        "Ikan cakalang suwir khas Manado, cocok dinikmati dengan nasi hangat atau sebagai isian Panada.",
+      kuah_asam: "Kuah Asam",
+      kuah_asam_desc:
+        "Sup ikan asam yang segar dan bergizi menggunakan kakap merah atau ikan lainnya, dibumbui dengan tomat dan jeruk nipis.",
+      tude: "Ikan Tude Woku Daun",
+      tude_desc:
+        "Ikan Tude segar yang dibungkus daun pisang dan dimasak dengan banyak rempah lokal.",
+      roa: "Rica Ikan Roa (Sambel Roa)",
+      roa_desc:
+        "Ikan Roa asap dicampur dengan cabai dan tomat. Biasanya disajikan dengan Tinutuan atau pisang goreng.",
+      tinutuan: "Tinutuan (Bubur Manado)",
+      tinutuan_desc:
+        "Bubur sehat dari beras, bayam, singkong, labu, dan jagung. Sering disajikan dengan keripik Nike atau cakalang goreng.",
+      nasi_kuning: "Nasi Kuning",
+      nasi_kuning_desc:
+        "Nasi yang dimasak dengan santan dan kunyit, disajikan dengan cakalang suwir, daging sapi, dan telur rebus, dibungkus daun woka.",
+      klappertart: "Klappertart",
+      klappertart_desc:
+        "Kue kelapa legendaris dari kelapa muda, susu, vanila, dengan topping kismis, kenari, atau keju.",
+      es_kacang: "Es Kacang Merah",
+      es_kacang_desc:
+        "Campuran segar kacang merah dan buah-buahan yang disajikan dengan es serut—pilihan sempurna bagi pecinta kacang merah.",
+      pisang_goreng: "Pisang Goreng",
+      pisang_goreng_desc:
+        "Kebiasaan unik orang Manado: menikmati pisang goreng renyah dengan dicocol sambal pedas.",
+      panada: "Panada",
+      panada_desc:
+        "Camilan populer mirip empanada, diisi dengan ikan cakalang suwir pedas.",
+      lalampa: "Lalampa",
+      lalampa_desc:
+        "Ketan gulung tradisional diisi ikan cakalang suwir, mirip lemper tapi dengan rasa pedas yang khas.",
+      cap_tikus: "Cap Tikus",
+      cap_tikus_desc:
+        "Minuman beralkohol tradisional dari nira pohon palem (saguer), minuman khas wilayah Minahasa.",
+    },
+  },
+  shopping: {
+    title: "Belanja di Manado",
+    categories: {
+      center: "Pusat Perbelanjaan Kota",
+      souvenir: "Toko Souvenir & Kerajinan",
+      minahasa: "Minahasa (Tinoor, Pulutan, Tomohon)",
+    },
+    items: {
+      megamall: "Mega Mall",
+      megamall_desc:
+        "Mall pertama di Manado yang dibangun tahun 2004, menyediakan kebutuhan keluarga dalam satu tempat.",
+      mantos: "Manado Town Square (Mantos)",
+      mantos_desc:
+        "Pusat perbelanjaan paling lengkap dengan berbagai branded shop, restoran, dan hiburan.",
+      itcenter: "IT Center Manado",
+      itcenter_desc:
+        "Pusat elektronik, handphone, dan laptop terlengkap dengan harga terjangkau.",
+      merciful: "Grand Merciful Building",
+      merciful_desc:
+        "Toko oleh-oleh terbesar dan terlengkap, dari kerajinan tangan hingga makanan khas.",
+      kawanua: "UD Kawanua",
+      kawanua_desc:
+        "Toko oleh-oleh khas sejak 1989, menyediakan Klappertaart dan berbagai kue Manado.",
+      tinoor: "Desa Tinoor",
+      tinoor_desc:
+        "Tempat pengrajin bambu dan kayu di sepanjang jalan menuju Tomohon.",
+      tomohon: "Pasar Beriman Tomohon",
+      tomohon_desc:
+        "Pasar tradisional terbesar di Minahasa, terkenal dengan bagian daging ekstrimnya.",
+    },
+  },
+  footer: {
+    description:
+      "Pintu gerbang utama Anda menuju keindahan Sulawesi Utara yang tak tertandingi. Kami menyediakan pengalaman perjalanan berkualitas tinggi dengan layanan profesional dan keahlian lokal.",
+    quickLinks: "Tautan Cepat",
+    getInTouch: "Hubungi Kami",
+    rights: "Semua hak dilindungi undang-undang.",
+  },
+  about: {
+    hero: {
+      title1: "Tentang",
+      title2: "Kami",
+      subtitle: "Gerbang Anda menuju surga tersembunyi di Indonesia dan dunia.",
+    },
+    story: {
+      title1: "Cerita",
+      title2: "Kami",
+      p1: "WelcomeManado didirikan dengan visi yang sederhana namun kuat: untuk menunjukkan keindahan Sulawesi Utara yang tak tertandingi kepada dunia sambil memberikan pengalaman perjalanan yang lancar dan tak terlupakan.",
+      p2: "Selama bertahun-tahun, kami telah memperluas jangkauan kami melampaui pantai Manado, mengurasi perjalanan eksklusif di seluruh kepulauan Indonesia dan destinasi internasional. Tim ahli lokal dan pemandu profesional kami berdedikasi untuk memastikan setiap perjalanan lebih dari sekadar liburan—itu adalah kenangan seumur hidup.",
+      exp_years: "10+ Tahun Pengalaman",
+      happy_travelers: "5rb+ Wisatawan Puas",
+      since: "Sejak 2014",
+      pioneering: "Pelopor Perjalanan",
+    },
+    why: {
+      title1: "Mengapa",
+      title2: "Memilih Kami",
+      features: {
+        expert: {
+          title: "Pengetahuan Lokal Ahli",
+          desc: "Akar kami yang dalam di Manado dan Sulawesi berarti kami mengetahui rahasia terbaik yang terlewatkan oleh tur biasa.",
+        },
+        professional: {
+          title: "Layanan Profesional",
+          desc: "Dari pemesanan awal hingga keberangkatan akhir, kami menangani setiap detail dengan presisi dan perhatian.",
+        },
+        personalized: {
+          title: "Pengalaman Personal",
+          desc: "Kami percaya pada kualitas di atas kuantitas, menawarkan tur grup kecil dan rencana perjalanan yang disesuaikan.",
+        },
+      },
+    },
+  },
+  transport: {
+    hero: {
+      badge: "Transportasi",
+      title1: "TRANSPORTASI DI",
+      title2: "MANADO",
+      description:
+        "Ada banyak cara untuk sampai ke Manado. Melalui darat, laut, dan udara, Kota Manado sangat mudah dijangkau. Panduan Transportasi Manado kami akan memberitahu Anda tentang perjalanan di dalam dan sekitar Manado.",
+    },
+    section: {
+      title: "Berkeliling",
+    },
+    items: {
+      air: "Melalui Udara",
+      air_desc:
+        "Bandara Internasional Sam Ratulangi Manado. Terdapat banyak penerbangan domestik dan internasional yang menghubungkan Manado dengan kota-kota besar lainnya di Indonesia dan negara lain. Penerbangan domestik menghubungkan Manado ke banyak kota besar di Indonesia dan penerbangan internasional Manado ke Singapura dan ke negara lain.",
+      land: "Melalui Darat",
+      land_desc:
+        "Bus jarak jauh dan minibus lokal beroperasi di tiga terminal yang dijalankan dengan cukup tertib. Terminal Malalayang terletak di bagian selatan Manado dan juga merupakan terminal antar-provinsi, beroperasi menuju Sulawesi Tengah (Poso & Luwuk) dan Provinsi Gorontalo. Terminal Paal 2 terletak di timur Manado, terminal transit untuk menuju bagian utara Manado. Terminal Karombasan melayani rute: Tomohon, Tondano, Tombatu dan bagian lain dari Area Minahasa.",
+      sea_manado: "Melalui Laut (Pelabuhan Manado)",
+      sea_manado_desc:
+        "Pelabuhan Manado biasanya melayani kapal-kapal kecil karena perairan yang cukup dangkal dan berdekatan dengan Taman Laut Bunaken yang dilindungi. Kapal-kapal yang berlabuh di sini bertujuan ke pulau-pulau di Sulawesi Utara seperti Kepulauan Sitaro, Sangihe, Talaud, serta Ternate, Mangole, Sanana dan Tobelo.",
+      sea_bitung: "Melalui Laut (Pelabuhan Bitung)",
+      sea_bitung_desc:
+        "Pelabuhan Bitung terdiri dari pelabuhan penumpang dan pelabuhan peti kemas. Kapal-kapal besar milik PT. PELNI berlabuh di sini karena memiliki perairan yang dalam. Pelabuhan Bitung adalah satu-satunya pelabuhan di Sulawesi Utara yang dikunjungi kapal penumpang antar kota di Indonesia seperti Jakarta, Surabaya, Ambon, dan kota besar lainnya.",
+      around: "Berkeliling Manado",
+      around_desc:
+        "Moda transportasi paling populer di Manado adalah mikrolet (angkot biru). Taksi juga tersedia dengan sistem argo atau negosiasi. Sewa mobil sangat mudah ditemukan di bandara. Ojek (motor) juga merupakan cara populer dan murah untuk bepergian. Aplikasi transportasi online seperti Gojek, Grab, Indriver, dan Maxim juga melimpah di kota Manado.",
+      explore: "Jelajahi",
+    },
+  },
+  culture: {
+    hero: {
+      badge: "Sejarah & Budaya",
+      title1: "SEJARAH &",
+      title2: "BUDAYA",
+      description:
+        "Sejarah dan budaya Manado adalah hal lain yang unik dan sangat menarik untuk dijelajahi. Anda akan menemukan banyak patung yang menceritakan sejarah dan cerita rakyat di Manado. Banyak tarian dan instrumen musik juga memiliki cerita mereka sendiri di Manado.",
+    },
+    section: {
+      title: "Warisan Budaya",
+    },
+    items: {
+      kabasaran: "TARIAN KABASARAN",
+      kabasaran_desc:
+        "Kabasaran adalah tarian perang Minahasa, diiringi suara tambur/gong kecil. Tarian ini sekarang menjadi tarian penyambutan tamu kehormatan.",
+      katrili: "TARIAN KATRILI",
+      katrili_desc:
+        "Katrili adalah tarian warisan kolonial Portugis dan Spanyol sejak abad ke-16 yang ditarikan dengan ceria. Tarian ini sering dibawakan dalam acara resmi pemerintah dan festival budaya.",
+      maengket: "TARIAN MAENGKET",
+      maengket_desc:
+        "Tarian tradisional asli Minahasa yang dilakukan saat panen raya dengan gerakan sederhana namun penuh makna syukur.",
+      kolintang: "MUSIK KOLINTANG",
+      kolintang_desc:
+        "Musik tradisional Minahasa yang terbuat dari kayu yang menghasilkan suara unik, sering dimainkan di pesta pernikahan dan upacara adat.",
+      malalayang: "PANTAI MALALAYANG",
+      malalayang_desc:
+        "Pantai pasir hitam dengan pemandangan Pulau Manado Tua dan Bunaken. Tempat populer untuk menikmati pisang goreng saat matahari terbenam.",
+      jesus: "PATUNG YESUS MEMBERKATI",
+      jesus_desc:
+        "Patung Yesus Memberkati di Manado adalah yang terbesar ke-1 di Asia dan ke-3 di dunia. Menjadi ikon baru Kota Manado sejak 2007.",
+    },
+  },
+  guide: {
+    hero: {
+      badge: "Panduan Manado",
+      title1: "INFO",
+      title2: "PERJALANAN",
+      description:
+        "Temukan destinasi utama, situs bersejarah, dan cagar alam di Sulawesi Utara. Panduan utama Anda untuk membuka keajaiban Manado.",
+    },
+    section: {
+      title: "Destinasi Utama",
+    },
+    items: {
+      bunaken: "Pulau Bunaken & Siladen",
+      bunaken_desc:
+        "Taman Nasional Laut Bunaken memiliki biodiversitas laut tertinggi di dunia. Waktu terbaik berkunjung adalah Mei - Agustus.",
+      lembeh: "Selat Lembeh",
+      lembeh_desc:
+        "Surga bagi pecinta fotografi makro bawah laut dengan berbagai biota unik dan langka.",
+      temple: "Klenteng Ban Hin Kiong",
+      temple_desc:
+        "Klenteng tertua di Indonesia Timur, pusat perayaan festival Cap Go Meh yang meriah.",
+      linow: "Danau Linow",
+      linow_desc:
+        "Danau unik yang warnanya bisa berubah-ubah, tempat yang sangat tenang untuk bersantai.",
+      tangkoko: "Cagar Alam Tangkoko",
+      tangkoko_desc:
+        "Rumah bagi Tarsius (primata terkecil di dunia) dan monyet hitam Sulawesi (Yaki).",
+      tondano: "Danau Tondano",
+      tondano_desc:
+        "Danau terluas di Sulawesi Utara dengan pemandangan pegunungan dan restoran apung yang lezat.",
+      tunan: "Air Terjun Tunan",
+      tunan_desc:
+        "Air terjun alami setinggi 86 meter yang dikelilingi hutan rimbun di Minahasa Utara.",
+      ekayana: "Pagoda Ekayana",
+      ekayana_desc:
+        "Vihara indah dengan arsitektur megah dan pemandangan Gunung Lokon.",
+      makatete: "Makatete Hills",
+      makatete_desc:
+        "Bukit dengan pemandangan Kota Manado yang spektakuler, cocok untuk melihat matahari terbenam.",
+      jesus_lembeh: "Patung Yesus (Pulau Lembeh)",
+      jesus_lembeh_desc:
+        "Monumen Yesus yang berdiri megah di Pulau Lembeh, mirip dengan patung di Rio de Janeiro.",
+      trikora: "Monumen Trikora",
+      trikora_desc:
+        "Monumen bersejarah peringatan pembebasan Irian Barat yang terletak di Pulau Lembeh.",
+      alamanda: "Alamanda Chapel",
+      alamanda_desc:
+        "Kapel indah di dataran tinggi Tomohon dengan latar belakang Gunung Lokon.",
+      kasih: "Bukit Kasih",
+      kasih_desc:
+        "Pusat spiritual di mana rumah ibadah dari 5 agama berdiri berdampingan di satu bukit.",
+      mahawu: "Gunung Mahawu",
+      mahawu_desc:
+        "Gunung berapi yang mudah didaki dengan pemandangan kawah dan Kota Tomohon yang menakjubkan.",
+      woloan: "Desa Woloan",
+      woloan_desc:
+        "Pusat industri rumah panggung kayu tradisional Minahasa yang bisa dibongkar pasang.",
+      waruga: "Waruga (Makam Batu)",
+      waruga_desc:
+        "Situs purbakala makam batu leluhur Minahasa yang berasal dari zaman Megalitikum.",
+      rafting: "Rafting Timbukar",
+      rafting_desc:
+        "Petualangan arung jeram yang menantang dan seru di Sungai Timbukar, Sonder.",
+      golf: "Golf Resort Kawanua",
+      golf_desc:
+        "Resor golf internasional dengan pemandangan Gunung Klabat yang megah.",
+      museum: "Museum Negeri",
+      museum_desc:
+        "Pusat sejarah dan budaya Sulawesi Utara yang menyimpan berbagai artefak berharga.",
+      cave: "Goa Jepang",
+      cave_desc:
+        "Situs bersejarah peninggalan Perang Dunia II yang terletak di antara Kawangkoan dan Kiawa.",
+    },
+  },
+  common: {
+    explore: "Jelajahi",
+  },
+};

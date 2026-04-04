@@ -1,0 +1,301 @@
+export default {
+  nav: {
+    home: "首页",
+    localTours: "当地游",
+    national: "国内游",
+    international: "出境游",
+    hotels: "酒店",
+    travelInfo: "旅游资讯",
+    about: "关于我们",
+    contact: "联系我们",
+    shopping: "万鸦老购物",
+    food: "万鸦老美食",
+    transport: "万鸦老交通",
+    history: "万鸦老历史与文化",
+    guide: "万鸦老指南",
+  },
+  hero: {
+    title: "探索",
+    subtitle: "意想不到",
+    description:
+      "从布纳肯充满活力的珊瑚礁到北苏拉威西雄伟的山峰。踏上一段超越国界的旅程，创造终生难忘的回忆。",
+    explore: "探索万鸦老",
+    nationalTours: "国内游",
+  },
+  home: {
+    local: {
+      badge: "当地天堂",
+      title1: "万鸦老",
+      title2: "宝藏",
+      description:
+        "潜入世界闻名的海洋生物多样性，探索使北苏拉威西成为独特全球目的地的火山景观。",
+      allPackages: "所有套餐",
+    },
+    national: {
+      badge: "横跨印尼",
+      title1: "国内",
+      title2: "目的地",
+      description: "体验印尼的灵魂。从巴厘岛的精神中心到科莫多岛的古代巨龙。",
+      exploreArchipelago: "探索群岛",
+    },
+    international: {
+      badge: "全球旅程",
+      title1: "全球",
+      title2: "冒险",
+      description:
+        "通过我们精心策划的国际旅游扩展您的视野。发现全球标志性的地标和多元文化。",
+      goInternational: "走向国际",
+    },
+    cta: {
+      title: "准备好迎接您的 <br /> 下一次冒险了吗？",
+      description: "我们的旅游专家随时准备帮助您规划完美的度假。让我们实现它！",
+      bookNow: "现在预订",
+      chatWA: "WhatsApp 聊天",
+    },
+  },
+  food: {
+    title: "万鸦老美食与烹饪",
+    description:
+      "万鸦老当地美食，也被称为米纳哈萨美食，以其大胆且极辣的味道而闻名。从新鲜的海鲜到异国情调的肉类，探索北苏拉威西独特的烹饪传承。",
+    categories: {
+      main: "主菜",
+      breakfast: "早餐菜单",
+      dessert: "甜点与小吃",
+      drinks: "饮品",
+    },
+    items: {
+      seafood: "海鲜",
+      seafood_desc:
+        "新鲜海鲜是万鸦老的主食。最受欢迎的包括烤大头虾和烤辣石斑鱼，通常搭配 Sambal Dabu-Dabu（由干葱、西红柿和青柠混合而成的辣酱）。",
+      crab: "椰子蟹",
+      crab_desc:
+        "世界上最大的陆生节肢动物，被视为美味佳肴，味道与龙虾相似。可选巴东辣酱、蚝油或椰奶酱。",
+      woku: "万鸦老镬烧鱼 (Ikan Woku Belanga)",
+      woku_desc:
+        "石斑鱼在锅中烹饪，加入丰富的香料，如柠檬罗勒、姜黄叶、香茅、西红柿和极辣的辣椒。",
+      cakalang: "万鸦老金枪鱼松 (Cakalang Pampis)",
+      cakalang_desc:
+        "万鸦老风格的鲣鱼碎（金枪鱼松），非常适合搭配温热的米饭或作为 Panada 的馅料。",
+      kuah_asam: "酸鱼汤 (Kuah Asam)",
+      kuah_asam_desc:
+        "一种清新且营养丰富的酸鱼汤，使用红鲷鱼或其他鱼类，用西红柿和柠檬汁调味。",
+      tude: "叶裹镬烧鱼 (Ikan Tude Woku Daun)",
+      tude_desc: "新鲜的 Tude 鱼包裹在香蕉叶中，并加入大量当地香料烹饪。",
+      roa: "罗阿鱼辣椒酱 (Sambel Roa)",
+      roa_desc:
+        "烟熏罗阿鱼与辣椒和西红柿混合。通常搭配 Tinutuan 或炸香蕉食用。",
+      tinutuan: "万鸦老粥 (Tinutuan/Bubur Manado)",
+      tinutuan_desc:
+        "一种由大米、菠菜、木薯、南瓜和玉米制成的健康粥。通常搭配 Nike 咸脆饼或炸鲣鱼。",
+      nasi_kuning: "黄姜饭 (Nasi Kuning)",
+      nasi_kuning_desc:
+        "加入椰奶和姜黄烹饪的米饭，搭配鲣鱼碎、牛肉碎和煮鸡蛋，传统上用棕榈叶包裹。",
+      klappertart: "椰子挞 (Klappertart)",
+      klappertart_desc:
+        "传说中的椰子蛋糕，由嫩椰子、牛奶、香草制成，顶部有葡萄干、核桃或奶酪。",
+      es_kacang: "红豆冰 (Es Kacang Merah)",
+      es_kacang_desc: "清爽的红豆和水果混合在碎冰上——红豆爱好者的完美享受。",
+      pisang_goreng: "炸香蕉 (Pisang Goreng)",
+      pisang_goreng_desc:
+        "万鸦老独特的习惯：享受香脆的炸香蕉并蘸上辛辣的辣椒酱 (Sambal)。",
+      panada: "万鸦老肉馅饼 (Panada)",
+      panada_desc: "一种类似于肉馅卷饼的流行小吃，里面填满了辛辣的鲣鱼碎。",
+      lalampa: "辣鱼糯米卷 (Lalampa)",
+      lalampa_desc:
+        "传统的填有金枪鱼碎的糯米卷，类似于 lemper 但带有独特的辛辣味。",
+      cap_tikus: "鼠头酒 (Cap Tikus)",
+      cap_tikus_desc:
+        "一种由棕榈树汁（saguer）加工而成的传统高酒精度饮料，是米纳哈萨地区的招牌烈酒。",
+    },
+  },
+  shopping: {
+    title: "万鸦老购物",
+    categories: {
+      center: "城市购物中心",
+      souvenir: "纪念品商店与手工艺品",
+      minahasa: "米纳哈萨（蒂诺、普鲁坦、托莫洪）",
+    },
+    items: {
+      megamall: "Mega Mall",
+      megamall_desc:
+        "万鸦老第一家购物中心，建于2004年，在一处提供各种家庭需求。",
+      mantos: "Manado Town Square (Mantos)",
+      mantos_desc: "设施最齐全的购物中心，拥有各种品牌店、餐厅和娱乐设施。",
+      itcenter: "IT Center Manado",
+      itcenter_desc: "最齐全的电子产品、手机和笔记本电脑中心，价格实惠。",
+      merciful: "Grand Merciful Building",
+      merciful_desc: "最大、最全面的礼品店，从手工艺品到特色美食应有尽有。",
+      kawanua: "UD Kawanua",
+      kawanua_desc: "始于1989年的典型万鸦老纪念品商店，提供椰子挞和各种蛋糕。",
+      tinoor: "蒂诺村 (Tinoor Village)",
+      tinoor_desc: "通往托莫洪路上的竹子和木材手工艺人聚集地。",
+      tomohon: "托莫洪极端市场 (Tomohon Extreme Market)",
+      tomohon_desc: "米纳哈萨最大的传统市场，以其极端肉类部分而闻名。",
+    },
+  },
+  footer: {
+    description:
+      "您前往北苏拉威西及其他地区无与伦比美景的首选门户。我们以专业的服务和当地的专业知识提供高品质的旅游体验。",
+    quickLinks: "快速链接",
+    getInTouch: "保持联系",
+    rights: "版权所有。",
+  },
+  about: {
+    hero: {
+      title1: "关于",
+      title2: "我们",
+      subtitle: "您前往印度尼西亚及世界隐藏天堂的门户。",
+    },
+    story: {
+      title1: "我们的",
+      title2: "故事",
+      p1: "WelcomeManado 的成立基于一个简单而强大的愿景：向世界展示北苏拉威西无与伦比的美景，同时为旅客提供无缝、难忘的体验。",
+      p2: "多年来, 我们的足迹已超出万鸦老海岸, 在印度尼西亚群岛和国际目的地策划了专属旅程。我们的当地专家和专业导游团队致力于确保每次旅行不仅仅是一个假期——它是一个终生的记忆。",
+      exp_years: "10+ 年经验",
+      happy_travelers: "5k+ 快乐旅客",
+      since: "始于 2014 年",
+      pioneering: "开拓旅游",
+    },
+    why: {
+      title1: "为什么",
+      title2: "选择我们",
+      features: {
+        expert: {
+          title: "专业的当地知识",
+          desc: "我们在万鸦老和苏拉威西的深厚根基意味着我们知道普通旅游团错过的保存最完好的秘密。",
+        },
+        professional: {
+          title: "专业服务",
+          desc: "从最初的预订到最终的出发，我们精准细心地处理每一个细节。",
+        },
+        personalized: {
+          title: "个性化体验",
+          desc: "我们相信质量高于数量，提供小团旅游和定制行程。",
+        },
+      },
+    },
+  },
+  transport: {
+    hero: {
+      badge: "交通",
+      title1: "万鸦老",
+      title2: "交通指南",
+      description:
+        "到达万鸦老有很多种方式。无论是通过陆路、海路还是航空，万鸦老市都非常容易到达。我们的“万鸦老交通指南”将告诉您在万鸦老及其周边地区的旅行方式。",
+    },
+    section: {
+      title: "周边出行",
+    },
+    items: {
+      air: "航空出行",
+      air_desc:
+        "万鸦老萨姆·拉图兰吉国际机场。有许多国内和国际航班连接万鸦老与印度尼西亚其他大城市及其他国家。",
+      land: "陆路出行",
+      land_desc:
+        "长途巴士和当地小型巴士在三个运行有序的客运站运营。包括 Malalayang、Paal 2 和 Karombasan 客运站。",
+      sea_manado: "海路出行 (万鸦老港)",
+      sea_manado_desc:
+        "万鸦老港通常服务于较小的船只。这是因为水域较浅，且邻近受保护的布纳肯国家海洋公园。",
+      sea_bitung: "海路出行 (比通港)",
+      sea_bitung_desc:
+        "比通港由客运港和集装箱港组成。PT. PELNI 使用比通港，因为那里有深水港。",
+      around: "万鸦老市内出行",
+      around_desc:
+        "万鸦老最受欢迎的交通工具是 microlet（蓝色小巴士）。出租车、租车和在线摩托车出租（Gojek、Grab）也非常丰富。",
+      explore: "探索",
+    },
+  },
+  culture: {
+    hero: {
+      badge: "历史与文化",
+      title1: "历史与",
+      title2: "文化",
+      description:
+        "万鸦老的历史和文化是另一个独特且非常有趣的探索领域。您会发现许多讲述万鸦老历史和民间故事的雕像。许多舞蹈和乐器在万鸦老也有它们自己的故事。",
+    },
+    section: {
+      title: "文化遗产",
+    },
+    items: {
+      kabasaran: "卡巴萨兰舞 (KABASARAN DANCE)",
+      kabasaran_desc:
+        "Kabasaran 是米纳哈萨的战争舞蹈，伴随着小锣的声音。现在已成为欢迎显贵的欢迎舞。",
+      katrili: "卡特里利舞 (KATRILI DANCE)",
+      katrili_desc:
+        "Katrili 是自 16 世纪以来葡萄牙和西班牙殖民时期的遗产舞蹈，舞者们跳起舞来活泼开朗。",
+      maengket: "马恩格特舞 (MAENGKET DANCE)",
+      maengket_desc: "这是米纳哈萨原始的传统舞蹈，在收获庄稼时表演，动作简单。",
+      kolintang: "哥林堂音乐 (KOLINTANG MUSIC)",
+      kolintang_desc: "哥林堂是米纳哈萨的传统木制音乐，能产生独特的音乐声音。",
+      malalayang: "马拉拉扬海滩 (MALALAYANG BEACH)",
+      malalayang_desc:
+        "这片黑沙滩拥有万鸦老图阿岛、布纳肯岛甚至西拉登岛的美丽景色。",
+      jesus: "基督降福雕像",
+      jesus_desc:
+        "万鸦老的基督降福雕像是亚洲第一大、世界第三大的雕像。自 2007 年以来成为万鸦老市的新标志。",
+    },
+  },
+  guide: {
+    hero: {
+      badge: "万鸦老指南",
+      title1: "旅游",
+      title2: "资讯",
+      description:
+        "探索北苏拉威西的首选目的地、历史遗迹和自然保护区。开启万鸦老奇观的终极指南。",
+    },
+    section: {
+      title: "首选目的地",
+    },
+    items: {
+      bunaken: "布纳肯和西拉登岛",
+      bunaken_desc:
+        "布纳肯国家海洋公园以清澈的海水和世界级的潜水点闻名。最佳游览时间：5月至8月。",
+      lembeh: "蓝碧海峡",
+      lembeh_desc:
+        "真正的宏观天堂，是进行水肺潜水、寻找稀有和特殊生物的好地方。",
+      temple: "万兴宫 (Ban Hin Kiong)",
+      temple_desc:
+        "印度尼西亚东部最古老的佛教寺庙，每年都会举行吸引人的“大伯公”节日。",
+      linow: "里诺湖 (Lake Linow)",
+      linow_desc:
+        "美丽的湖泊，湖水颜色会变化！有时看是蓝色，有时是绿色，有时是红色。",
+      tangkoko: "唐科科自然保护区",
+      tangkoko_desc: "这里是眼鏡猴（世界上最小的灵长类动物）和黑猴的家园。",
+      tondano: "通达诺湖",
+      tondano_desc: "北苏拉威西省著名的旅游目的地，海拔 600 米，景色优美。",
+      tunan: "图南瀑布 (Waterfall Tunan)",
+      tunan_desc: "位于北米纳哈萨的 86 米高的自然瀑布，周围环绕着天然森林。",
+      ekayana: "依卡亚纳塔 (Pagoda Ekayana)",
+      ekayana_desc: "非常独特的寺庙，有许多僧侣和龙的雕像，可以俯瞰洛孔山。",
+      makatete: "马卡特特山 (Makatete Hills)",
+      makatete_desc: "位于米纳哈萨的丘陵旅游区，可以清晰地看到万鸦老市全景。",
+      jesus_lembeh: "基督救世主雕像 (蓝碧岛)",
+      jesus_lembeh_desc: "蓝碧岛矗立着巴西风格的基督降福双子雕像。",
+      trikora: "特里科拉纪念碑",
+      trikora_desc: "为纪念在蓝碧岛开展的“人民三大命令”行动而设立的纪念碑。",
+      alamanda: "阿拉曼达教堂",
+      alamanda_desc: "也被称为圣母玛利亚教堂，位于托莫洪高地，环境宁静。",
+      kasih: "爱之丘 (Bukit Kasih)",
+      kasih_desc: "精神中心，印尼五大宗教的礼拜场所并排矗立在山顶。",
+      mahawu: "马哈武山",
+      mahawu_desc:
+        "徒步前往马哈武山火山口是一项必做活动，火山口湖景色非常壮观。",
+      woloan: "沃洛安村",
+      woloan_desc: "米纳哈萨传统木制活动房的生产中心。",
+      waruga: "瓦鲁加石墓",
+      waruga_desc: "米纳哈萨祖先的石墓或石棺，可追溯到巨石时代。",
+      rafting: "廷布卡漂流",
+      rafting_desc: "北苏拉威西最壮观、最令人兴奋的冒险运动之一。",
+      golf: "高尔夫度假村",
+      golf_desc:
+        "位于机场附近，占地 1800 平方米，可欣赏到克拉巴特山的绝佳景色。",
+      museum: "省博物馆",
+      museum_desc: "收藏了来自印尼多个民族的历史、文化和其他文物。",
+      cave: "日军洞穴",
+      cave_desc: "二战期间由日军建造的历史遗迹，位于卡旺科安和基亚瓦之间。",
+    },
+  },
+  common: {
+    explore: "探索",
+  },
+};
