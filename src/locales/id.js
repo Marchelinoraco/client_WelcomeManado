@@ -325,4 +325,13 @@ export default {
   common: {
     explore: "Jelajahi",
   },
+  travelInfo: {
+    hero: {
+      badge: "Info Perjalanan",
+      title1: "INFORMASI",
+      title2: "PERJALANAN",
+      description:
+        "Dapatkan informasi lengkap untuk persiapan perjalanan Anda ke Manado. Dari kebutuhan visa hingga tips lokal yang berguna.",
+    },
+  },
 };

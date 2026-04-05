@@ -2,7 +2,7 @@ import axios from "axios";
 import { dummyCategories, dummyTours } from "../data/dummyTours";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 // Set to true to use dummy data instead of API
-const USE_DUMMY = true;
+const USE_DUMMY = import.meta.env.VITE_USE_DUMMY === "true";
 
 export const getCategories = async () => {
   if (USE_DUMMY) {
@@ -62,6 +62,84 @@ export const getTourDetail = async (slug) => {
     return { data: { data: tour || dummyTours[0] } };
   }
   return api.get(`/tours/${slug}`);
+};
+
+export const getLocalCategories = async () => {
+  if (USE_DUMMY) {
+    return {
+      data: { data: dummyCategories.filter((c) => c.type === "local") },
+    };
+  }
+  return api.get("/wisatalokal/categories");
+};
+
+export const getLocalTours = async (params = {}) => {
+  if (USE_DUMMY) {
+    const categorySlug = params.category;
+    const list = dummyTours.filter((t) => t.category?.type === "local");
+    if (!categorySlug) return { data: { data: list } };
+    return {
+      data: { data: list.filter((t) => t.category?.slug === categorySlug) },
+    };
+  }
+  return api.get("/wisatalokal/tours", { params });
+};
+
+export const getLocalTourDetail = async (slug) => {
+  if (USE_DUMMY) return getTourDetail(slug);
+  return api.get(`/wisatalokal/tours/${slug}`);
+};
+
+export const getNationalCategories = async () => {
+  if (USE_DUMMY) {
+    return {
+      data: { data: dummyCategories.filter((c) => c.type === "national") },
+    };
+  }
+  return api.get("/nasional/categories");
+};
+
+export const getNationalTours = async (params = {}) => {
+  if (USE_DUMMY) {
+    const categorySlug = params.category;
+    const list = dummyTours.filter((t) => t.category?.type === "national");
+    if (!categorySlug) return { data: { data: list } };
+    return {
+      data: { data: list.filter((t) => t.category?.slug === categorySlug) },
+    };
+  }
+  return api.get("/nasional/tours", { params });
+};
+
+export const getNationalTourDetail = async (slug) => {
+  if (USE_DUMMY) return getTourDetail(slug);
+  return api.get(`/nasional/tours/${slug}`);
+};
+
+export const getInternationalRegions = async () => {
+  if (USE_DUMMY) {
+    return {
+      data: { data: dummyCategories.filter((c) => c.type === "international") },
+    };
+  }
+  return api.get("/internasional/regions");
+};
+
+export const getInternationalTours = async (params = {}) => {
+  if (USE_DUMMY) {
+    const categorySlug = params.category;
+    const list = dummyTours.filter((t) => t.category?.type === "international");
+    if (!categorySlug) return { data: { data: list } };
+    return {
+      data: { data: list.filter((t) => t.category?.slug === categorySlug) },
+    };
+  }
+  return api.get("/internasional/tours", { params });
+};
+
+export const getInternationalTourDetail = async (slug) => {
+  if (USE_DUMMY) return getTourDetail(slug);
+  return api.get(`/internasional/tours/${slug}`);
 };
 
 export default api;

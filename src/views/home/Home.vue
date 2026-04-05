@@ -89,8 +89,44 @@
       <!-- Section 1: Manado -->
       <section
         id="manado-tours"
-        class="py-32 lg:py-48 px-6 lg:px-10 overflow-hidden"
+        class="py-32 lg:py-48 px-6 lg:px-10 overflow-hidden relative"
       >
+        <!-- Floating Stats Section -->
+        <div
+          class="max-w-7xl mx-auto -mt-48 lg:-mt-64 relative z-30 mb-32 px-6"
+        >
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+            <div
+              v-for="(stat, idx) in stats"
+              :key="idx"
+              class="bg-white/90 backdrop-blur-3xl p-8 lg:p-10 rounded-[2.5rem] border border-white/50 shadow-[0_30px_60px_rgba(0,0,0,0.08)] text-center group hover:-translate-y-3 transition-all duration-700 ease-spring relative overflow-hidden"
+            >
+              <!-- Animated Background Decoration -->
+              <div
+                class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/5 rounded-full group-hover:scale-[3] transition-transform duration-700"
+              ></div>
+
+              <div class="relative z-10">
+                <div
+                  class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/50 text-blue-600 flex items-center justify-center mx-auto mb-6 group-hover:from-blue-600 group-hover:to-blue-700 group-hover:text-white group-hover:shadow-xl group-hover:shadow-blue-600/30 transition-all duration-500"
+                >
+                  <component :is="stat.icon" class="w-7 h-7" />
+                </div>
+                <p
+                  class="text-4xl font-black text-slate-900 mb-2 tracking-tighter"
+                >
+                  {{ stat.value }}
+                </p>
+                <p
+                  class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]"
+                >
+                  {{ stat.label }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="max-w-7xl mx-auto">
           <div
             class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-10"
@@ -114,7 +150,7 @@
               </p>
             </div>
             <router-link
-              to="/category/tour-in-manado"
+              to="/category/manado-city-tour"
               class="group inline-flex items-center px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.local.allPackages") }}
@@ -139,6 +175,89 @@
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
           >
             <TourCard v-for="tour in localTours" :key="tour.id" :tour="tour" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Us Section -->
+      <section
+        class="py-32 lg:py-56 bg-slate-50 px-6 lg:px-10 overflow-hidden relative"
+      >
+        <!-- Background Patterns -->
+        <div
+          class="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none"
+          style="
+            background-image: radial-gradient(#2563eb 1px, transparent 1px);
+            background-size: 40px 40px;
+          "
+        ></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+            <!-- Left: Text Content -->
+            <div class="lg:col-span-5">
+              <div
+                class="inline-flex items-center px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full mb-8"
+              >
+                <ShieldCheck class="w-4 h-4 mr-2" />
+                <span class="text-[10px] font-black uppercase tracking-[0.2em]"
+                  >The Welcome Manado Advantage</span
+                >
+              </div>
+              <h2
+                class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-10 leading-[0.9] uppercase"
+              >
+                Why Travel <br />
+                <span class="text-blue-600 italic">With Us?</span>
+              </h2>
+              <p
+                class="text-slate-500 text-xl font-medium leading-relaxed mb-12"
+              >
+                We don't just organize trips; we craft lifelong memories with a
+                touch of local heart and international standards.
+              </p>
+              <div class="flex items-center space-x-6">
+                <div class="flex -space-x-4">
+                  <img
+                    v-for="i in 4"
+                    :key="i"
+                    :src="`https://i.pravatar.cc/100?img=${i + 10}`"
+                    class="w-12 h-12 rounded-full border-4 border-white object-cover"
+                  />
+                </div>
+                <p class="text-sm font-bold text-slate-900">
+                  Joined by 10,000+ <br />
+                  happy travelers
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Feature Cards -->
+            <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div
+                v-for="(feature, idx) in features"
+                :key="idx"
+                class="bg-white p-10 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.03)] group hover:-translate-y-2 transition-all duration-700 border border-slate-100/50 flex flex-col items-start"
+                :class="idx === 1 ? 'md:translate-y-12' : ''"
+              >
+                <div
+                  class="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-[15deg] transition-all duration-700 ease-spring"
+                >
+                  <component
+                    :is="feature.icon"
+                    class="w-8 h-8 text-blue-600 group-hover:text-white transition-colors"
+                  />
+                </div>
+                <h3
+                  class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase"
+                >
+                  {{ feature.title }}
+                </h3>
+                <p class="text-slate-500 font-medium leading-relaxed text-sm">
+                  {{ feature.description }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -180,7 +299,7 @@
               </p>
             </div>
             <router-link
-              to="/category/indonesia-destination"
+              to="/nasional/bali-lombok"
               class="group inline-flex items-center px-8 py-4 bg-white text-slate-900 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.national.exploreArchipelago") }}
@@ -195,6 +314,7 @@
               v-for="tour in nationalTours"
               :key="tour.id"
               :tour="tour"
+              detailBasePath="/nasional/tour"
             />
           </div>
         </div>
@@ -228,7 +348,7 @@
               </p>
             </div>
             <router-link
-              to="/category/international-tour"
+              to="/internasional"
               class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-900 transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.international.goInternational") }}
@@ -243,6 +363,7 @@
               v-for="tour in internationalTours"
               :key="tour.id"
               :tour="tour"
+              detailBasePath="/internasional/tour"
             />
           </div>
         </div>
@@ -311,16 +432,51 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import TourCard from "../components/TourCard.vue";
-import { getTours } from "../services/api";
-import { autoTranslate } from "../services/translate";
+import TourCard from "@/components/TourCard.vue";
+import { getTours } from "@/services/api";
+import { autoTranslate } from "@/services/translate";
 import {
   ArrowRight,
   ChevronRight,
   Palmtree,
   Globe,
   MessageCircle,
+  ShieldCheck,
+  Users,
+  Calendar,
+  Award,
+  Zap,
+  Star,
+  Clock,
 } from "lucide-vue-next";
+
+const stats = [
+  { label: "Happy Travelers", value: "10K+", icon: Users },
+  { label: "Destinations", value: "50+", icon: Globe },
+  { label: "Years Experience", value: "15+", icon: Award },
+  { label: "Tour Guides", value: "25+", icon: Palmtree },
+];
+
+const features = [
+  {
+    title: "Instant Booking",
+    description:
+      "Secure your dream vacation in seconds with our seamless real-time booking system.",
+    icon: Zap,
+  },
+  {
+    title: "Best Price",
+    description:
+      "We guarantee the best value for your investment with no hidden fees or charges.",
+    icon: Star,
+  },
+  {
+    title: "24/7 Support",
+    description:
+      "Our dedicated travel experts are always ready to assist you at every step of your journey.",
+    icon: Clock,
+  },
+];
 
 const { locale } = useI18n();
 const tours = ref({

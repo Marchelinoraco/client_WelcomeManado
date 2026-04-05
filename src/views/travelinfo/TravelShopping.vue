@@ -116,5 +116,5 @@
 
 <script setup>
 import { Compass, Map, ArrowRight } from "lucide-vue-next";
-import { shoppingCategories } from "../data/manadoShopping";
+import { shoppingCategories } from "@/data/manadoShopping";
 </script>

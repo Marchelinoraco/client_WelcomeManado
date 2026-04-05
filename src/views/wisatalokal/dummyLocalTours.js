@@ -1,4 +1,4 @@
-export const dummyCategories = [
+export const dummyLocalCategories = [
   {
     id: 1,
     name: "Manado - Minahasa - Likupang",
@@ -20,46 +20,9 @@ export const dummyCategories = [
     description: "Cultural journey in South Sulawesi.",
     type: "culture",
   },
-  {
-    id: 4,
-    name: "Bali Gateway",
-    slug: "bali-gateway",
-    description: "Destinasi wisata paling ikonik di Indonesia.",
-  },
-  {
-    id: 5,
-    name: "Komodo Island",
-    slug: "komodo-island",
-    description: "Melihat naga purba di habitat aslinya.",
-  },
-  {
-    id: 6,
-    name: "Raja Ampat",
-    slug: "raja-ampat",
-    description: "Surga terakhir di bumi, Papua Barat.",
-  },
-  {
-    id: 7,
-    name: "Europe Adventure",
-    slug: "europe-adventure",
-    description: "Menjelajahi landmark ikonik di benua biru.",
-  },
-  {
-    id: 8,
-    name: "Japan Discovery",
-    slug: "japan-discovery",
-    description: "Perpaduan teknologi modern dan tradisi kuno.",
-  },
-  {
-    id: 9,
-    name: "Holy Land Tour",
-    slug: "holy-land-tour",
-    description: "Perjalanan spiritual yang mendalam dan bermakna.",
-  },
 ];
 
-export const dummyTours = [
-  // LOCAL TOURS (category_id 1, 2, 3)
+export const dummyLocalTours = [
   {
     id: 1,
     category_id: 1,
@@ -76,6 +39,11 @@ export const dummyTours = [
       slug: "manado-minahasa-likupang",
       name: "Manado - Minahasa - Likupang",
     },
+    price_details: [
+      { pax_range: "2-3 Pax", price_per_pax: 950000 },
+      { pax_range: "4-6 Pax", price_per_pax: 750000 },
+      { pax_range: "7-10 Pax", price_per_pax: 650000 },
+    ],
     galleries: [
       {
         image_path:
@@ -411,8 +379,6 @@ export const dummyTours = [
       },
     ],
   },
-
-  // Tangkoko Adventure Tour (category_id 2)
   {
     id: 12,
     category_id: 2,
@@ -420,16 +386,20 @@ export const dummyTours = [
     slug: "tangkoko-nature-reserve",
     summary: "Bertemu Tarsius and Monyet Hitam di habitat aslinya.",
     description:
-      "Petualangan menembus hutan Tangkoko untuk melihat primata terkecil di dunia.",
+      "Petualangan menembus hutan Tangkoko untuk melihat primata terkecil di dunia. Tangkoko adalah rumah bagi Tarsius Spectrum, monyet terkecil di dunia yang aktif di malam hari, serta Monyet Hitam Sulawesi (Macaca Nigra). Tour ini dimulai pada sore hari untuk memaksimalkan peluang melihat satwa-satwa endemik ini saat mereka mulai beraktivitas.",
     base_price: 850000,
     duration_days: 1,
     duration_nights: 0,
-    location: "Bitung",
+    location: "Bitung, North Sulawesi",
     category: { slug: "tangkoko-adventure", name: "Tangkoko Adventure Tour" },
     galleries: [
       {
         image_path:
           "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        image_path:
+          "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=800&q=80",
       },
     ],
     itineraries: [
@@ -437,14 +407,126 @@ export const dummyTours = [
         id: 12,
         day_number: 1,
         title: "Evening Trek",
-        description: "Trekking sore hari mencari Tarsius.",
+        description: "Trekking sore hari mencari Tarsius and Macaca Nigra.",
         hotel_info: "-",
         meals_info: "Dinner",
       },
     ],
   },
-
-  // Makassar - Toraja (category_id 3)
+  {
+    id: 13,
+    category_id: 2,
+    title: "Tangkoko Bird Watching Tour",
+    slug: "tangkoko-bird-watching",
+    summary: "Surga bagi pengamat burung dengan puluhan spesies endemik.",
+    description:
+      "Jelajahi keanekaragaman avifauna di Tangkoko. Temukan Burung Rangkong (Knobbed Hornbill), Raja Udang (Kingfisher), dan spesies endemik lainnya dalam perjalanan satu hari yang mendalam.",
+    base_price: 950000,
+    duration_days: 1,
+    duration_nights: 0,
+    location: "Tangkoko Nature Reserve",
+    category: { slug: "tangkoko-adventure", name: "Tangkoko Adventure Tour" },
+    galleries: [
+      {
+        image_path:
+          "https://images.unsplash.com/photo-1444464666168-49d633b867ad?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    itineraries: [
+      {
+        id: 13,
+        day_number: 1,
+        title: "Morning Birding",
+        description: "Pengamatan burung di pagi hari saat aktivitas puncak.",
+        hotel_info: "-",
+        meals_info: "Lunch",
+      },
+    ],
+  },
+  {
+    id: 14,
+    category_id: 2,
+    title: "2D1N Tangkoko Overnight Expedition",
+    slug: "tangkoko-overnight",
+    summary: "Pengalaman mendalam menginap di sekitar kawasan hutan.",
+    description:
+      "Nikmati petualangan dua hari di Tangkoko. Termasuk trekking malam untuk melihat Tarsius dan trekking pagi untuk melihat Macaca Nigra serta burung-burung eksotis. Menginap di homestay lokal yang nyaman untuk merasakan suasana hutan yang tenang.",
+    base_price: 1850000,
+    duration_days: 2,
+    duration_nights: 1,
+    location: "Batuputih, Bitung",
+    category: { slug: "tangkoko-adventure", name: "Tangkoko Adventure Tour" },
+    galleries: [
+      {
+        image_path:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    itineraries: [
+      {
+        id: 15,
+        day_number: 1,
+        title: "Arrival & Night Trek",
+        description: "Tiba di Batuputih dan persiapan trekking malam.",
+        hotel_info: "Local Homestay",
+        meals_info: "Dinner",
+      },
+      {
+        id: 16,
+        day_number: 2,
+        title: "Morning Trek & Departure",
+        description: "Mencari Macaca Nigra dan Hornbill sebelum kembali.",
+        hotel_info: "-",
+        meals_info: "Breakfast, Lunch",
+      },
+    ],
+  },
+  {
+    id: 15,
+    category_id: 2,
+    title: "3D2N Wildlife Photography Masterclass",
+    slug: "tangkoko-photography-package",
+    summary: "Paket khusus bagi fotografer alam liar profesional.",
+    description:
+      "Paket intensif 3 hari yang dirancang khusus untuk fotografer. Dipandu oleh ranger berpengalaman yang memahami perilaku satwa, memberikan Anda kesempatan terbaik untuk menangkap momen langka Tarsius, Macaca, dan Burung Rangkong.",
+    base_price: 3200000,
+    duration_days: 3,
+    duration_nights: 2,
+    location: "Tangkoko Nature Reserve",
+    category: { slug: "tangkoko-adventure", name: "Tangkoko Adventure Tour" },
+    galleries: [
+      {
+        image_path:
+          "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    itineraries: [
+      {
+        id: 17,
+        day_number: 1,
+        title: "Initial Scouting",
+        description: "Mencari lokasi sarang Tarsius dan Macaca.",
+        hotel_info: "Eco Lodge",
+        meals_info: "Dinner",
+      },
+      {
+        id: 18,
+        day_number: 2,
+        title: "Full Day Shooting",
+        description: "Sesi foto pagi dan sore di berbagai titik strategis.",
+        hotel_info: "Eco Lodge",
+        meals_info: "B, L, D",
+      },
+      {
+        id: 19,
+        day_number: 3,
+        title: "Birding Session & Wrap-up",
+        description: "Fokus pada avifauna sebelum sesi berakhir.",
+        hotel_info: "-",
+        meals_info: "Breakfast",
+      },
+    ],
+  },
   {
     id: 28,
     category_id: 3,
@@ -472,270 +554,6 @@ export const dummyTours = [
         description: "Melihat patung Tau-Tau di tebing batu Lemo.",
         hotel_info: "Heritage Hotel",
         meals_info: "B, L, D",
-      },
-    ],
-  },
-
-  // NATIONAL TOURS (category_id 4, 5, 6)
-  {
-    id: 41,
-    category_id: 4,
-    title: "Best of Bali: Ubud & Tanah Lot",
-    slug: "best-of-bali",
-    summary: "Jelajahi pusat budaya Ubud dan matahari terbenam di Tanah Lot.",
-    description:
-      "Perjalanan melalui jantung budaya Bali. Kunjungi Teras Sawah Tegalalang di Ubud, Hutan Monyet, dan nikmati pemandangan ikonik Pura Tanah Lot di atas tebing.",
-    base_price: 2850000,
-    duration_days: 3,
-    duration_nights: 2,
-    location: "Bali, Indonesia",
-    category: { slug: "bali-gateway", name: "Bali Gateway" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 20,
-        day_number: 1,
-        title: "Ubud Discovery",
-        description: "Tegalalang Rice Terrace and Ubud Monkey Forest.",
-        hotel_info: "Ubud Resort",
-        meals_info: "Lunch",
-      },
-      {
-        id: 21,
-        day_number: 2,
-        title: "Temple & Sunset",
-        description: "Ulun Danu Beratan and Tanah Lot Sunset.",
-        hotel_info: "Seminyak Hotel",
-        meals_info: "Breakfast, Dinner",
-      },
-      {
-        id: 22,
-        day_number: 3,
-        title: "Beach Day & Farewell",
-        description: "Melasti Beach and transfer to airport.",
-        hotel_info: "-",
-        meals_info: "Breakfast",
-      },
-    ],
-  },
-  {
-    id: 51,
-    category_id: 5,
-    title: "Komodo Liveaboard Adventure",
-    slug: "komodo-liveaboard",
-    summary: "Berlayar di Taman Nasional Komodo dan bertemu Naga Purba.",
-    description:
-      "Pengalaman menginap di kapal pinisi sambil menjelajahi Pulau Padar, Pantai Merah (Pink Beach), dan Pulau Komodo untuk melihat habitat asli Naga Komodo.",
-    base_price: 5500000,
-    duration_days: 3,
-    duration_nights: 2,
-    location: "Labuan Bajo, Flores",
-    category: { slug: "komodo-island", name: "Komodo Island" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 30,
-        day_number: 1,
-        title: "Island Hopping",
-        description: "Kelor Island snorkeling and Padar Island trekking.",
-        hotel_info: "Luxury Cabin Boat",
-        meals_info: "Lunch, Dinner",
-      },
-      {
-        id: 31,
-        day_number: 2,
-        title: "The Dragon Encounter",
-        description: "Komodo Island trek and Pink Beach relaxation.",
-        hotel_info: "Luxury Cabin Boat",
-        meals_info: "B, L, D",
-      },
-      {
-        id: 32,
-        day_number: 3,
-        title: "Manta Point",
-        description: "Swimming with Manta Rays and return to Labuan Bajo.",
-        hotel_info: "-",
-        meals_info: "B, L",
-      },
-    ],
-  },
-  {
-    id: 61,
-    category_id: 6,
-    title: "Raja Ampat: The Last Paradise",
-    slug: "raja-ampat-paradise",
-    summary: "Keanekaragaman hayati laut terkaya di dunia.",
-    description:
-      "Jelajahi kepulauan karst Wayag atau Piaynemo yang menakjubkan. Raja Ampat menawarkan pengalaman snorkeling dan diving yang tak tertandingi.",
-    base_price: 12500000,
-    duration_days: 4,
-    duration_nights: 3,
-    location: "Raja Ampat, Papua Barat",
-    category: { slug: "raja-ampat", name: "Raja Ampat" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1534433852028-323280036128?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 40,
-        day_number: 1,
-        title: "Waisai Arrival",
-        description: "Ferry from Sorong and check-in at homestay/resort.",
-        hotel_info: "Eco Resort",
-        meals_info: "Dinner",
-      },
-      {
-        id: 41,
-        day_number: 2,
-        title: "Piaynemo Viewpoint",
-        description: "Climbing to the top for the iconic karst view.",
-        hotel_info: "Eco Resort",
-        meals_info: "B, L, D",
-      },
-      {
-        id: 42,
-        day_number: 3,
-        title: "Friwen Wall Snorkeling",
-        description: "Discovering underwater beauty and bird watching.",
-        hotel_info: "Eco Resort",
-        meals_info: "B, L, D",
-      },
-      {
-        id: 43,
-        day_number: 4,
-        title: "Back to Sorong",
-        description: "Transfer back to airport.",
-        hotel_info: "-",
-        meals_info: "B, L",
-      },
-    ],
-  },
-
-  // INTERNATIONAL TOURS (category_id 7, 8, 9)
-  {
-    id: 71,
-    category_id: 7,
-    title: "European Dream: 5 Countries",
-    slug: "europe-dream",
-    summary: "Paris, Swiss, Italia, Jerman, dan Belanda.",
-    description:
-      "Perjalanan komprehensif melintasi Eropa. Dari Menara Eiffel hingga kanal-kanal Amsterdam dan pegunungan Alpen di Swiss.",
-    base_price: 45000000,
-    duration_days: 12,
-    duration_nights: 11,
-    location: "Western Europe",
-    category: { slug: "europe-adventure", name: "Europe Adventure" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1431274172761-fca41d930114?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 50,
-        day_number: 1,
-        title: "Bonjour Paris",
-        description: "Arrival and Seine River Cruise.",
-        hotel_info: "Novotel Paris",
-        meals_info: "Dinner",
-      },
-      {
-        id: 51,
-        day_number: 2,
-        title: "Louvre & Eiffel",
-        description: "Exploring the world's largest museum.",
-        hotel_info: "Novotel Paris",
-        meals_info: "B, L",
-      },
-    ],
-  },
-  {
-    id: 81,
-    category_id: 8,
-    title: "Japan Golden Route",
-    slug: "japan-golden-route",
-    summary: "Tokyo, Mt Fuji, Kyoto, dan Osaka.",
-    description:
-      "Nikmati perpaduan sempurna antara modernitas Tokyo dan tradisi Kyoto. Kunjungi Gunung Fuji dan nikmati pengalaman naik Shinkansen.",
-    base_price: 28000000,
-    duration_days: 7,
-    duration_nights: 6,
-    location: "Japan",
-    category: { slug: "japan-discovery", name: "Japan Discovery" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 60,
-        day_number: 1,
-        title: "Tokyo Arrival",
-        description: "Exploring Shinjuku and Shibuya.",
-        hotel_info: "Shinjuku Washington",
-        meals_info: "Dinner",
-      },
-      {
-        id: 61,
-        day_number: 2,
-        title: "Mt Fuji & Hakone",
-        description: "Cruising Lake Ashi with Mt Fuji view.",
-        hotel_info: "Shinjuku Washington",
-        meals_info: "B, L",
-      },
-    ],
-  },
-  {
-    id: 91,
-    category_id: 9,
-    title: "Holy Land Spiritual Journey",
-    slug: "holy-land-spiritual",
-    summary: "Ziarah ke Mesir, Israel, dan Yordania.",
-    description:
-      "Perjalanan spiritual mendalam mengunjungi Piramida Giza, Gunung Sinai, Yerusalem, Bethlehem, dan Laut Mati.",
-    base_price: 38000000,
-    duration_days: 12,
-    duration_nights: 11,
-    location: "Middle East",
-    category: { slug: "holy-land-tour", name: "Holy Land Tour" },
-    galleries: [
-      {
-        image_path:
-          "https://images.unsplash.com/photo-1548135039-35d13ef30b24?auto=format&fit=crop&w=800&q=80",
-      },
-    ],
-    itineraries: [
-      {
-        id: 70,
-        day_number: 1,
-        title: "Cairo Arrival",
-        description: "Nile River Cruise and dinner.",
-        hotel_info: "Cairo Marriott",
-        meals_info: "Dinner",
-      },
-      {
-        id: 71,
-        day_number: 2,
-        title: "Giza Pyramids",
-        description: "Visiting the Great Sphinx and Pyramids.",
-        hotel_info: "Cairo Marriott",
-        meals_info: "B, L",
       },
     ],
   },

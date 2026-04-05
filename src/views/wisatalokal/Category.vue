@@ -46,12 +46,31 @@
       </div>
 
       <div v-else-if="category">
+        <!-- Filter Tabs -->
+        <div v-if="hasMultipleTypes" class="flex justify-center mb-16">
+          <div class="inline-flex p-1.5 bg-slate-100 rounded-2xl">
+            <button
+              v-for="tab in filterTabs"
+              :key="tab.id"
+              @click="activeTab = tab.id"
+              class="px-8 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300"
+              :class="
+                activeTab === tab.id
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                  : 'text-slate-500 hover:text-slate-900'
+              "
+            >
+              {{ tab.name }}
+            </button>
+          </div>
+        </div>
+
         <!-- List of Tours -->
         <div
-          v-if="tours.length > 0"
+          v-if="filteredTours.length > 0"
           class="grid grid-cols-1 md:grid-cols-3 gap-10"
         >
-          <TourCard v-for="tour in tours" :key="tour.id" :tour="tour" />
+          <TourCard v-for="tour in filteredTours" :key="tour.id" :tour="tour" />
         </div>
         <div
           v-else
@@ -70,36 +89,60 @@
 import { ref, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import TourCard from "../components/TourCard.vue";
-import { getTours, getCategories } from "../services/api";
-import { autoTranslate } from "../services/translate";
+import TourCard from "@/components/TourCard.vue";
+import { getLocalCategories, getLocalTours } from "@/services/api";
+import { autoTranslate } from "@/services/translate";
+import { dummyLocalCategories, dummyLocalTours } from "./dummyLocalTours";
 
 const route = useRoute();
 const { locale } = useI18n();
 const category = ref(null);
 const tours = ref([]);
 const loading = ref(true);
+const activeTab = ref("daily");
+
+const isMultiDay = (tour) => {
+  return tour.duration_days > 1 || tour.duration_nights > 0;
+};
+
+const hasDaily = computed(() => tours.value.some((t) => !isMultiDay(t)));
+const hasPackages = computed(() => tours.value.some((t) => isMultiDay(t)));
+const hasMultipleTypes = computed(() => hasDaily.value && hasPackages.value);
+
+const filterTabs = computed(() => {
+  const tabs = [];
+  if (hasDaily.value) {
+    tabs.push({
+      id: "daily",
+      name: locale.value === "id" ? "Wisata Harian" : "Daily Tours",
+    });
+  }
+  if (hasPackages.value) {
+    tabs.push({
+      id: "packages",
+      name: locale.value === "id" ? "Paket Tour" : "Tour Packages",
+    });
+  }
+  return tabs;
+});
+
+const filteredTours = computed(() => {
+  if (!hasMultipleTypes.value) return tours.value;
+  return tours.value.filter((t) => {
+    if (activeTab.value === "daily") return !isMultiDay(t);
+    if (activeTab.value === "packages") return isMultiDay(t);
+    return true;
+  });
+});
 
 const heroImage = computed(() => {
   const images = {
     "manado-city-tour":
       "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=2400&q=80",
-    "bunaken-marine-park":
+    "marine-bunaken":
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2400&q=80",
-    "minahasa-highland":
+    "highland-tomohon":
       "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=2400&q=80",
-    "bali-gateway":
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=2400&q=80",
-    "komodo-island":
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=2400&q=80",
-    "raja-ampat":
-      "https://images.unsplash.com/photo-1534433852028-323280036128?auto=format&fit=crop&w=2400&q=80",
-    "europe-adventure":
-      "https://images.unsplash.com/photo-1431274172761-fca41d930114?auto=format&fit=crop&w=2400&q=80",
-    "japan-discovery":
-      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80",
-    "holy-land-tour":
-      "https://images.unsplash.com/photo-1548135039-35d13ef30b24?auto=format&fit=crop&w=2400&q=80",
   };
   return (
     images[route.params.slug] ||
@@ -111,14 +154,27 @@ const fetchData = async () => {
   loading.value = true;
   try {
     const [catRes, tourRes] = await Promise.all([
-      getCategories(),
-      getTours({ category: route.params.slug }),
+      getLocalCategories(),
+      getLocalTours({ category: route.params.slug }),
     ]);
 
-    const rawCategory = catRes.data.data.find(
+    const rawCategory = (catRes.data.data || []).find(
       (c) => c.slug === route.params.slug,
     );
-    const rawTours = tourRes.data.data;
+    const rawTours = tourRes.data.data || [];
+
+    if (!rawCategory) {
+      const localCat = dummyLocalCategories.find(
+        (c) => c.slug === route.params.slug,
+      );
+      if (localCat) {
+        category.value = localCat;
+        tours.value = dummyLocalTours.filter(
+          (t) => t.category_id === localCat.id,
+        );
+        return;
+      }
+    }
 
     // Auto translate category info if not in Indonesian
     if (locale.value !== "id" && rawCategory) {
@@ -153,8 +209,22 @@ const fetchData = async () => {
     } else {
       tours.value = rawTours;
     }
+
+    // Reset active tab based on available types
+    if (hasPackages.value && !hasDaily.value) {
+      activeTab.value = "packages";
+    } else {
+      activeTab.value = "daily";
+    }
   } catch (error) {
     console.error("Error fetching category data:", error);
+    const localCat = dummyLocalCategories.find(
+      (c) => c.slug === route.params.slug,
+    );
+    category.value = localCat || null;
+    tours.value = localCat
+      ? dummyLocalTours.filter((t) => t.category_id === localCat.id)
+      : [];
   } finally {
     loading.value = false;
   }
