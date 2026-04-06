@@ -13,16 +13,40 @@
         <div class="flex-shrink-0 flex items-center lg:mr-8">
           <router-link to="/" class="group flex items-center space-x-3">
             <div
-              class="w-11 h-11 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/20 group-hover:rotate-[15deg] transition-all duration-500 ease-spring"
+              class="w-11 h-11 rounded-2xl overflow-hidden shadow-xl group-hover:rotate-[15deg] transition-all duration-500 ease-spring ring-1"
+              :class="[
+                isScrolled
+                  ? 'bg-gradient-to-br from-slate-900 to-slate-700 ring-slate-200/60 shadow-slate-900/10'
+                  : 'bg-white/10 backdrop-blur-md ring-white/20 shadow-red-900/20',
+              ]"
             >
-              <Palmtree class="w-6 h-6 text-white" />
+              <svg
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-full h-full"
+                aria-label="WelcomeManado"
+                role="img"
+              >
+                <path
+                  d="M12 18 L26 82 L42 46 L56 82 L70 18 L57 18 L50 55 L42 18 L34 55 L27 18 Z"
+                  fill="#DC2626"
+                  stroke="rgba(255,255,255,0.9)"
+                  stroke-width="2.5"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M32 86 L32 44 L44 44 L50 58 L56 44 L68 44 L68 86 L56 86 L56 62 L50 72 L44 62 L44 86 Z"
+                  fill="#F8FAFC"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
             <div class="flex flex-col">
               <span
                 class="text-2xl font-black tracking-tighter leading-none transition-colors"
                 :class="isScrolled ? 'text-slate-900' : 'text-white'"
               >
-                Welcome<span class="text-blue-600">Manado</span>
+                Welcome<span class="text-red-600">Manado</span>
               </span>
               <span
                 class="text-[9px] font-black uppercase tracking-[0.4em] mt-1.5 opacity-60 transition-colors"
@@ -42,7 +66,7 @@
             class="px-4 py-2 text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
-                ? 'text-slate-600 hover:text-blue-600'
+                ? 'text-slate-600 hover:text-red-600'
                 : 'text-white/90 hover:text-white hover:bg-white/10'
             "
             >{{ $t("nav.home") }}</router-link
@@ -55,7 +79,7 @@
             class="relative group whitespace-nowrap"
           >
             <button
-              class="px-4 py-2 flex items-center text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-blue-600"
+              class="px-4 py-2 flex items-center text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
               :class="
                 isScrolled
                   ? 'text-slate-600'
@@ -86,14 +110,14 @@
                     >
                       <router-link
                         :to="'/category/' + cat.slug"
-                        class="flex items-center justify-between px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all group/item"
+                        class="flex items-center justify-between px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-red-50/50 hover:text-red-600 rounded-2xl transition-all group/item"
                       >
                         <div class="flex items-center">
                           <div
                             class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center mr-4 group-hover/item:bg-white group-hover/item:shadow-sm transition-all shrink-0"
                           >
                             <MapPin
-                              class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"
+                              class="w-4 h-4 text-slate-400 group-hover/item:text-red-600"
                             />
                           </div>
                           {{ cat.name }}
@@ -110,7 +134,7 @@
                         class="absolute left-full top-0 pl-4 opacity-0 invisible group-hover/cat:opacity-100 group-hover/cat:visible transition-all duration-300 transform translate-x-4 group-hover/cat:translate-x-0 pointer-events-none group-hover/cat:pointer-events-auto"
                       >
                         <div
-                          class="w-72 bg-white rounded-[2.5rem] shadow-2xl border border-slate-50 p-4 shadow-blue-900/10"
+                          class="w-72 bg-white rounded-[2.5rem] shadow-2xl border border-slate-50 p-4 shadow-red-900/10"
                         >
                           <div
                             class="px-4 py-2 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-50 mb-3"
@@ -124,7 +148,7 @@
                               v-for="tour in getToursByCategory(cat.id)"
                               :key="tour.id"
                               :to="getTourLink(tour)"
-                              class="block px-4 py-3 text-[12.5px] font-bold text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-xl transition-all"
+                              class="block px-4 py-3 text-[12.5px] font-bold text-slate-500 hover:text-red-600 hover:bg-red-50/50 rounded-xl transition-all"
                             >
                               {{ tour.title }}
                             </router-link>
@@ -141,13 +165,13 @@
                     v-for="cat in menu.categories"
                     :key="cat.id"
                     :to="getCategoryLink(menu.key, cat.slug)"
-                    class="flex items-center px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all group/item"
+                    class="flex items-center px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-red-50/50 hover:text-red-600 rounded-2xl transition-all group/item"
                   >
                     <div
                       class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center mr-4 group-hover/item:bg-white group-hover/item:shadow-sm transition-all shrink-0"
                     >
                       <MapPin
-                        class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"
+                        class="w-4 h-4 text-slate-400 group-hover/item:text-red-600"
                       />
                     </div>
                     {{ cat.name }}
@@ -163,7 +187,7 @@
             class="px-4 py-2 text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
-                ? 'text-slate-600 hover:text-blue-600'
+                ? 'text-slate-600 hover:text-red-600'
                 : 'text-white/90 hover:text-white hover:bg-white/10'
             "
             >{{ $t("nav.hotels") }}</router-link
@@ -172,7 +196,7 @@
           <!-- Travel Info -->
           <div class="relative group whitespace-nowrap">
             <button
-              class="px-4 py-2 flex items-center text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-blue-600"
+              class="px-4 py-2 flex items-center text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
               :class="
                 isScrolled
                   ? 'text-slate-600'
@@ -195,13 +219,13 @@
                   v-for="(item, index) in travelInfoMenu"
                   :key="index"
                   :to="item.path"
-                  class="flex items-center px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all group/item"
+                  class="flex items-center px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-red-50/50 hover:text-red-600 rounded-2xl transition-all group/item"
                 >
                   <div
                     class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center mr-4 group-hover/item:bg-white group-hover/item:shadow-sm transition-all shrink-0"
                   >
                     <Compass
-                      class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"
+                      class="w-4 h-4 text-slate-400 group-hover/item:text-red-600"
                     />
                   </div>
                   {{ $t("nav." + item.key) }}
@@ -215,7 +239,7 @@
             class="px-4 py-2 text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
-                ? 'text-slate-600 hover:text-blue-600'
+                ? 'text-slate-600 hover:text-red-600'
                 : 'text-white/90 hover:text-white hover:bg-white/10'
             "
             >{{ $t("nav.about") }}</router-link
@@ -252,7 +276,7 @@
                   class="flex items-center justify-between px-5 py-3.5 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all"
                   :class="
                     locale === lang.code
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                      ? 'bg-red-600 text-white shadow-lg shadow-red-600/20'
                       : 'text-slate-600 hover:bg-slate-50'
                   "
                 >
@@ -272,7 +296,7 @@
           <!-- Contact Button -->
           <router-link
             to="/contact"
-            class="px-8 py-3.5 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 hover:shadow-blue-600/30 hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
+            class="px-8 py-3.5 bg-red-600 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 hover:shadow-red-600/30 hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
           >
             {{ $t("nav.contact") }}
           </router-link>
@@ -285,7 +309,7 @@
             class="w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 active:scale-90"
             :class="
               isScrolled
-                ? 'bg-blue-50 text-blue-600'
+                ? 'bg-red-50 text-red-600'
                 : 'bg-white/10 text-white backdrop-blur-md border border-white/20'
             "
           >
@@ -333,7 +357,7 @@
             >
               <div class="flex items-center space-x-3">
                 <div
-                  class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200"
+                  class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-200"
                 >
                   <Palmtree class="w-5 h-5 text-white" />
                 </div>
@@ -363,7 +387,7 @@
                     :key="link.to"
                     :to="link.to"
                     @click="isMobileMenuOpen = false"
-                    class="text-2xl font-black text-slate-900 hover:text-blue-600 transition-colors tracking-tight"
+                    class="text-2xl font-black text-slate-900 hover:text-red-600 transition-colors tracking-tight"
                   >
                     {{ link.label }}
                   </router-link>
@@ -390,16 +414,16 @@
                           expandedMobileCategory =
                             expandedMobileCategory === cat.id ? null : cat.id
                         "
-                        class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl hover:bg-blue-50 transition-all group"
+                        class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl hover:bg-red-50 transition-all group"
                       >
                         <div class="flex items-center">
                           <div
                             class="w-9 h-9 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
                           >
-                            <MapPin class="w-4 h-4 text-blue-600" />
+                            <MapPin class="w-4 h-4 text-red-600" />
                           </div>
                           <span
-                            class="font-bold text-slate-700 group-hover:text-blue-600 transition-colors"
+                            class="font-bold text-slate-700 group-hover:text-red-600 transition-colors"
                             >{{ cat.name }}</span
                           >
                         </div>
@@ -422,7 +446,7 @@
                           :key="tour.id"
                           :to="getTourLink(tour)"
                           @click="isMobileMenuOpen = false"
-                          class="block py-2.5 text-[13px] font-bold text-slate-500 hover:text-blue-600 transition-colors"
+                          class="block py-2.5 text-[13px] font-bold text-slate-500 hover:text-red-600 transition-colors"
                         >
                           {{ tour.title }}
                         </router-link>
@@ -443,15 +467,15 @@
                       :key="index"
                       :to="item.path"
                       @click="isMobileMenuOpen = false"
-                      class="flex items-center p-4 bg-slate-50 rounded-2xl hover:bg-blue-50 transition-all group"
+                      class="flex items-center p-4 bg-slate-50 rounded-2xl hover:bg-red-50 transition-all group"
                     >
                       <div
                         class="w-9 h-9 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
                       >
-                        <Compass class="w-4 h-4 text-blue-600" />
+                        <Compass class="w-4 h-4 text-red-600" />
                       </div>
                       <span
-                        class="font-bold text-slate-700 group-hover:text-blue-600 transition-colors"
+                        class="font-bold text-slate-700 group-hover:text-red-600 transition-colors"
                         >{{ $t("nav." + item.key) }}</span
                       >
                     </router-link>
@@ -472,7 +496,7 @@
                       class="flex items-center p-4 rounded-2xl border transition-all"
                       :class="
                         locale === lang.code
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-200'
+                          ? 'bg-red-600 text-white border-red-600 shadow-lg shadow-red-200'
                           : 'bg-slate-50 text-slate-600 border-slate-100'
                       "
                     >
@@ -489,7 +513,7 @@
               <router-link
                 to="/contact"
                 @click="isMobileMenuOpen = false"
-                class="w-full flex items-center justify-center py-5 bg-blue-600 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 uppercase tracking-widest text-xs active:scale-95 transition-all"
+                class="w-full flex items-center justify-center py-5 bg-red-600 text-white font-black rounded-2xl shadow-xl shadow-red-600/20 uppercase tracking-widest text-xs active:scale-95 transition-all"
               >
                 Book Your Adventure
               </router-link>
@@ -507,8 +531,8 @@ import {
   ChevronDown,
   ChevronRight,
   Menu,
-  X,
   Palmtree,
+  X,
   MapPin,
   Building,
   Compass,

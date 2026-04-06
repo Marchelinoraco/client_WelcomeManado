@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white font-sans">
     <div v-if="loading" class="flex items-center justify-center min-h-[60vh]">
       <div
-        class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
+        class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"
       ></div>
     </div>
 
@@ -38,22 +38,22 @@
               <h2 class="text-3xl font-bold text-slate-800 leading-tight">
                 {{ tour.title }}
                 <span v-if="!tour.title.toLowerCase().includes('lunch')"
-                  >& Lunch Makanan Khas Manado</span
+                  >& {{ $t("localTourDetail.lunch") }}</span
                 >
               </h2>
               <div class="text-slate-600 font-medium">
-                Durasi
+                {{ $t("tour.duration") }}
                 <template
                   v-if="tour.duration_hours_min && tour.duration_hours_max"
-                  >{{ tour.duration_hours_min }}-{{
-                    tour.duration_hours_max
-                  }}
-                  jam</template
+                  >{{ tour.duration_hours_min }}-{{ tour.duration_hours_max }}
+                  {{ $t("tour.hours") }}</template
                 >
                 <template v-else-if="tour.duration_hours"
-                  >{{ tour.duration_hours }} jam</template
+                  >{{ tour.duration_hours }} {{ $t("tour.hours") }}</template
                 >
-                <template v-else>{{ tour.duration_days }} hari</template>
+                <template v-else
+                  >{{ tour.duration_days }} {{ $t("tour.days") }}</template
+                >
               </div>
 
               <div
@@ -70,17 +70,17 @@
 
               <div class="pt-8 border-t border-slate-100">
                 <p class="text-xl font-bold text-slate-800 mb-6">
-                  Hubungi kami untuk keterangan lebih lanjut
+                  {{ $t("tour.contactMore") }}
                 </p>
 
                 <!-- Simple CTA Button -->
                 <a
                   :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
                   target="_blank"
-                  class="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+                  class="inline-flex items-center px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-200"
                 >
                   <MessageCircle class="mr-3 w-5 h-5" />
-                  Chat on WhatsApp
+                  {{ $t("tour.chatWA") }}
                 </a>
               </div>
             </div>
@@ -98,10 +98,11 @@
                 <MapPinIcon class="w-6 h-6 text-slate-400" />
               </div>
               <div>
-                <h3 class="text-xl font-bold text-slate-800 mb-4">Alamat</h3>
+                <h3 class="text-xl font-bold text-slate-800 mb-4">
+                  {{ $t("common.address") }}
+                </h3>
                 <p class="text-slate-500 text-sm leading-relaxed">
-                  Jl. A. A. Maramis No. 171, Manado,<br />
-                  Sulawesi Utara
+                  {{ $t("common.officeAddress") }}
                 </p>
               </div>
             </div>
@@ -115,7 +116,7 @@
               </div>
               <div>
                 <h3 class="text-xl font-bold text-slate-800 mb-4">
-                  No Telepon
+                  {{ $t("common.phone") }}
                 </h3>
                 <p class="text-slate-500 text-sm font-bold">+6282293935566</p>
               </div>
@@ -130,12 +131,12 @@
               </div>
               <div>
                 <h3 class="text-xl font-bold text-slate-800 mb-4">
-                  Sosial Media
+                  {{ $t("common.socialMedia") }}
                 </h3>
                 <div class="flex items-center space-x-3">
                   <a
                     href="#"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"
+                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
                   >
                     <Facebook class="w-5 h-5" />
                   </a>
@@ -147,7 +148,7 @@
                   </a>
                   <a
                     href="#"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-emerald-500 hover:text-white transition-all"
+                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
                   >
                     <MessageCircle class="w-5 h-5" />
                   </a>
@@ -186,7 +187,7 @@
               class="flex flex-wrap items-center gap-4 mb-8 animate-fade-in-up"
             >
               <span
-                class="px-5 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-blue-600/20"
+                class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
                 >{{ tour.category?.name }}</span
               >
               <span
@@ -214,10 +215,10 @@
               <div
                 class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
               >
-                <MapPinIcon class="w-5 h-5 text-blue-400" />
+                <MapPinIcon class="w-5 h-5 text-red-400" />
               </div>
               <span class="uppercase tracking-widest text-xs">{{
-                tour.location || "Manado, North Sulawesi"
+                tour.location || $t("common.defaultLocation")
               }}</span>
             </div>
           </div>
@@ -240,7 +241,7 @@
                   class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group"
                 >
                   <div
-                    class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors"
+                    class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors"
                   >
                     <component :is="item.icon" class="w-6 h-6" />
                   </div>
@@ -258,7 +259,7 @@
               <!-- Overview -->
               <section class="animate-fade-in-up delay-400">
                 <div class="flex items-center space-x-4 mb-8">
-                  <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                   <h2
                     class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                   >
@@ -276,11 +277,11 @@
                 class="animate-fade-in-up delay-450"
               >
                 <div class="flex items-center space-x-4 mb-8">
-                  <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                   <h2
                     class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                   >
-                    Rincian Harga Paket
+                    {{ $t("tour.priceBreakdownTitle") }}
                   </h2>
                 </div>
 
@@ -293,12 +294,12 @@
                         <th
                           class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100"
                         >
-                          Jumlah Peserta (Pax)
+                          {{ $t("tour.priceBreakdown.paxHeader") }}
                         </th>
                         <th
                           class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 text-right"
                         >
-                          Harga per Orang (IDR)
+                          {{ $t("tour.priceBreakdown.priceHeader") }}
                         </th>
                       </tr>
                     </thead>
@@ -306,7 +307,7 @@
                       <tr
                         v-for="(price, idx) in tour.price_details"
                         :key="idx"
-                        class="hover:bg-blue-50/30 transition-colors group"
+                        class="hover:bg-red-50/30 transition-colors group"
                       >
                         <td
                           class="px-8 py-5 text-sm font-bold text-slate-600 border-b border-slate-50 group-last:border-0"
@@ -314,19 +315,16 @@
                           {{ price.pax_range }}
                         </td>
                         <td
-                          class="px-8 py-5 text-sm font-black text-blue-600 border-b border-slate-50 text-right group-last:border-0"
+                          class="px-8 py-5 text-sm font-black text-red-600 border-b border-slate-50 text-right group-last:border-0"
                         >
                           {{ formatPrice(price.price_per_pax) }}
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <div
-                    class="px-8 py-4 bg-blue-50/50 border-t border-slate-100"
-                  >
-                    <p class="text-[10px] font-bold text-blue-600/70 italic">
-                      * Harga dapat berubah sewaktu-waktu. Silakan hubungi kami
-                      untuk konfirmasi ketersediaan dan harga final.
+                  <div class="px-8 py-4 bg-red-50/50 border-t border-slate-100">
+                    <p class="text-[10px] font-bold text-red-600/70 italic">
+                      {{ $t("tour.priceBreakdown.disclaimer") }}
                     </p>
                   </div>
                 </div>
@@ -338,7 +336,7 @@
                 class="animate-fade-in-up delay-500"
               >
                 <div class="flex items-center space-x-4 mb-10">
-                  <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                   <h2
                     class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                   >
@@ -357,7 +355,7 @@
                       class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div
-                      class="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                      class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity"
                     ></div>
                   </div>
                 </div>
@@ -369,7 +367,7 @@
                 class="animate-fade-in-up delay-600"
               >
                 <div class="flex items-center space-x-4 mb-12">
-                  <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                   <h2
                     class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                   >
@@ -391,7 +389,7 @@
                     <!-- Day Badge -->
                     <div class="relative flex-shrink-0">
                       <div
-                        class="w-12 h-12 rounded-2xl bg-white border-2 border-blue-600 flex items-center justify-center text-blue-600 font-black text-sm shadow-xl shadow-blue-600/10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300"
+                        class="w-12 h-12 rounded-2xl bg-white border-2 border-red-600 flex items-center justify-center text-red-600 font-black text-sm shadow-xl shadow-red-600/10 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
                       >
                         {{ item.day_number }}
                       </div>
@@ -412,7 +410,7 @@
                         <div class="flex flex-wrap gap-3">
                           <span
                             v-if="item.meals_info"
-                            class="inline-flex items-center px-4 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-xl"
+                            class="inline-flex items-center px-4 py-1.5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-widest rounded-xl"
                           >
                             <UtensilsIcon class="w-3 h-3 mr-2" />
                             {{ item.meals_info }}
@@ -432,7 +430,7 @@
                         <div
                           class="w-10 h-10 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm"
                         >
-                          <HotelIcon class="w-5 h-5 text-blue-600" />
+                          <HotelIcon class="w-5 h-5 text-red-600" />
                         </div>
                         <div>
                           <p
@@ -456,68 +454,59 @@
               <div class="sticky top-32 space-y-8 animate-fade-in-up delay-700">
                 <!-- Modern Price Card -->
                 <div
-                  class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden group"
+                  class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-red-900/40 relative overflow-hidden group"
                 >
                   <!-- Background Decoration -->
                   <div
-                    class="absolute -top-20 -right-20 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px] group-hover:bg-blue-600/30 transition-colors"
+                    class="absolute -top-20 -right-20 w-64 h-64 bg-red-600/20 rounded-full blur-[80px] group-hover:bg-red-600/30 transition-colors"
                   ></div>
 
                   <div class="relative z-10">
                     <span
-                      class="px-4 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
-                      >Best Price Guarantee</span
+                      class="px-4 py-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
+                      >{{ $t("tour.bestPrice") }}</span
                     >
 
                     <div v-if="tour.base_price">
                       <p
                         class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
                       >
-                        Investment Starts From
+                        {{ $t("tour.investment") }}
                       </p>
                       <div class="flex items-baseline gap-2 mb-10">
-                        <span class="text-xs font-black text-blue-400"
-                          >IDR</span
-                        >
+                        <span class="text-xs font-black text-red-400">IDR</span>
                         <span class="text-5xl font-black tracking-tighter">{{
                           formatPrice(tour.base_price)
                         }}</span>
-                        <span class="text-white/40 text-sm font-bold"
-                          >/pax</span
-                        >
+                        <span class="text-white/40 text-sm font-bold">
+                          {{ $t("tour.perPax") }}
+                        </span>
                       </div>
                     </div>
                     <div v-else class="mb-10">
                       <p
                         class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
                       >
-                        Pricing Information
+                        {{ $t("tour.pricingInfo") }}
                       </p>
                       <h3
                         class="text-2xl font-black text-white uppercase tracking-tight"
                       >
-                        Contact us for price inquiry
+                        {{ $t("tour.contactInquiry") }}
                       </h3>
                     </div>
 
                     <!-- Features List -->
                     <div class="space-y-5 mb-12">
                       <div
-                        v-for="feat in [
-                          'Expert Local Guide',
-                          tour.base_price
-                            ? 'Premium Accommodation'
-                            : 'Safety Equipment Included',
-                          'Full Insurance Coverage',
-                          'Instant Booking',
-                        ]"
+                        v-for="feat in featureList"
                         :key="feat"
                         class="flex items-center text-sm font-bold text-white/70"
                       >
                         <div
                           class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center mr-4 flex-shrink-0"
                         >
-                          <CheckIcon class="w-3 h-3 text-blue-400" />
+                          <CheckIcon class="w-3 h-3 text-red-400" />
                         </div>
                         {{ feat }}
                       </div>
@@ -525,9 +514,9 @@
 
                     <button
                       v-if="tour.base_price"
-                      class="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-blue-600/40 active:scale-95 flex items-center justify-center group/btn mb-4"
+                      class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/40 active:scale-95 flex items-center justify-center group/btn mb-4"
                     >
-                      Reserve Your Spot
+                      {{ $t("tour.reserveSpot") }}
                       <ArrowRight
                         class="ml-3 w-5 h-5 group/btn:translate-x-1 transition-transform"
                       />
@@ -536,40 +525,40 @@
                     <a
                       :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
                       target="_blank"
-                      class="w-full py-6 bg-emerald-500 hover:bg-emerald-600 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-emerald-500/20 active:scale-95 flex items-center justify-center group/wa"
+                      class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/20 active:scale-95 flex items-center justify-center group/wa"
                     >
                       <MessageCircle class="mr-3 w-5 h-5" />
-                      Chat on WhatsApp
+                      {{ $t("tour.chatWA") }}
                     </a>
 
                     <p
                       class="text-center text-[10px] text-white/30 mt-6 font-bold uppercase tracking-widest"
                     >
-                      Secure Payment & Instant Confirmation
+                      {{ $t("tour.securePayment") }}
                     </p>
                   </div>
                 </div>
 
                 <!-- Help Card -->
                 <div
-                  class="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 group hover:bg-blue-100 transition-colors"
+                  class="bg-red-50 p-8 rounded-[2.5rem] border border-red-100 group hover:bg-red-100 transition-colors"
                 >
                   <div class="flex items-center space-x-4">
                     <div
-                      class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-blue-600 shadow-sm group-hover:scale-110 transition-transform"
+                      class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-red-600 shadow-sm group-hover:scale-110 transition-transform"
                     >
                       <StarIcon class="w-7 h-7" />
                     </div>
                     <div>
                       <h4
-                        class="text-sm font-black text-blue-900 uppercase tracking-widest mb-1"
+                        class="text-sm font-black text-red-900 uppercase tracking-widest mb-1"
                       >
-                        Tailored Journey?
+                        {{ $t("tour.tailoredJourney") }}
                       </h4>
                       <p
-                        class="text-xs font-bold text-blue-600/70 leading-relaxed"
+                        class="text-xs font-bold text-red-600/70 leading-relaxed"
                       >
-                        Let us customize this tour exactly to your preferences.
+                        {{ $t("tour.customizeTour") }}
                       </p>
                     </div>
                   </div>
@@ -584,16 +573,16 @@
       <a
         :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
         target="_blank"
-        class="fixed bottom-10 right-10 z-[99] w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/40 hover:bg-emerald-600 hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce-slow"
-        title="Chat on WhatsApp"
+        class="fixed bottom-10 right-10 z-[99] w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl shadow-red-600/40 hover:bg-red-700 hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce-slow"
+        :title="$t('tour.chatWA')"
       >
         <MessageCircle class="w-8 h-8" />
         <span class="absolute -top-2 -right-2 flex h-5 w-5">
           <span
-            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
           ></span>
           <span
-            class="relative inline-flex rounded-full h-5 w-5 bg-emerald-500 border-2 border-white"
+            class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"
           ></span>
         </span>
       </a>
@@ -629,7 +618,7 @@ import { autoTranslate } from "@/services/translate";
 import { dummyLocalTours } from "./dummyLocalTours";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const tour = ref(null);
 const loading = ref(true);
 const mainImage = ref("");
@@ -673,7 +662,7 @@ const fetchTour = async () => {
           autoTranslate(rawTour.title, locale.value),
           autoTranslate(rawTour.description, locale.value),
           autoTranslate(
-            rawTour.location || "Manado, North Sulawesi",
+            rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
           ),
         ]);
@@ -761,28 +750,53 @@ const galleryPreview = computed(() => {
 });
 
 const summaryItems = computed(() => {
-  let durationValue = `${tour.value?.duration_days}D / ${tour.value?.duration_nights}N`;
+  let durationValue = `${tour.value?.duration_days} ${t("tour.days")} / ${tour.value?.duration_nights} ${t("tour.nights")}`;
   if (tour.value?.duration_hours_min && tour.value?.duration_hours_max) {
-    durationValue = `${tour.value.duration_hours_min}-${tour.value.duration_hours_max} Hours`;
+    durationValue = `${tour.value.duration_hours_min}-${tour.value.duration_hours_max} ${t("tour.hours")}`;
   } else if (tour.value?.duration_hours) {
-    durationValue = `${tour.value.duration_hours} Hours`;
+    durationValue = `${tour.value.duration_hours} ${t("tour.hours")}`;
   }
 
   return [
     {
-      label: "Duration",
+      label: t("tour.duration"),
       value: durationValue,
       icon: ClockIcon,
     },
-    { label: "Group Size", value: "Min. 2 Pax", icon: Users },
-    { label: "Language", value: "ID / EN", icon: Compass },
-    { label: "Insurance", value: "Included", icon: ShieldCheck },
+    { label: t("tour.groupSize"), value: t("tour.pax"), icon: Users },
+    {
+      label: t("tour.language"),
+      value: t("tour.languageValue"),
+      icon: Compass,
+    },
+    {
+      label: t("tour.insurance"),
+      value: t("tour.included"),
+      icon: ShieldCheck,
+    },
   ];
 });
 
 const formatPrice = (price) => {
-  return new Intl.NumberFormat("id-ID").format(price);
+  const localeMap = {
+    id: "id-ID",
+    en: "en-US",
+    zh: "zh-CN",
+    ko: "ko-KR",
+  };
+  return new Intl.NumberFormat(localeMap[locale.value] || "en-US").format(
+    price,
+  );
 };
+
+const featureList = computed(() => {
+  return [
+    t("tour.expertGuide"),
+    tour.value?.base_price ? t("tour.premiumAcc") : t("tour.safetyEquip"),
+    t("tour.fullInsurance"),
+    t("tour.instantBooking"),
+  ];
+});
 </script>
 
 <style scoped>

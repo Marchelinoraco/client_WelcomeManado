@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 overflow-hidden flex flex-col h-full relative"
+    class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 overflow-hidden flex flex-col h-full relative"
   >
     <!-- Image Header -->
     <div class="relative h-72 overflow-hidden">
@@ -23,7 +23,7 @@
       <!-- Floating Badges -->
       <div class="absolute top-6 left-6 flex flex-col gap-2">
         <div
-          class="px-4 py-1.5 bg-blue-600 text-white text-[10px] font-black rounded-xl uppercase tracking-[0.15em] shadow-lg shadow-blue-600/20 backdrop-blur-md"
+          class="px-4 py-1.5 bg-red-600 text-white text-[10px] font-black rounded-xl uppercase tracking-[0.15em] shadow-lg shadow-red-600/20 backdrop-blur-md"
         >
           {{ tour.category?.name }}
         </div>
@@ -33,7 +33,7 @@
         <div
           class="flex items-center space-x-1 px-4 py-1.5 bg-white/90 backdrop-blur-md text-slate-900 text-[10px] font-black rounded-xl shadow-lg uppercase tracking-wider"
         >
-          <Clock class="w-3 h-3 text-blue-600" />
+          <Clock class="w-3 h-3 text-red-600" />
           <span>{{ durationLabel }}</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
       >
         <router-link
           :to="detailHref"
-          class="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 flex items-center group/btn"
+          class="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center group/btn"
         >
           View Details
           <ArrowRight
@@ -57,7 +57,7 @@
     <!-- Content Body -->
     <div class="p-8 flex-1 flex flex-col">
       <div class="flex items-center space-x-2 mb-3">
-        <div class="flex items-center text-blue-600/60">
+        <div class="flex items-center text-red-600/60">
           <MapPin class="w-3.5 h-3.5" />
         </div>
         <span
@@ -67,7 +67,7 @@
       </div>
 
       <h3
-        class="text-xl font-black text-slate-900 mb-3 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors"
+        class="text-xl font-black text-slate-900 mb-3 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors"
       >
         {{ tour.title }}
       </h3>
@@ -88,22 +88,22 @@
             >{{ tour.base_price ? "Starting From" : "Contact for Price" }}</span
           >
           <div v-if="tour.base_price" class="flex items-baseline space-x-1">
-            <span class="text-xs font-black text-blue-600">IDR</span>
+            <span class="text-xs font-black text-red-600">IDR</span>
             <span
-              class="text-2xl font-black text-slate-900 group-hover:text-blue-600 transition-colors"
+              class="text-2xl font-black text-slate-900 group-hover:text-red-600 transition-colors"
               >{{ formatPrice(tour.base_price) }}</span
             >
           </div>
           <div v-else class="flex items-baseline space-x-1">
             <span
-              class="text-sm font-black text-blue-600 uppercase tracking-widest"
+              class="text-sm font-black text-red-600 uppercase tracking-widest"
               >Inquiry Now</span
             >
           </div>
         </div>
 
         <div
-          class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300"
+          class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
         >
           <ArrowUpRight class="w-6 h-6" />
         </div>

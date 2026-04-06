@@ -42,7 +42,7 @@
           class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16"
         >
           <nav
-            class="flex mb-8 text-[10px] font-black uppercase tracking-[0.25em] text-blue-300"
+            class="flex mb-8 text-[10px] font-black uppercase tracking-[0.25em] text-red-300"
           >
             <router-link to="/" class="hover:text-white transition-colors"
               >Home</router-link
@@ -77,7 +77,8 @@
                 >
                 <select
                   v-model="selectedDestination"
-                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+                  @change="applyFilters"
+                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
                 >
                   <option
                     v-for="dest in destinationOptions"
@@ -96,7 +97,7 @@
                 >
                 <select
                   v-model="selectedInterest"
-                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
                 >
                   <option value="all">All Interest</option>
                   <option
@@ -118,14 +119,14 @@
                   v-model="searchQuery"
                   type="text"
                   placeholder="Search tour..."
-                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+                  class="w-full h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
                 />
               </div>
 
               <div class="md:col-span-1 md:pt-6">
                 <button
                   @click="applyFilters"
-                  class="w-full h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-black uppercase tracking-widest transition-colors"
+                  class="w-full h-12 rounded-2xl bg-red-600 hover:bg-red-700 text-white text-xs font-black uppercase tracking-widest transition-colors"
                 >
                   Search
                 </button>
@@ -139,7 +140,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div v-if="loading" class="text-center py-20">
         <div
-          class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"
+          class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-600 border-t-transparent"
         ></div>
       </div>
 
@@ -170,7 +171,7 @@
                   class="flex items-start gap-3 text-sm font-bold text-slate-700"
                 >
                   <span
-                    class="mt-1.5 w-2 h-2 rounded-full bg-blue-600 flex-shrink-0"
+                    class="mt-1.5 w-2 h-2 rounded-full bg-red-600 flex-shrink-0"
                   ></span>
                   <span>{{ item }}</span>
                 </li>
@@ -188,7 +189,7 @@
               class="px-8 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300"
               :class="
                 activeTab === tab.id
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                  ? 'bg-red-600 text-white shadow-lg shadow-red-200'
                   : 'text-slate-500 hover:text-slate-900'
               "
             >
@@ -334,9 +335,20 @@ const applyFilters = () => {
     selectedDestination.value &&
     selectedDestination.value !== route.params.slug
   ) {
+    selectedInterest.value = "all";
+    searchQuery.value = "";
     router.push(`/nasional/${selectedDestination.value}`);
   }
 };
+
+watch(
+  () => selectedDestination.value,
+  (next) => {
+    if (!next) return;
+    if (next === route.params.slug) return;
+    applyFilters();
+  },
+);
 
 const fetchData = async () => {
   loading.value = true;
@@ -433,6 +445,13 @@ const fetchData = async () => {
 };
 
 onMounted(fetchData);
-watch(() => route.params.slug, fetchData);
+watch(
+  () => route.params.slug,
+  () => {
+    selectedInterest.value = "all";
+    searchQuery.value = "";
+    fetchData();
+  },
+);
 watch(locale, fetchData); // Refetch and translate when language changes
 </script>

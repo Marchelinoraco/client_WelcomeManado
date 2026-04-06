@@ -1,6 +1,6 @@
 <template>
   <div
-    class="selection:bg-blue-100 selection:text-blue-700 font-sans min-h-screen bg-slate-50"
+    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50"
   >
     <!-- Hero Header -->
     <header
@@ -24,7 +24,7 @@
         <div
           class="inline-flex items-center space-x-3 mb-6 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20"
         >
-          <Compass class="w-4 h-4 text-blue-400" />
+          <Compass class="w-4 h-4 text-red-400" />
           <span
             class="text-xs font-black text-white uppercase tracking-[0.3em]"
             >{{ $t("guide.hero.badge") }}</span
@@ -35,7 +35,7 @@
         >
           {{ $t("guide.hero.title1") }}
           <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400"
+            class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600"
             >{{ $t("guide.hero.title2") }}</span
           >
         </h1>
@@ -53,7 +53,7 @@
         <h2 class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
           {{ $t("guide.section.title") }}
         </h2>
-        <div class="w-20 h-1 bg-blue-600 rounded-full mx-auto"></div>
+        <div class="w-20 h-1 bg-red-600 rounded-full mx-auto"></div>
       </div>
 
       <div
@@ -63,16 +63,16 @@
         <article
           v-for="(dest, index) in guideDestinations"
           :key="index"
-          class="group bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left"
+          class="group bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left"
         >
           <div
-            class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+            class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
           >
-            <Map class="w-6 h-6 text-blue-600" />
+            <Map class="w-6 h-6 text-red-600" />
           </div>
 
           <h3
-            class="text-xl font-black text-slate-900 leading-tight mb-3 group-hover:text-blue-600 transition-colors"
+            class="text-xl font-black text-slate-900 leading-tight mb-3 group-hover:text-red-600 transition-colors"
           >
             {{ $t("guide.items." + dest.key) }}
           </h3>
@@ -84,14 +84,14 @@
           </p>
 
           <div
-            class="mt-auto w-full flex items-center justify-between pt-4 border-t border-slate-100 group-hover:border-blue-100 transition-colors"
+            class="mt-auto w-full flex items-center justify-between pt-4 border-t border-slate-100 group-hover:border-red-100 transition-colors"
           >
             <span
-              class="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors"
+              class="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-red-600 transition-colors"
               >{{ $t("common.explore") }}</span
             >
             <div
-              class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-600 flex items-center justify-center transition-colors"
+              class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-red-600 flex items-center justify-center transition-colors"
             >
               <ArrowRight
                 class="w-4 h-4 text-slate-400 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-300"

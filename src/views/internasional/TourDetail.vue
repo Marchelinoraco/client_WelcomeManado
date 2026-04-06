@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white font-sans">
     <div v-if="loading" class="flex items-center justify-center min-h-[60vh]">
       <div
-        class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
+        class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"
       ></div>
     </div>
 
@@ -25,14 +25,14 @@
           <nav
             class="flex items-center text-[10px] font-black uppercase tracking-[0.25em] text-white/70 mb-6"
           >
-            <router-link to="/" class="hover:text-white transition-colors"
-              >Home</router-link
-            >
+            <router-link to="/" class="hover:text-white transition-colors">{{
+              $t("nav.home")
+            }}</router-link>
             <span class="mx-3 text-white/30">•</span>
             <router-link
               to="/internasional"
               class="hover:text-white transition-colors"
-              >Tours</router-link
+              >{{ $t("nav.international") }}</router-link
             >
             <span class="mx-3 text-white/30">•</span>
             <span class="text-white">{{ trip.title }}</span>
@@ -40,12 +40,12 @@
 
           <div class="flex flex-wrap items-center gap-4 mb-8">
             <span
-              class="px-5 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-blue-600/20"
+              class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
               >{{ regionLabel(trip.region) }}</span
             >
             <span
               class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
-              >{{ trip.duration_days }} Hari</span
+              >{{ trip.duration_days }} {{ $t("tour.days") }}</span
             >
             <span
               class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
@@ -68,12 +68,12 @@
             <div
               class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
             >
-              <Calendar class="w-5 h-5 text-blue-300" />
+              <Calendar class="w-5 h-5 text-red-300" />
             </div>
-            <span class="uppercase tracking-widest text-xs"
-              >Periode:
-              {{ formatDateRange(trip.start_date, trip.end_date) }}</span
-            >
+            <span class="uppercase tracking-widest text-xs">
+              {{ $t("internationalTourDetail.period") }}:
+              {{ formatDateRange(trip.start_date, trip.end_date) }}
+            </span>
           </div>
         </div>
       </header>
@@ -87,11 +87,11 @@
               class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
             >
               <div class="flex items-center space-x-4 mb-8">
-                <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                 <h2
                   class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                 >
-                  Deskripsi
+                  {{ $t("internationalTourDetail.description") }}
                 </h2>
               </div>
               <p class="text-slate-600 leading-relaxed font-medium">
@@ -104,11 +104,14 @@
               class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
             >
               <div class="flex items-center space-x-4 mb-8">
-                <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                 <h2
                   class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                 >
-                  {{ trip.price_breakdown.title || "Detail Harga" }}
+                  {{
+                    trip.price_breakdown.title ||
+                    $t("internationalTourDetail.priceDetails")
+                  }}
                 </h2>
               </div>
 
@@ -148,11 +151,11 @@
               class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
             >
               <div class="flex items-center space-x-4 mb-8">
-                <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                 <h2
                   class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                 >
-                  Harga Belum Termasuk
+                  {{ $t("internationalTourDetail.excludedCosts") }}
                 </h2>
               </div>
 
@@ -187,22 +190,24 @@
 
             <section
               v-if="trip.booking_fee?.amount_idr"
-              class="bg-blue-50 rounded-[2.5rem] border border-blue-100 p-10"
+              class="bg-red-50 rounded-[2.5rem] border border-red-100 p-10"
             >
               <div class="flex items-center justify-between gap-6 flex-wrap">
                 <div>
                   <div
-                    class="text-[10px] font-black text-blue-700 uppercase tracking-[0.25em]"
+                    class="text-[10px] font-black text-red-700 uppercase tracking-[0.25em]"
                   >
-                    Booking Fee
+                    {{ $t("internationalTourDetail.bookingFee") }}
                   </div>
                   <div class="text-3xl font-black text-slate-900 mt-2">
                     {{ formatCurrency(trip.booking_fee.amount_idr) }}
-                    <span class="text-sm font-black text-slate-500">/pax</span>
+                    <span class="text-sm font-black text-slate-500">
+                      {{ $t("tour.perPax") }}
+                    </span>
                   </div>
                 </div>
                 <div
-                  class="max-w-xl text-sm font-bold text-blue-900/70 leading-relaxed"
+                  class="max-w-xl text-sm font-bold text-red-900/70 leading-relaxed"
                 >
                   {{ trip.booking_fee.note }}
                 </div>
@@ -214,11 +219,11 @@
               class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
             >
               <div class="flex items-center space-x-4 mb-10">
-                <div class="w-12 h-1 bg-blue-600 rounded-full"></div>
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
                 <h2
                   class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                 >
-                  Itinerary
+                  {{ $t("tour.plannedItinerary") }}
                 </h2>
               </div>
 
@@ -230,7 +235,7 @@
                 >
                   <div class="flex-shrink-0">
                     <div
-                      class="w-12 h-12 rounded-2xl bg-white border-2 border-blue-600 flex items-center justify-center text-blue-600 font-black text-sm"
+                      class="w-12 h-12 rounded-2xl bg-white border-2 border-red-600 flex items-center justify-center text-red-600 font-black text-sm"
                     >
                       {{ day.day }}
                     </div>
@@ -239,7 +244,12 @@
                     <div
                       class="text-sm font-black text-slate-900 uppercase tracking-tight"
                     >
-                      Day {{ day.day }} — {{ day.title }}
+                      {{
+                        $t("internationalTourDetail.dayTitle", {
+                          day: day.day,
+                          title: day.title,
+                        })
+                      }}
                     </div>
                     <ul class="mt-4 space-y-2">
                       <li
@@ -248,7 +258,7 @@
                         class="flex items-start gap-3 text-sm font-medium text-slate-600"
                       >
                         <span
-                          class="mt-2 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0"
+                          class="mt-2 w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0"
                         ></span>
                         <span>{{ n }}</span>
                       </li>
@@ -268,7 +278,7 @@
                 <div
                   class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]"
                 >
-                  Harga Termasuk
+                  {{ $t("internationalTourDetail.inclusions") }}
                 </div>
                 <ul class="mt-6 space-y-3">
                   <li
@@ -277,7 +287,7 @@
                     class="flex items-start gap-3 text-sm font-bold text-slate-700"
                   >
                     <span
-                      class="mt-2 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"
+                      class="mt-2 w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0"
                     ></span>
                     <span>{{ item }}</span>
                   </li>
@@ -289,7 +299,7 @@
                 <div
                   class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]"
                 >
-                  Harga Tidak Termasuk
+                  {{ $t("internationalTourDetail.exclusions") }}
                 </div>
                 <ul class="mt-6 space-y-3">
                   <li
@@ -310,35 +320,36 @@
           <div class="lg:col-span-4">
             <div class="sticky top-32 space-y-8">
               <div
-                class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden"
+                class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-red-900/40 relative overflow-hidden"
               >
                 <div
-                  class="absolute -top-20 -right-20 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px]"
+                  class="absolute -top-20 -right-20 w-64 h-64 bg-red-600/20 rounded-full blur-[80px]"
                 ></div>
 
                 <div class="relative z-10">
                   <span
-                    class="px-4 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
-                    >Overview</span
+                    class="px-4 py-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
+                    >{{ $t("internationalTourDetail.overview") }}</span
                   >
 
                   <div class="space-y-4 mb-10">
                     <div
                       class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span>Durasi</span>
+                      <span>{{ $t("tour.duration") }}</span>
                       <span class="text-white"
-                        >{{ trip.duration_days }} Hari<span
-                          v-if="trip.duration_nights"
-                        >
-                          / {{ trip.duration_nights }} Malam</span
+                        >{{ trip.duration_days }} {{ $t("tour.days")
+                        }}<span v-if="trip.duration_nights">
+                          /
+                          {{ trip.duration_nights }}
+                          {{ $t("tour.nights") }}</span
                         ></span
                       >
                     </div>
                     <div
                       class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span>Periode</span>
+                      <span>{{ $t("internationalTourDetail.period") }}</span>
                       <span class="text-white">{{
                         formatDateRange(trip.start_date, trip.end_date)
                       }}</span>
@@ -346,21 +357,25 @@
                     <div
                       class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span>Seat</span>
+                      <span>{{ $t("internationalTourDetail.seat") }}</span>
                       <span
                         :class="
                           trip.seats_available
-                            ? 'text-emerald-400'
+                            ? 'text-red-400'
                             : 'text-white/50'
                         "
                       >
-                        {{ trip.seats_available ? "Tersedia" : "Sold Out" }}
+                        {{
+                          trip.seats_available
+                            ? $t("internationalTourDetail.available")
+                            : $t("internationalTourDetail.soldOut")
+                        }}
                       </span>
                     </div>
                     <div
                       class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span>Airlines</span>
+                      <span>{{ $t("internationalTourDetail.airlines") }}</span>
                       <span class="text-white">{{ trip.airline }}</span>
                     </div>
                   </div>
@@ -368,28 +383,30 @@
                   <p
                     class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
                   >
-                    IDR
+                    {{ $t("internationalTrips.currency") }}
                   </p>
                   <div class="flex items-baseline gap-2 mb-10">
                     <span class="text-5xl font-black tracking-tighter">{{
                       formatPrice(trip.price_idr)
                     }}</span>
-                    <span class="text-white/40 text-sm font-bold">/pax</span>
+                    <span class="text-white/40 text-sm font-bold">
+                      {{ $t("tour.perPax") }}
+                    </span>
                   </div>
 
                   <a
                     :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20trip:%20${trip.title}`"
                     target="_blank"
-                    class="w-full py-6 bg-emerald-500 hover:bg-emerald-600 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-emerald-500/20 active:scale-95 flex items-center justify-center"
+                    class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/20 active:scale-95 flex items-center justify-center"
                   >
                     <MessageCircle class="mr-3 w-5 h-5" />
-                    Chat on WhatsApp
+                    {{ $t("tour.chatWA") }}
                   </a>
 
                   <p
                     class="text-center text-[10px] text-white/30 mt-6 font-bold uppercase tracking-widest"
                   >
-                    Secure Payment & Instant Confirmation
+                    {{ $t("tour.securePayment") }}
                   </p>
                 </div>
               </div>
@@ -397,6 +414,22 @@
           </div>
         </div>
       </main>
+    </div>
+
+    <div v-else class="pt-32 pb-20 px-6 lg:px-10">
+      <div
+        class="max-w-3xl mx-auto bg-white border border-slate-100 rounded-[2.5rem] p-10 text-center shadow-sm"
+      >
+        <h1 class="text-2xl font-black text-slate-900">
+          {{ $t("internationalTourDetail.notFound") }}
+        </h1>
+        <router-link
+          to="/internasional"
+          class="mt-8 inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-black rounded-2xl hover:bg-red-700 transition-colors uppercase tracking-widest text-xs"
+        >
+          {{ $t("internationalTourDetail.backToTrips") }}
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -417,7 +450,7 @@ import {
 } from "./dummyInternationalTours";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const loading = ref(true);
 const trip = ref(null);
 const regions = ref([]);
@@ -440,73 +473,83 @@ const splitList = (value) => {
     .filter(Boolean);
 };
 
-const normalizeTrip = (t) => {
+const normalizeTrip = (raw) => {
   const image =
-    t.cover_image ||
-    t.image ||
-    t.galleries?.[0]?.image_path ||
+    raw.cover_image ||
+    raw.image ||
+    raw.galleries?.[0]?.image_path ||
     placeholderImage;
 
-  const itinerary = Array.isArray(t.itineraries)
-    ? t.itineraries.map((it) => ({
+  const itinerary = Array.isArray(raw.itineraries)
+    ? raw.itineraries.map((it) => ({
         day: it.day_number,
         title: it.title,
         notes: [it.description].filter(Boolean),
       }))
-    : t.itinerary || [];
+    : raw.itinerary || [];
 
-  const priceDetails = Array.isArray(t.price_details) ? t.price_details : [];
+  const priceDetails = Array.isArray(raw.price_details)
+    ? raw.price_details
+    : [];
   const rows = priceDetails.map((p) => ({
     label: p.label || p.type || "-",
     price_idr: Number(p.total ?? p.base_price ?? p.price ?? 0),
   }));
 
   const price_breakdown =
-    t.price_breakdown ||
+    raw.price_breakdown ||
     (rows.length
       ? {
-          title: "Detail Harga",
+          title: t("internationalTourDetail.priceDetails"),
           currency: "IDR",
-          sections: [{ title: "Harga", rows }],
+          sections: [
+            { title: t("internationalTourDetail.priceSection"), rows },
+          ],
         }
       : null);
 
   return {
-    id: t.id,
-    slug: t.slug,
-    title: t.title,
-    description: t.description,
-    route: t.route || t.category?.name || "",
-    region: t.category?.slug || t.region || "-",
-    duration_days: Number(t.duration_days || 0),
-    duration_nights: Number(t.duration_nights || 0),
-    start_date: t.start_date || null,
-    end_date: t.end_date || null,
-    airline: t.airline_info || t.airline || "",
-    seats_available: t.seats_available ?? true,
-    price_idr: Number(t.base_price || t.price_idr || 0),
+    id: raw.id,
+    slug: raw.slug,
+    title: raw.title,
+    description: raw.description,
+    route: raw.route || raw.category?.name || "",
+    region: raw.category?.slug || raw.region || "-",
+    duration_days: Number(raw.duration_days || 0),
+    duration_nights: Number(raw.duration_nights || 0),
+    start_date: raw.start_date || null,
+    end_date: raw.end_date || null,
+    airline: raw.airline_info || raw.airline || "",
+    seats_available: raw.seats_available ?? true,
+    price_idr: Number(raw.base_price || raw.price_idr || 0),
     image,
-    overview: t.overview || null,
+    overview: raw.overview || null,
     itinerary,
-    inclusions: splitList(t.inclusions),
-    exclusions: splitList(t.exclusions),
-    excluded_costs: t.excluded_costs || [],
-    booking_fee: t.booking_fee || null,
+    inclusions: splitList(raw.inclusions),
+    exclusions: splitList(raw.exclusions),
+    excluded_costs: raw.excluded_costs || [],
+    booking_fee: raw.booking_fee || null,
     price_breakdown,
   };
 };
 
-const translateTrip = async (t, targetLocale) => {
-  if (!t || targetLocale === "id") return t;
+const translateTrip = async (tripData, targetLocale) => {
+  if (!tripData || targetLocale === "id") return tripData;
 
   const [title, description, routeText] = await Promise.all([
-    t.title ? autoTranslate(t.title, targetLocale) : t.title,
-    t.description ? autoTranslate(t.description, targetLocale) : t.description,
-    t.route ? autoTranslate(t.route, targetLocale) : t.route,
+    tripData.title
+      ? autoTranslate(tripData.title, targetLocale)
+      : tripData.title,
+    tripData.description
+      ? autoTranslate(tripData.description, targetLocale)
+      : tripData.description,
+    tripData.route
+      ? autoTranslate(tripData.route, targetLocale)
+      : tripData.route,
   ]);
 
   const itinerary = await Promise.all(
-    (t.itinerary || []).map(async (day) => {
+    (tripData.itinerary || []).map(async (day) => {
       const [dayTitle, notes] = await Promise.all([
         day.title ? autoTranslate(day.title, targetLocale) : day.title,
         Promise.all(
@@ -520,37 +563,41 @@ const translateTrip = async (t, targetLocale) => {
   );
 
   const inclusions = await Promise.all(
-    (t.inclusions || []).map((x) => (x ? autoTranslate(x, targetLocale) : x)),
+    (tripData.inclusions || []).map((x) =>
+      x ? autoTranslate(x, targetLocale) : x,
+    ),
   );
   const exclusions = await Promise.all(
-    (t.exclusions || []).map((x) => (x ? autoTranslate(x, targetLocale) : x)),
+    (tripData.exclusions || []).map((x) =>
+      x ? autoTranslate(x, targetLocale) : x,
+    ),
   );
 
   const excluded_costs = await Promise.all(
-    (t.excluded_costs || []).map(async (x) => ({
+    (tripData.excluded_costs || []).map(async (x) => ({
       ...x,
       label: x.label ? await autoTranslate(x.label, targetLocale) : x.label,
       note: x.note ? await autoTranslate(x.note, targetLocale) : x.note,
     })),
   );
 
-  const booking_fee = t.booking_fee
+  const booking_fee = tripData.booking_fee
     ? {
-        ...t.booking_fee,
-        note: t.booking_fee.note
-          ? await autoTranslate(t.booking_fee.note, targetLocale)
-          : t.booking_fee.note,
+        ...tripData.booking_fee,
+        note: tripData.booking_fee.note
+          ? await autoTranslate(tripData.booking_fee.note, targetLocale)
+          : tripData.booking_fee.note,
       }
-    : t.booking_fee;
+    : tripData.booking_fee;
 
-  const price_breakdown = t.price_breakdown?.sections?.length
+  const price_breakdown = tripData.price_breakdown?.sections?.length
     ? {
-        ...t.price_breakdown,
-        title: t.price_breakdown.title
-          ? await autoTranslate(t.price_breakdown.title, targetLocale)
-          : t.price_breakdown.title,
+        ...tripData.price_breakdown,
+        title: tripData.price_breakdown.title
+          ? await autoTranslate(tripData.price_breakdown.title, targetLocale)
+          : tripData.price_breakdown.title,
         sections: await Promise.all(
-          t.price_breakdown.sections.map(async (s) => ({
+          tripData.price_breakdown.sections.map(async (s) => ({
             ...s,
             title: s.title
               ? await autoTranslate(s.title, targetLocale)
@@ -566,10 +613,10 @@ const translateTrip = async (t, targetLocale) => {
           })),
         ),
       }
-    : t.price_breakdown;
+    : tripData.price_breakdown;
 
   return {
-    ...t,
+    ...tripData,
     title,
     description,
     route: routeText,
@@ -627,7 +674,15 @@ onMounted(fetchTrip);
 watch(locale, fetchTrip);
 
 const formatPrice = (price) => {
-  return new Intl.NumberFormat("id-ID").format(price || 0);
+  const localeMap = {
+    id: "id-ID",
+    en: "en-US",
+    zh: "zh-CN",
+    ko: "ko-KR",
+  };
+  return new Intl.NumberFormat(localeMap[locale.value] || "en-US").format(
+    price || 0,
+  );
 };
 
 const formatDateRange = (start, end) => {
@@ -635,11 +690,18 @@ const formatDateRange = (start, end) => {
   const s = new Date(`${start}T00:00:00`);
   const e = new Date(`${end}T00:00:00`);
   if (Number.isNaN(s.getTime()) || Number.isNaN(e.getTime())) return "-";
-  const startLabel = s.toLocaleString("id-ID", {
+  const localeMap = {
+    id: "id-ID",
+    en: "en-US",
+    zh: "zh-CN",
+    ko: "ko-KR",
+  };
+  const dateLocale = localeMap[locale.value] || "en-US";
+  const startLabel = s.toLocaleString(dateLocale, {
     day: "numeric",
     month: "short",
   });
-  const endLabel = e.toLocaleString("id-ID", {
+  const endLabel = e.toLocaleString(dateLocale, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -648,7 +710,7 @@ const formatDateRange = (start, end) => {
 };
 
 const formatCurrency = (price) => {
-  return `IDR ${formatPrice(price)}`;
+  return `${t("internationalTrips.currency")} ${formatPrice(price)}`;
 };
 </script>
 

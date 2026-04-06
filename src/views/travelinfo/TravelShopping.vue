@@ -1,6 +1,6 @@
 <template>
   <div
-    class="selection:bg-blue-100 selection:text-blue-700 font-sans min-h-screen bg-slate-50"
+    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50"
   >
     <!-- Hero Header -->
     <header
@@ -24,7 +24,7 @@
         <div
           class="inline-flex items-center space-x-3 mb-6 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20"
         >
-          <Compass class="w-4 h-4 text-blue-400" />
+          <Compass class="w-4 h-4 text-red-400" />
           <span
             class="text-xs font-black text-white uppercase tracking-[0.3em]"
             >{{ $t("nav.shopping") }}</span
@@ -36,7 +36,7 @@
           {{ $t("shopping.title").split(" ")[0] }}
           {{ $t("shopping.title").split(" ")[1] }}
           <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400"
+            class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600"
             >{{ $t("shopping.title").split(" ")[2] }}
             {{ $t("shopping.title").split(" ")[3] }}</span
           >
@@ -62,7 +62,7 @@
           >
             {{ $t("shopping.categories." + category.key) }}
           </h2>
-          <div class="w-20 h-1.5 bg-blue-600 rounded-full mt-6"></div>
+          <div class="w-20 h-1.5 bg-red-600 rounded-full mt-6"></div>
         </div>
 
         <div
@@ -72,18 +72,18 @@
           <article
             v-for="(item, index) in category.items"
             :key="index"
-            class="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left"
+            class="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left"
           >
             <div
-              class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-600 transition-all duration-500"
+              class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-red-600 transition-all duration-500"
             >
               <Map
-                class="w-7 h-7 text-blue-600 group-hover:text-white transition-colors"
+                class="w-7 h-7 text-red-600 group-hover:text-white transition-colors"
               />
             </div>
 
             <h3
-              class="text-xl font-black text-slate-900 leading-tight mb-4 group-hover:text-blue-600 transition-colors"
+              class="text-xl font-black text-slate-900 leading-tight mb-4 group-hover:text-red-600 transition-colors"
             >
               {{ $t("shopping.items." + item.key) }}
             </h3>
@@ -93,14 +93,14 @@
             </p>
 
             <div
-              class="mt-auto w-full flex items-center justify-between pt-6 border-t border-slate-100 group-hover:border-blue-100 transition-colors"
+              class="mt-auto w-full flex items-center justify-between pt-6 border-t border-slate-100 group-hover:border-red-100 transition-colors"
             >
               <span
-                class="text-xs font-black text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors"
+                class="text-xs font-black text-slate-400 uppercase tracking-widest group-hover:text-red-600 transition-colors"
                 >Information</span
               >
               <div
-                class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-blue-600 flex items-center justify-center transition-all duration-300"
+                class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-red-600 flex items-center justify-center transition-all duration-300"
               >
                 <ArrowRight
                   class="w-5 h-5 text-slate-400 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-500"

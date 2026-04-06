@@ -53,6 +53,94 @@ export default {
       chatWA: "WhatsApp 聊天",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "万鸦老的酒店",
+      badge: "高端住宿",
+      title1: "奢华",
+      title2: "入住",
+      description:
+        "探索万鸦老精选酒店与度假村。从海滨天堂到市中心地标，理想假期就在眼前。",
+    },
+    search: {
+      placeholder: "按名称或位置搜索酒店…",
+    },
+    categories: {
+      all: "全部",
+      resort: "度假村",
+      cityHotel: "城市酒店",
+      boutique: "精品酒店",
+      ecoLodge: "生态旅宿",
+    },
+    empty: {
+      title: "未找到酒店",
+      description: "未找到与“{query}”匹配的酒店，请尝试其他关键词！",
+    },
+    card: {
+      featured: "精选推荐",
+    },
+  },
+  hotelDetail: {
+    back: "返回酒店列表",
+    starsLabel: "{stars} 星高端酒店",
+    overview: "概览",
+    amenities: {
+      breakfast: "早餐",
+      wifi: "免费 Wi‑Fi",
+      parking: "停车",
+      ac: "空调房",
+    },
+    booking: {
+      title: "预订住宿",
+      subtitle: "通过我们的客服直接预订，享受更优价格。",
+      checkIn: "入住",
+      checkOut: "退房",
+      cta: "通过 WhatsApp 预订",
+      fastResponse: "5 分钟内快速响应。",
+    },
+  },
+  contactPage: {
+    hero: {
+      badge: "我们随时为您提供帮助",
+      title1: "让我们",
+      title2: "联系",
+      description:
+        "准备开启下一段旅程？联系我们的旅行专家，让我们为您处理细节。",
+    },
+    info: {
+      email: "邮箱",
+      phone: "电话",
+      office: "办公室",
+      officeValue: "万鸦老，北苏拉威西",
+    },
+    social: {
+      title: "关注我们的旅程",
+    },
+    form: {
+      title1: "给我们发送",
+      title2: "消息",
+      fields: {
+        fullName: {
+          label: "姓名",
+          placeholder: "您的姓名",
+        },
+        email: {
+          label: "电子邮箱",
+          placeholder: "john@example.com",
+        },
+        subject: {
+          label: "主题",
+          placeholder: "告诉我们您感兴趣的内容",
+        },
+        message: {
+          label: "消息",
+          placeholder: "分享您的旅行计划或问题…",
+        },
+      },
+      submit: "发送消息",
+      success: "感谢您的留言！我们的团队将尽快与您联系。",
+    },
+  },
   food: {
     title: "万鸦老美食与烹饪",
     description:
@@ -297,11 +385,20 @@ export default {
   },
   common: {
     explore: "探索",
+    address: "地址",
+    phone: "电话",
+    socialMedia: "社交媒体",
+    defaultLocation: "万鸦老，北苏拉威西",
+    officeAddress: "A. A. Maramis 路 171 号，万鸦老，北苏拉威西",
+  },
+  localTourDetail: {
+    lunch: "万鸦老特色午餐",
   },
   tour: {
     duration: "时长",
     groupSize: "团队规模",
     language: "语言",
+    languageValue: "ID / EN",
     insurance: "保险",
     pax: "最少 2 人",
     included: "已包含",
@@ -326,9 +423,82 @@ export default {
     securePayment: "安全支付与即时确认",
     tailoredJourney: "定制旅程？",
     customizeTour: "让我们根据您的喜好精确定制此行程。",
+    perPax: "/人",
+    contactMore: "联系我们了解更多信息",
+    priceBreakdownTitle: "套餐价格明细",
+    priceBreakdown: {
+      paxHeader: "人数（Pax）",
+      priceHeader: "每人价格（IDR）",
+      disclaimer: "* 价格可能随时调整，请联系我们确认余位与最终价格。",
+    },
     startingFrom: "起价",
     contactForPrice: "联系获取价格",
     inquiryNow: "立即咨询",
     viewDetails: "查看详情",
+  },
+  internationalTrips: {
+    currency: "IDR",
+    hero: {
+      imageAlt: "主视觉背景",
+      badge: "出境游",
+      title: "海外旅游套餐",
+      subtitle: "选择地区，按价格与天数筛选，找到最适合您的行程。",
+    },
+    regionHero: {
+      asia: "亚洲精选行程——城市漫游、文化、美食与隐藏景点。选择最适合的套餐，开始规划旅程。",
+      default: "按出发日期、时长与预算选择最合适的旅游套餐，找到适合您的行程。",
+    },
+    showing: "显示 {shown}/{total} 条结果",
+    sort: {
+      newest: "最新",
+      priceLow: "价格从低到高",
+      priceHigh: "价格从高到低",
+      durationLow: "最短行程",
+      durationHigh: "最长行程",
+    },
+    filters: {
+      title: "筛选",
+      reset: "重置",
+      region: "地区",
+      price: "价格",
+      durationDays: "天数",
+      month: "月份",
+      allMonths: "全部月份",
+      airlines: "航空公司",
+      search: "搜索",
+      searchPlaceholder: "搜索行程...",
+    },
+    pricePresets: {
+      p0_10: "IDR 5 - 10M",
+      p11_20: "IDR 11 - 20M",
+      p21_30: "IDR 21 - 30M",
+      p31_40: "IDR 31 - 40M",
+      gt_40: "> IDR 40M",
+    },
+    empty: "没有符合筛选条件的行程。",
+    card: {
+      favorite: "收藏",
+      price: "价格",
+      seatsAvailable: "余位充足",
+      soldOut: "已售罄",
+    },
+  },
+  internationalTourDetail: {
+    overview: "概览",
+    notFound: "未找到行程",
+    backToTrips: "返回出境游",
+    period: "日期",
+    description: "描述",
+    priceDetails: "价格详情",
+    priceSection: "价格",
+    excludedCosts: "不含费用",
+    bookingFee: "预订费用",
+    dayTitle: "第 {day} 天 — {title}",
+    inclusions: "费用包含",
+    exclusions: "费用不含",
+    seat: "座位",
+    available: "有余位",
+    soldOut: "已售罄",
+    airlines: "航空公司",
   },
 };

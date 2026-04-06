@@ -55,6 +55,95 @@ export default {
       chatWA: "Chat WhatsApp",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "Hotels in Manado",
+      badge: "Premium Accommodations",
+      title1: "STAY IN",
+      title2: "LUXURY",
+      description:
+        "Discover the finest hotels and resorts in Manado. From beachfront paradises to city center landmarks, your perfect getaway awaits.",
+    },
+    search: {
+      placeholder: "Search hotels by name or location...",
+    },
+    categories: {
+      all: "All",
+      resort: "Resort",
+      cityHotel: "City Hotel",
+      boutique: "Boutique",
+      ecoLodge: "Eco Lodge",
+    },
+    empty: {
+      title: "No hotels found",
+      description:
+        'We couldn\'t find any hotels matching "{query}". Try another search term!',
+    },
+    card: {
+      featured: "Featured Selection",
+    },
+  },
+  hotelDetail: {
+    back: "Back to Hotels",
+    starsLabel: "{stars}-Star Premium Hotel",
+    overview: "Overview",
+    amenities: {
+      breakfast: "Breakfast",
+      wifi: "Free Wi-Fi",
+      parking: "Parking",
+      ac: "AC Rooms",
+    },
+    booking: {
+      title: "Book Your Stay",
+      subtitle: "Get the best rates by booking directly with our agents.",
+      checkIn: "Check-in",
+      checkOut: "Check-out",
+      cta: "Book via WhatsApp",
+      fastResponse: "Fast response within 5 minutes.",
+    },
+  },
+  contactPage: {
+    hero: {
+      badge: "We're here to help",
+      title1: "LET'S",
+      title2: "CONNECT",
+      description:
+        "Ready to start your next journey? Reach out to our travel experts and let us handle the details for you.",
+    },
+    info: {
+      email: "Email",
+      phone: "Phone",
+      office: "Office",
+      officeValue: "Manado, North Sulawesi",
+    },
+    social: {
+      title: "Follow Our Journey",
+    },
+    form: {
+      title1: "Send us a",
+      title2: "Message",
+      fields: {
+        fullName: {
+          label: "Full Name",
+          placeholder: "John Doe",
+        },
+        email: {
+          label: "Email Address",
+          placeholder: "john@example.com",
+        },
+        subject: {
+          label: "Subject",
+          placeholder: "Tell us what you're interested in",
+        },
+        message: {
+          label: "Message",
+          placeholder: "Share your travel plans or questions...",
+        },
+      },
+      submit: "Send Message",
+      success: "Thank you for your message! Our team will contact you soon.",
+    },
+  },
   food: {
     title: "Food & Cuisine in Manado",
     description:
@@ -325,11 +414,20 @@ export default {
   },
   common: {
     explore: "Explore",
+    address: "Address",
+    phone: "Phone",
+    socialMedia: "Social Media",
+    defaultLocation: "Manado, North Sulawesi",
+    officeAddress: "Jl. A. A. Maramis No. 171, Manado, North Sulawesi",
+  },
+  localTourDetail: {
+    lunch: "Manado Local Lunch",
   },
   tour: {
     duration: "Duration",
     groupSize: "Group Size",
     language: "Language",
+    languageValue: "ID / EN",
     insurance: "Insurance",
     pax: "Min. 2 Pax",
     included: "Included",
@@ -354,9 +452,85 @@ export default {
     securePayment: "Secure Payment & Instant Confirmation",
     tailoredJourney: "Tailored Journey?",
     customizeTour: "Let us customize this tour exactly to your preferences.",
+    perPax: "/pax",
+    contactMore: "Contact us for more information",
+    priceBreakdownTitle: "Package Price Breakdown",
+    priceBreakdown: {
+      paxHeader: "Number of Participants (Pax)",
+      priceHeader: "Price per Person (IDR)",
+      disclaimer:
+        "* Prices may change at any time. Please contact us to confirm availability and final pricing.",
+    },
     startingFrom: "Starting From",
     contactForPrice: "Contact for Price",
     inquiryNow: "Inquiry Now",
     viewDetails: "View Details",
+  },
+  internationalTrips: {
+    currency: "IDR",
+    hero: {
+      imageAlt: "Hero background",
+      badge: "International Trips",
+      title: "International Tour Packages",
+      subtitle:
+        "Select a region, filter by price and duration, then find the best trip for your needs.",
+    },
+    regionHero: {
+      asia: "A curated collection of the best tours in Asia — city escapes, culture, cuisine, and hidden gems. Pick your favorite package and start planning.",
+      default:
+        "Choose the best tour package by departure date, duration, and budget, then find the trip that suits you.",
+    },
+    showing: "Showing {shown} of {total} results",
+    sort: {
+      newest: "Newest",
+      priceLow: "Lowest Price",
+      priceHigh: "Highest Price",
+      durationLow: "Shortest Duration",
+      durationHigh: "Longest Duration",
+    },
+    filters: {
+      title: "Filters",
+      reset: "Reset",
+      region: "Region",
+      price: "Price",
+      durationDays: "Duration (Days)",
+      month: "Month",
+      allMonths: "All Months",
+      airlines: "Airlines",
+      search: "Search",
+      searchPlaceholder: "Search trips...",
+    },
+    pricePresets: {
+      p0_10: "IDR 5 - 10M",
+      p11_20: "IDR 11 - 20M",
+      p21_30: "IDR 21 - 30M",
+      p31_40: "IDR 31 - 40M",
+      gt_40: "> IDR 40M",
+    },
+    empty: "No trips match the selected filters.",
+    card: {
+      favorite: "Favorite",
+      price: "Price",
+      seatsAvailable: "Seats Available",
+      soldOut: "Sold Out",
+    },
+  },
+  internationalTourDetail: {
+    overview: "Overview",
+    notFound: "Trip not found",
+    backToTrips: "Back to International",
+    period: "Period",
+    description: "Description",
+    priceDetails: "Price Details",
+    priceSection: "Price",
+    excludedCosts: "Excluded Costs",
+    bookingFee: "Booking Fee",
+    dayTitle: "Day {day} — {title}",
+    inclusions: "Included",
+    exclusions: "Not Included",
+    seat: "Seat",
+    available: "Available",
+    soldOut: "Sold Out",
+    airlines: "Airlines",
   },
 };

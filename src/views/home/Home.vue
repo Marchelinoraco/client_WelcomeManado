@@ -1,5 +1,5 @@
 <template>
-  <div class="selection:bg-blue-100 selection:text-blue-700 font-sans">
+  <div class="selection:bg-red-100 selection:text-red-700 font-sans">
     <!-- Hero Section -->
     <header
       class="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900"
@@ -18,17 +18,17 @@
 
       <!-- Animated Decorative Elements -->
       <div
-        class="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] animate-pulse"
+        class="absolute top-1/4 -left-20 w-96 h-96 bg-red-600/20 rounded-full blur-[120px] animate-pulse"
       ></div>
       <div
-        class="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-600/20 rounded-full blur-[120px] animate-pulse delay-1000"
+        class="absolute bottom-1/4 -right-20 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] animate-pulse delay-1000"
       ></div>
 
       <div class="relative z-20 text-center px-6 max-w-6xl mx-auto mt-20">
         <div
           class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl mb-8 animate-fade-in-up"
         >
-          <div class="w-2 h-2 rounded-full bg-blue-500 mr-3 animate-ping"></div>
+          <div class="w-2 h-2 rounded-full bg-red-500 mr-3 animate-ping"></div>
           <span
             class="text-[10px] font-black text-white uppercase tracking-[0.3em]"
             >Premium Travel Experience</span
@@ -40,7 +40,7 @@
         >
           {{ $t("hero.title") }} <br />
           <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600"
+            class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600"
             >{{ $t("hero.subtitle") }}</span
           >
         </h1>
@@ -56,7 +56,7 @@
         >
           <a
             href="#manado-tours"
-            class="group px-10 py-5 bg-blue-600 text-white font-black rounded-[2rem] hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/30 flex items-center justify-center space-x-3 active:scale-95"
+            class="group px-10 py-5 bg-red-600 text-white font-black rounded-[2rem] hover:bg-red-700 transition-all shadow-2xl shadow-red-600/30 flex items-center justify-center space-x-3 active:scale-95"
           >
             <span class="uppercase tracking-widest text-xs">{{
               $t("hero.explore")
@@ -103,12 +103,12 @@
             >
               <!-- Animated Background Decoration -->
               <div
-                class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/5 rounded-full group-hover:scale-[3] transition-transform duration-700"
+                class="absolute -right-4 -bottom-4 w-20 h-20 bg-red-500/5 rounded-full group-hover:scale-[3] transition-transform duration-700"
               ></div>
 
               <div class="relative z-10">
                 <div
-                  class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/50 text-blue-600 flex items-center justify-center mx-auto mb-6 group-hover:from-blue-600 group-hover:to-blue-700 group-hover:text-white group-hover:shadow-xl group-hover:shadow-blue-600/30 transition-all duration-500"
+                  class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-50 to-red-100/50 text-red-600 flex items-center justify-center mx-auto mb-6 group-hover:from-red-600 group-hover:to-red-700 group-hover:text-white group-hover:shadow-xl group-hover:shadow-red-600/30 transition-all duration-500"
                 >
                   <component :is="stat.icon" class="w-7 h-7" />
                 </div>
@@ -133,9 +133,9 @@
           >
             <div class="max-w-2xl">
               <div class="flex items-center space-x-3 mb-4">
-                <div class="w-10 h-1 bg-blue-600 rounded-full"></div>
+                <div class="w-10 h-1 bg-red-600 rounded-full"></div>
                 <span
-                  class="text-xs font-black text-blue-600 uppercase tracking-[0.4em]"
+                  class="text-xs font-black text-red-600 uppercase tracking-[0.4em]"
                   >{{ $t("home.local.badge") }}</span
                 >
               </div>
@@ -143,7 +143,7 @@
                 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-6"
               >
                 {{ $t("home.local.title1") }} <br />
-                <span class="text-blue-600">{{ $t("home.local.title2") }}</span>
+                <span class="text-red-600">{{ $t("home.local.title2") }}</span>
               </h2>
               <p class="text-slate-500 text-lg font-medium leading-relaxed">
                 {{ $t("home.local.description") }}
@@ -151,7 +151,7 @@
             </div>
             <router-link
               to="/category/manado-city-tour"
-              class="group inline-flex items-center px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl active:scale-95"
+              class="group inline-flex items-center px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-red-600 transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.local.allPackages") }}
               <ChevronRight
@@ -197,7 +197,7 @@
             <!-- Left: Text Content -->
             <div class="lg:col-span-5">
               <div
-                class="inline-flex items-center px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full mb-8"
+                class="inline-flex items-center px-4 py-1.5 bg-red-50 text-red-600 rounded-full mb-8"
               >
                 <ShieldCheck class="w-4 h-4 mr-2" />
                 <span class="text-[10px] font-black uppercase tracking-[0.2em]"
@@ -208,7 +208,7 @@
                 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-10 leading-[0.9] uppercase"
               >
                 Why Travel <br />
-                <span class="text-blue-600 italic">With Us?</span>
+                <span class="text-red-600 italic">With Us?</span>
               </h2>
               <p
                 class="text-slate-500 text-xl font-medium leading-relaxed mb-12"
@@ -241,11 +241,11 @@
                 :class="idx === 1 ? 'md:translate-y-12' : ''"
               >
                 <div
-                  class="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-[15deg] transition-all duration-700 ease-spring"
+                  class="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:rotate-[15deg] transition-all duration-700 ease-spring"
                 >
                   <component
                     :is="feature.icon"
-                    class="w-8 h-8 text-blue-600 group-hover:text-white transition-colors"
+                    class="w-8 h-8 text-red-600 group-hover:text-white transition-colors"
                   />
                 </div>
                 <h3
@@ -268,10 +268,10 @@
         class="bg-slate-900 py-32 lg:py-48 px-6 lg:px-10 relative overflow-hidden"
       >
         <div
-          class="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[150px] rounded-full -mr-32 -mt-32"
+          class="absolute top-0 right-0 w-1/2 h-full bg-red-600/10 blur-[150px] rounded-full -mr-32 -mt-32"
         ></div>
         <div
-          class="absolute bottom-0 left-0 w-1/2 h-full bg-emerald-600/5 blur-[150px] rounded-full -ml-32 -mb-32"
+          class="absolute bottom-0 left-0 w-1/2 h-full bg-red-600/5 blur-[150px] rounded-full -ml-32 -mb-32"
         ></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
@@ -280,9 +280,9 @@
           >
             <div class="max-w-2xl">
               <div class="flex items-center space-x-3 mb-4">
-                <div class="w-10 h-1 bg-blue-500 rounded-full"></div>
+                <div class="w-10 h-1 bg-red-500 rounded-full"></div>
                 <span
-                  class="text-xs font-black text-blue-400 uppercase tracking-[0.4em]"
+                  class="text-xs font-black text-red-400 uppercase tracking-[0.4em]"
                   >{{ $t("home.national.badge") }}</span
                 >
               </div>
@@ -290,7 +290,7 @@
                 class="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-6 uppercase"
               >
                 {{ $t("home.national.title1") }} <br />
-                <span class="text-blue-500 italic">{{
+                <span class="text-red-500 italic">{{
                   $t("home.national.title2")
                 }}</span>
               </h2>
@@ -300,7 +300,7 @@
             </div>
             <router-link
               to="/nasional/bali-lombok"
-              class="group inline-flex items-center px-8 py-4 bg-white text-slate-900 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all shadow-xl active:scale-95"
+              class="group inline-flex items-center px-8 py-4 bg-white text-slate-900 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.national.exploreArchipelago") }}
               <ChevronRight
@@ -339,7 +339,7 @@
               >
                 {{ $t("home.international.title1") }} <br />
                 <span
-                  class="text-blue-600 underline decoration-4 underline-offset-8"
+                  class="text-red-600 underline decoration-4 underline-offset-8"
                   >{{ $t("home.international.title2") }}</span
                 >
               </h2>
@@ -349,7 +349,7 @@
             </div>
             <router-link
               to="/internasional"
-              class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-900 transition-all shadow-xl active:scale-95"
+              class="group inline-flex items-center px-8 py-4 bg-red-600 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-900 transition-all shadow-xl active:scale-95"
             >
               {{ $t("home.international.goInternational") }}
               <ChevronRight
@@ -372,27 +372,27 @@
       <!-- CTA Section -->
       <section class="pb-32 px-6 lg:px-10">
         <div
-          class="max-w-7xl mx-auto bg-blue-600 rounded-[3rem] p-12 lg:p-24 text-center relative overflow-hidden shadow-2xl shadow-blue-600/40"
+          class="max-w-7xl mx-auto bg-red-600 rounded-[3rem] p-12 lg:p-24 text-center relative overflow-hidden shadow-2xl shadow-red-600/40"
         >
           <div class="relative z-10">
             <h2
               class="text-3xl md:text-5xl font-black text-white mb-8 tracking-tighter uppercase leading-tight"
               v-html="$t('home.cta.title')"
             ></h2>
-            <p class="text-blue-100 text-lg font-medium mb-12 max-w-xl mx-auto">
+            <p class="text-red-100 text-lg font-medium mb-12 max-w-xl mx-auto">
               {{ $t("home.cta.description") }}
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
               <router-link
                 to="/contact"
-                class="px-12 py-5 bg-white text-blue-600 font-black rounded-2xl hover:bg-slate-900 hover:text-white transition-all shadow-xl uppercase tracking-widest text-xs"
+                class="px-12 py-5 bg-white text-red-600 font-black rounded-2xl hover:bg-slate-900 hover:text-white transition-all shadow-xl uppercase tracking-widest text-xs"
               >
                 {{ $t("home.cta.bookNow") }}
               </router-link>
               <a
                 href="https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour."
                 target="_blank"
-                class="px-12 py-5 bg-emerald-500 text-white font-black rounded-2xl hover:bg-emerald-600 transition-all shadow-xl shadow-emerald-500/20 uppercase tracking-widest text-xs flex items-center justify-center"
+                class="px-12 py-5 bg-red-600 text-white font-black rounded-2xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 uppercase tracking-widest text-xs flex items-center justify-center"
               >
                 <MessageCircle class="w-5 h-5 mr-2" />
                 {{ $t("home.cta.chatWA") }}
@@ -412,16 +412,16 @@
       <a
         href="https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour."
         target="_blank"
-        class="fixed bottom-10 right-10 z-[99] w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/40 hover:bg-emerald-600 hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce-slow"
+        class="fixed bottom-10 right-10 z-[99] w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl shadow-red-600/40 hover:bg-red-700 hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce-slow"
         title="Chat on WhatsApp"
       >
         <MessageCircle class="w-8 h-8" />
         <span class="absolute -top-2 -right-2 flex h-5 w-5">
           <span
-            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
           ></span>
           <span
-            class="relative inline-flex rounded-full h-5 w-5 bg-emerald-500 border-2 border-white"
+            class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"
           ></span>
         </span>
       </a>

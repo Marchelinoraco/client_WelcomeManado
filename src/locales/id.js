@@ -55,6 +55,97 @@ export default {
       chatWA: "Chat WhatsApp",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "Hotel di Manado",
+      badge: "Akomodasi Premium",
+      title1: "MENGINAP DI",
+      title2: "KEMEWAHAN",
+      description:
+        "Temukan hotel dan resort terbaik di Manado. Dari surga tepi pantai hingga landmark pusat kota, liburan impian Anda menanti.",
+    },
+    search: {
+      placeholder: "Cari hotel berdasarkan nama atau lokasi...",
+    },
+    categories: {
+      all: "Semua",
+      resort: "Resort",
+      cityHotel: "Hotel Kota",
+      boutique: "Boutique",
+      ecoLodge: "Eco Lodge",
+    },
+    empty: {
+      title: "Hotel tidak ditemukan",
+      description:
+        'Kami tidak menemukan hotel yang sesuai dengan "{query}". Coba kata kunci lain!',
+    },
+    card: {
+      featured: "Pilihan Unggulan",
+    },
+  },
+  hotelDetail: {
+    back: "Kembali ke Hotel",
+    starsLabel: "{stars}-Bintang Hotel Premium",
+    overview: "Ringkasan",
+    amenities: {
+      breakfast: "Sarapan",
+      wifi: "Wi-Fi Gratis",
+      parking: "Parkir",
+      ac: "Kamar AC",
+    },
+    booking: {
+      title: "Pesan Menginap",
+      subtitle:
+        "Dapatkan harga terbaik dengan memesan langsung melalui agen kami.",
+      checkIn: "Check-in",
+      checkOut: "Check-out",
+      cta: "Pesan via WhatsApp",
+      fastResponse: "Respon cepat dalam 5 menit.",
+    },
+  },
+  contactPage: {
+    hero: {
+      badge: "Kami siap membantu",
+      title1: "AYO",
+      title2: "TERHUBUNG",
+      description:
+        "Siap memulai perjalanan berikutnya? Hubungi ahli perjalanan kami dan biarkan kami mengurus detailnya untuk Anda.",
+    },
+    info: {
+      email: "Email",
+      phone: "Telepon",
+      office: "Kantor",
+      officeValue: "Manado, Sulawesi Utara",
+    },
+    social: {
+      title: "Ikuti Perjalanan Kami",
+    },
+    form: {
+      title1: "Kirim",
+      title2: "Pesan",
+      fields: {
+        fullName: {
+          label: "Nama Lengkap",
+          placeholder: "Nama Anda",
+        },
+        email: {
+          label: "Alamat Email",
+          placeholder: "email@contoh.com",
+        },
+        subject: {
+          label: "Subjek",
+          placeholder: "Ceritakan apa yang Anda minati",
+        },
+        message: {
+          label: "Pesan",
+          placeholder: "Bagikan rencana perjalanan atau pertanyaan Anda...",
+        },
+      },
+      submit: "Kirim Pesan",
+      success:
+        "Terima kasih atas pesan Anda! Tim kami akan segera menghubungi Anda.",
+    },
+  },
   food: {
     title: "Makanan & Kuliner di Manado",
     description:
@@ -324,6 +415,120 @@ export default {
   },
   common: {
     explore: "Jelajahi",
+    address: "Alamat",
+    phone: "No Telepon",
+    socialMedia: "Sosial Media",
+    defaultLocation: "Manado, Sulawesi Utara",
+    officeAddress: "Jl. A. A. Maramis No. 171, Manado, Sulawesi Utara",
+  },
+  localTourDetail: {
+    lunch: "Lunch Makanan Khas Manado",
+  },
+  tour: {
+    duration: "Durasi",
+    groupSize: "Ukuran Grup",
+    language: "Bahasa",
+    languageValue: "ID / EN",
+    insurance: "Asuransi",
+    pax: "Min. 2 Pax",
+    included: "Termasuk",
+    days: "Hari",
+    nights: "Malam",
+    hours: "Jam",
+    experienceDetails: "Detail Pengalaman",
+    visualJourney: "Galeri",
+    plannedItinerary: "Rencana Perjalanan",
+    accommodation: "Akomodasi",
+    bestPrice: "Jaminan Harga Terbaik",
+    investment: "Mulai Dari",
+    pricingInfo: "Informasi Harga",
+    contactInquiry: "Hubungi kami untuk info harga",
+    expertGuide: "Pemandu Lokal Profesional",
+    premiumAcc: "Akomodasi Premium",
+    safetyEquip: "Termasuk Peralatan Keamanan",
+    fullInsurance: "Asuransi Penuh",
+    instantBooking: "Booking Instan",
+    reserveSpot: "Reservasi Sekarang",
+    chatWA: "Chat WhatsApp",
+    securePayment: "Pembayaran Aman & Konfirmasi Instan",
+    tailoredJourney: "Perjalanan Custom?",
+    customizeTour: "Kami bisa menyesuaikan tour ini sesuai preferensi Anda.",
+    perPax: "/pax",
+    contactMore: "Hubungi kami untuk keterangan lebih lanjut",
+    priceBreakdownTitle: "Rincian Harga Paket",
+    priceBreakdown: {
+      paxHeader: "Jumlah Peserta (Pax)",
+      priceHeader: "Harga per Orang (IDR)",
+      disclaimer:
+        "* Harga dapat berubah sewaktu-waktu. Silakan hubungi kami untuk konfirmasi ketersediaan dan harga final.",
+    },
+  },
+  internationalTrips: {
+    currency: "IDR",
+    hero: {
+      imageAlt: "Latar hero",
+      badge: "Trip Internasional",
+      title: "Paket Tour Luar Negeri",
+      subtitle:
+        "Pilih region, filter harga dan durasi, lalu temukan trip terbaik sesuai kebutuhanmu.",
+    },
+    regionHero: {
+      asia: "Koleksi tour terbaik di Asia — city escape, budaya, kuliner, hingga hidden gems. Pilih paket yang paling cocok dan mulai rencanakan perjalananmu.",
+      default:
+        "Pilih paket tour terbaik berdasarkan tanggal keberangkatan, durasi, dan budget, lalu temukan trip yang cocok untukmu.",
+    },
+    showing: "Menampilkan {shown} dari {total} hasil",
+    sort: {
+      newest: "Tour Terbaru",
+      priceLow: "Harga Terendah",
+      priceHigh: "Harga Tertinggi",
+      durationLow: "Durasi Terpendek",
+      durationHigh: "Durasi Terpanjang",
+    },
+    filters: {
+      title: "Filter",
+      reset: "Reset",
+      region: "Region",
+      price: "Harga",
+      durationDays: "Durasi Hari",
+      month: "Bulan",
+      allMonths: "Semua Bulan",
+      airlines: "Airlines",
+      search: "Cari",
+      searchPlaceholder: "Cari trip...",
+    },
+    pricePresets: {
+      p0_10: "IDR 5 - 10 jt",
+      p11_20: "IDR 11 - 20 jt",
+      p21_30: "IDR 21 - 30 jt",
+      p31_40: "IDR 31 - 40 jt",
+      gt_40: "> IDR 40 jt",
+    },
+    empty: "Tidak ada trip yang cocok dengan filter.",
+    card: {
+      favorite: "Favorit",
+      price: "Harga",
+      seatsAvailable: "Seat Tersedia",
+      soldOut: "Sold Out",
+    },
+  },
+  internationalTourDetail: {
+    overview: "Ringkasan",
+    notFound: "Trip tidak ditemukan",
+    backToTrips: "Kembali ke Internasional",
+    period: "Periode",
+    description: "Deskripsi",
+    priceDetails: "Detail Harga",
+    priceSection: "Harga",
+    excludedCosts: "Harga Belum Termasuk",
+    bookingFee: "Biaya Booking",
+    dayTitle: "Hari {day} — {title}",
+    inclusions: "Harga Termasuk",
+    exclusions: "Harga Tidak Termasuk",
+    seat: "Seat",
+    available: "Tersedia",
+    soldOut: "Sold Out",
+    airlines: "Airlines",
   },
   travelInfo: {
     hero: {

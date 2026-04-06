@@ -7,7 +7,7 @@
       <img
         :src="regionHeroImage"
         class="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
-        alt="Hero Background"
+        :alt="$t('internationalTrips.hero.imageAlt')"
       />
       <div
         class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"
@@ -17,16 +17,16 @@
         class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-20 w-full"
       >
         <nav
-          class="flex mb-6 text-xs font-bold uppercase tracking-widest text-blue-400"
+          class="flex mb-6 text-xs font-bold uppercase tracking-widest text-red-400"
         >
-          <router-link to="/" class="hover:text-white transition-colors"
-            >Home</router-link
-          >
+          <router-link to="/" class="hover:text-white transition-colors">{{
+            $t("nav.home")
+          }}</router-link>
           <span class="mx-3 text-white/30">/</span>
           <router-link
             to="/internasional"
             class="hover:text-white transition-colors"
-            >Internasional</router-link
+            >{{ $t("nav.international") }}</router-link
           >
           <span class="mx-3 text-white/30">/</span>
           <span class="text-white">{{ activeRegion.name }}</span>
@@ -49,35 +49,48 @@
         >
           <div>
             <p
-              class="text-[10px] font-black uppercase tracking-[0.25em] text-blue-600/70"
+              class="text-[10px] font-black uppercase tracking-[0.25em] text-red-600/70"
             >
-              International Trips
+              {{ $t("internationalTrips.hero.badge") }}
             </p>
             <h1
               class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mt-2"
             >
-              Paket Tour Luar Negeri
+              {{ $t("internationalTrips.hero.title") }}
             </h1>
             <p class="text-slate-500 font-medium mt-3 max-w-2xl">
-              Pilih region, filter harga dan durasi, lalu temukan trip terbaik
-              sesuai kebutuhanmu.
+              {{ $t("internationalTrips.hero.subtitle") }}
             </p>
           </div>
 
           <div class="flex items-center gap-3">
             <div class="text-xs font-bold text-slate-500">
-              Menampilkan {{ filteredTrips.length }} dari
-              {{ trips.length }} hasil
+              {{
+                $t("internationalTrips.showing", {
+                  shown: filteredTrips.length,
+                  total: trips.length,
+                })
+              }}
             </div>
             <select
               v-model="sortBy"
-              class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-xs font-black uppercase tracking-widest text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+              class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-xs font-black uppercase tracking-widest text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
             >
-              <option value="newest">Tour Terbaru</option>
-              <option value="price_low">Harga Terendah</option>
-              <option value="price_high">Harga Tertinggi</option>
-              <option value="duration_low">Durasi Terpendek</option>
-              <option value="duration_high">Durasi Terpanjang</option>
+              <option value="newest">
+                {{ $t("internationalTrips.sort.newest") }}
+              </option>
+              <option value="price_low">
+                {{ $t("internationalTrips.sort.priceLow") }}
+              </option>
+              <option value="price_high">
+                {{ $t("internationalTrips.sort.priceHigh") }}
+              </option>
+              <option value="duration_low">
+                {{ $t("internationalTrips.sort.durationLow") }}
+              </option>
+              <option value="duration_high">
+                {{ $t("internationalTrips.sort.durationHigh") }}
+              </option>
             </select>
           </div>
         </div>
@@ -87,17 +100,32 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div v-if="activeRegion" class="flex items-center justify-between gap-4">
         <div class="text-xs font-bold text-slate-500">
-          Menampilkan {{ filteredTrips.length }} dari {{ trips.length }} hasil
+          {{
+            $t("internationalTrips.showing", {
+              shown: filteredTrips.length,
+              total: trips.length,
+            })
+          }}
         </div>
         <select
           v-model="sortBy"
-          class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-xs font-black uppercase tracking-widest text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+          class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-xs font-black uppercase tracking-widest text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
         >
-          <option value="newest">Tour Terbaru</option>
-          <option value="price_low">Harga Terendah</option>
-          <option value="price_high">Harga Tertinggi</option>
-          <option value="duration_low">Durasi Terpendek</option>
-          <option value="duration_high">Durasi Terpanjang</option>
+          <option value="newest">
+            {{ $t("internationalTrips.sort.newest") }}
+          </option>
+          <option value="price_low">
+            {{ $t("internationalTrips.sort.priceLow") }}
+          </option>
+          <option value="price_high">
+            {{ $t("internationalTrips.sort.priceHigh") }}
+          </option>
+          <option value="duration_low">
+            {{ $t("internationalTrips.sort.durationLow") }}
+          </option>
+          <option value="duration_high">
+            {{ $t("internationalTrips.sort.durationHigh") }}
+          </option>
         </select>
       </div>
 
@@ -111,13 +139,13 @@
                 <h2
                   class="text-sm font-black text-slate-900 uppercase tracking-widest"
                 >
-                  Filter
+                  {{ $t("internationalTrips.filters.title") }}
                 </h2>
                 <button
-                  class="text-xs font-black text-blue-600 hover:text-blue-700 uppercase tracking-widest"
+                  class="text-xs font-black text-red-600 hover:text-red-700 uppercase tracking-widest"
                   @click="resetFilters"
                 >
-                  Reset
+                  {{ $t("internationalTrips.filters.reset") }}
                 </button>
               </div>
 
@@ -126,7 +154,7 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Region
+                    {{ $t("internationalTrips.filters.region") }}
                   </div>
                   <div class="space-y-2.5">
                     <label
@@ -137,7 +165,7 @@
                       <span class="flex items-center gap-3">
                         <input
                           type="checkbox"
-                          class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600"
+                          class="h-4 w-4 rounded border-slate-300 text-red-600 focus:ring-red-600"
                           :value="r.slug"
                           v-model="selectedRegions"
                         />
@@ -154,7 +182,7 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Harga
+                    {{ $t("internationalTrips.filters.price") }}
                   </div>
                   <div class="grid grid-cols-2 gap-2">
                     <button
@@ -164,11 +192,11 @@
                       class="h-10 rounded-2xl border text-xs font-black uppercase tracking-widest transition-colors"
                       :class="
                         activePricePresets.includes(p.key)
-                          ? 'border-blue-600 bg-blue-50 text-blue-700'
+                          ? 'border-red-600 bg-red-50 text-red-700'
                           : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                       "
                     >
-                      {{ p.label }}
+                      {{ $t(p.labelKey) }}
                     </button>
                   </div>
                 </div>
@@ -177,7 +205,7 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Durasi Hari
+                    {{ $t("internationalTrips.filters.durationDays") }}
                   </div>
                   <div class="grid grid-cols-3 gap-2">
                     <button
@@ -187,11 +215,11 @@
                       class="h-9 rounded-2xl border text-xs font-black uppercase tracking-widest transition-colors"
                       :class="
                         selectedDurations.includes(d)
-                          ? 'border-blue-600 bg-blue-50 text-blue-700'
+                          ? 'border-red-600 bg-red-50 text-red-700'
                           : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                       "
                     >
-                      {{ d }} Hari
+                      {{ d }} {{ $t("tour.days") }}
                     </button>
                   </div>
                 </div>
@@ -200,13 +228,15 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Bulan
+                    {{ $t("internationalTrips.filters.month") }}
                   </div>
                   <select
                     v-model="selectedMonth"
-                    class="w-full h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+                    class="w-full h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
                   >
-                    <option value="">Semua Bulan</option>
+                    <option value="">
+                      {{ $t("internationalTrips.filters.allMonths") }}
+                    </option>
                     <option
                       v-for="m in monthOptions"
                       :key="m.value"
@@ -221,7 +251,7 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Airlines
+                    {{ $t("internationalTrips.filters.airlines") }}
                   </div>
                   <div
                     class="space-y-2.5 max-h-56 overflow-auto custom-scrollbar pr-1"
@@ -233,7 +263,7 @@
                     >
                       <input
                         type="checkbox"
-                        class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600"
+                        class="h-4 w-4 rounded border-slate-300 text-red-600 focus:ring-red-600"
                         :value="a"
                         v-model="selectedAirlines"
                       />
@@ -246,13 +276,15 @@
                   <div
                     class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3"
                   >
-                    Search
+                    {{ $t("internationalTrips.filters.search") }}
                   </div>
                   <input
                     v-model="searchQuery"
                     type="text"
-                    placeholder="Cari trip..."
-                    class="w-full h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
+                    :placeholder="
+                      $t('internationalTrips.filters.searchPlaceholder')
+                    "
+                    class="w-full h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
                   />
                 </div>
               </div>
@@ -266,7 +298,7 @@
             class="text-center py-24 bg-slate-50 rounded-[2.5rem] border border-slate-100"
           >
             <p class="text-slate-500 font-bold">
-              Tidak ada trip yang cocok dengan filter.
+              {{ $t("internationalTrips.empty") }}
             </p>
           </div>
 
@@ -278,7 +310,7 @@
               v-for="trip in sortedTrips"
               :key="trip.id"
               :to="`/internasional/tour/${trip.slug}`"
-              class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all overflow-hidden"
+              class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-red-900/10 transition-all overflow-hidden"
             >
               <div class="relative h-56 overflow-hidden">
                 <img
@@ -293,14 +325,14 @@
                   <span
                     class="px-4 py-1.5 bg-amber-400 text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl"
                   >
-                    {{ trip.duration_days }} Hari
+                    {{ trip.duration_days }} {{ $t("tour.days") }}
                   </span>
                 </div>
                 <div class="absolute top-5 right-5">
                   <button
                     @click.prevent
                     class="w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors"
-                    title="Favorite"
+                    :title="$t('internationalTrips.card.favorite')"
                   >
                     <Heart class="w-5 h-5" />
                   </button>
@@ -309,7 +341,7 @@
 
               <div class="p-7">
                 <div
-                  class="text-[11px] font-black text-blue-600 uppercase tracking-widest"
+                  class="text-[11px] font-black text-red-600 uppercase tracking-widest"
                 >
                   {{ regionLabel(trip.region) }}
                 </div>
@@ -335,19 +367,18 @@
                       <div
                         class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]"
                       >
-                        Price
+                        {{ $t("internationalTrips.card.price") }}
                       </div>
                       <div class="text-xl font-black text-red-500">
-                        IDR {{ formatPriceShort(trip.price_idr) }}
+                        {{ $t("internationalTrips.currency") }}
+                        {{ formatPriceShort(trip.price_idr) }}
                       </div>
                     </div>
                     <div class="flex items-center gap-2 text-xs font-bold">
                       <span
                         class="w-2 h-2 rounded-full"
                         :class="
-                          trip.seats_available
-                            ? 'bg-emerald-500'
-                            : 'bg-slate-300'
+                          trip.seats_available ? 'bg-red-500' : 'bg-slate-300'
                         "
                       ></span>
                       <span
@@ -358,7 +389,9 @@
                         "
                       >
                         {{
-                          trip.seats_available ? "Seat Tersedia" : "Sold Out"
+                          trip.seats_available
+                            ? $t("internationalTrips.card.seatsAvailable")
+                            : $t("internationalTrips.card.soldOut")
                         }}
                       </span>
                     </div>
@@ -386,7 +419,7 @@ import {
 } from "./dummyInternationalTours";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const trips = ref([]);
 const regions = ref([]);
@@ -400,11 +433,36 @@ const searchQuery = ref("");
 const sortBy = ref("newest");
 
 const pricePresets = [
-  { key: "0_10", label: "IDR 5 - 10 jt", min: 5000000, max: 10000000 },
-  { key: "11_20", label: "IDR 11 - 20 jt", min: 11000000, max: 20000000 },
-  { key: "21_30", label: "IDR 21 - 30 jt", min: 21000000, max: 30000000 },
-  { key: "31_40", label: "IDR 31 - 40 jt", min: 31000000, max: 40000000 },
-  { key: "gt_40", label: "> IDR 40 jt", min: 40000001, max: Infinity },
+  {
+    key: "0_10",
+    labelKey: "internationalTrips.pricePresets.p0_10",
+    min: 5000000,
+    max: 10000000,
+  },
+  {
+    key: "11_20",
+    labelKey: "internationalTrips.pricePresets.p11_20",
+    min: 11000000,
+    max: 20000000,
+  },
+  {
+    key: "21_30",
+    labelKey: "internationalTrips.pricePresets.p21_30",
+    min: 21000000,
+    max: 30000000,
+  },
+  {
+    key: "31_40",
+    labelKey: "internationalTrips.pricePresets.p31_40",
+    min: 31000000,
+    max: 40000000,
+  },
+  {
+    key: "gt_40",
+    labelKey: "internationalTrips.pricePresets.gt_40",
+    min: 40000001,
+    max: Infinity,
+  },
 ];
 
 const durationPresets = [5, 6, 7, 8, 9, 10, 11, 12, 13];
@@ -452,10 +510,9 @@ const regionHeroDescription = computed(() => {
   const desc = activeRegion.value?.description;
   if (typeof desc === "string" && desc.trim()) return desc;
 
-  if (regionSlug.value === "asia") {
-    return "Koleksi tour terbaik di Asia — city escape, budaya, kuliner, hingga hidden gems. Pilih paket yang paling cocok dan mulai rencanakan perjalananmu.";
-  }
-  return "Pilih paket tour terbaik berdasarkan tanggal keberangkatan, durasi, dan budget, lalu temukan trip yang cocok untukmu.";
+  if (regionSlug.value === "asia")
+    return t("internationalTrips.regionHero.asia");
+  return t("internationalTrips.regionHero.default");
 });
 
 const parseMonthKey = (isoDate) => {
@@ -468,6 +525,14 @@ const parseMonthKey = (isoDate) => {
 };
 
 const monthOptions = computed(() => {
+  const localeMap = {
+    id: "id-ID",
+    en: "en-US",
+    zh: "zh-CN",
+    ko: "ko-KR",
+  };
+
+  const dateLocale = localeMap[locale.value] || "en-US";
   const set = new Set(
     trips.value.map((t) => parseMonthKey(t.start_date)).filter(Boolean),
   );
@@ -475,7 +540,7 @@ const monthOptions = computed(() => {
   return arr.map((key) => {
     const [y, m] = key.split("-");
     const date = new Date(Number(y), Number(m) - 1, 1);
-    const label = date.toLocaleString("id-ID", {
+    const label = date.toLocaleString(dateLocale, {
       month: "long",
       year: "2-digit",
     });

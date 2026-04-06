@@ -9,7 +9,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
           <div class="col-span-1 md:col-span-2">
             <h3
-              class="text-3xl font-black text-blue-500 mb-8 tracking-tighter italic uppercase"
+              class="text-3xl font-black text-red-500 mb-8 tracking-tighter italic uppercase"
             >
               WelcomeManado
             </h3>
@@ -20,19 +20,19 @@
             </p>
             <div class="flex space-x-6">
               <div
-                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer text-xs font-bold"
+                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer text-xs font-bold"
               >
                 IG
               </div>
               <div
-                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer text-xs font-bold"
+                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer text-xs font-bold"
               >
                 FB
               </div>
               <a
                 href="https://wa.me/6282173738822"
                 target="_blank"
-                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer text-xs font-bold"
+                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer text-xs font-bold"
               >
                 WA
               </a>
@@ -48,14 +48,14 @@
               <li>
                 <router-link
                   to="/"
-                  class="hover:text-blue-500 transition-colors flex items-center"
+                  class="hover:text-red-500 transition-colors flex items-center"
                   ><span class="mr-2">#</span> {{ $t("nav.home") }}</router-link
                 >
               </li>
               <li>
                 <router-link
                   to="/about"
-                  class="hover:text-blue-500 transition-colors flex items-center"
+                  class="hover:text-red-500 transition-colors flex items-center"
                   ><span class="mr-2">#</span>
                   {{ $t("nav.about") }}</router-link
                 >
@@ -63,7 +63,7 @@
               <li>
                 <router-link
                   to="/contact"
-                  class="hover:text-blue-500 transition-colors flex items-center"
+                  class="hover:text-red-500 transition-colors flex items-center"
                   ><span class="mr-2">#</span>
                   {{ $t("nav.contact") }}</router-link
                 >
@@ -78,15 +78,15 @@
             </h4>
             <div class="space-y-6 text-gray-400 text-sm font-medium">
               <p class="flex items-start">
-                <span class="text-blue-500 mr-3 mt-1 text-xs">●</span> Manado,
+                <span class="text-red-500 mr-3 mt-1 text-xs">●</span> Manado,
                 North Sulawesi, Indonesia
               </p>
               <p class="flex items-start">
-                <span class="text-blue-500 mr-3 mt-1 text-xs">●</span> +62
+                <span class="text-red-500 mr-3 mt-1 text-xs">●</span> +62
                 821-7373-8822
               </p>
               <p class="flex items-start">
-                <span class="text-blue-500 mr-3 mt-1 text-xs">●</span>
+                <span class="text-red-500 mr-3 mt-1 text-xs">●</span>
                 info@welcomemanado.com
               </p>
             </div>

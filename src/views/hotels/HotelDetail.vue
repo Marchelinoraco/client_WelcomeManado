@@ -1,10 +1,10 @@
 <template>
   <div
-    class="selection:bg-blue-100 selection:text-blue-700 font-sans min-h-screen bg-slate-50 pt-20"
+    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50 pt-20"
   >
     <div v-if="!hotel" class="flex items-center justify-center min-h-screen">
       <div
-        class="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"
+        class="animate-spin rounded-full h-12 w-12 border-4 border-red-600 border-t-transparent"
       ></div>
     </div>
 
@@ -28,7 +28,7 @@
             class="inline-flex items-center text-white/70 hover:text-white mb-6 transition-colors uppercase tracking-widest text-xs font-bold"
           >
             <ArrowLeft class="w-4 h-4 mr-2" />
-            Back to Hotels
+            {{ $t("hotelDetail.back") }}
           </router-link>
 
           <div class="flex items-center space-x-2 mb-4">
@@ -39,9 +39,9 @@
                 class="w-5 h-5 text-amber-500 fill-amber-500"
               />
             </div>
-            <span class="text-white font-bold ml-2"
-              >{{ hotel.stars }}-Star Premium Hotel</span
-            >
+            <span class="text-white font-bold ml-2">{{
+              $t("hotelDetail.starsLabel", { stars: hotel.stars })
+            }}</span>
           </div>
 
           <h1
@@ -51,8 +51,10 @@
           </h1>
 
           <div class="flex items-center text-white/80 space-x-2">
-            <MapPin class="w-5 h-5 text-blue-500" />
-            <span class="text-lg font-medium">{{ hotel.location }}</span>
+            <MapPin class="w-5 h-5 text-red-500" />
+            <span class="text-lg font-medium">{{
+              hotel._location || hotel.location
+            }}</span>
           </div>
         </div>
       </div>
@@ -66,13 +68,13 @@
               <h2
                 class="text-2xl font-black text-slate-900 mb-6 uppercase tracking-widest relative inline-block"
               >
-                Overview
+                {{ $t("hotelDetail.overview") }}
                 <div
-                  class="absolute -bottom-2 left-0 w-1/2 h-1 bg-blue-600 rounded-full"
+                  class="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"
                 ></div>
               </h2>
               <p class="text-slate-600 text-lg leading-relaxed font-medium">
-                {{ hotel.description }}
+                {{ hotel._description || hotel.description }}
               </p>
             </section>
 
@@ -82,26 +84,34 @@
               <div
                 class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
               >
-                <Coffee class="w-8 h-8 text-blue-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">Breakfast</span>
+                <Coffee class="w-8 h-8 text-red-600 mb-3" />
+                <span class="font-bold text-slate-700 text-sm">{{
+                  $t("hotelDetail.amenities.breakfast")
+                }}</span>
               </div>
               <div
                 class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
               >
-                <Wifi class="w-8 h-8 text-blue-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">Free Wi-Fi</span>
+                <Wifi class="w-8 h-8 text-red-600 mb-3" />
+                <span class="font-bold text-slate-700 text-sm">{{
+                  $t("hotelDetail.amenities.wifi")
+                }}</span>
               </div>
               <div
                 class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
               >
-                <Car class="w-8 h-8 text-blue-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">Parking</span>
+                <Car class="w-8 h-8 text-red-600 mb-3" />
+                <span class="font-bold text-slate-700 text-sm">{{
+                  $t("hotelDetail.amenities.parking")
+                }}</span>
               </div>
               <div
                 class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
               >
-                <Wind class="w-8 h-8 text-blue-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">AC Rooms</span>
+                <Wind class="w-8 h-8 text-red-600 mb-3" />
+                <span class="font-bold text-slate-700 text-sm">{{
+                  $t("hotelDetail.amenities.ac")
+                }}</span>
               </div>
             </section>
           </div>
@@ -112,27 +122,27 @@
               class="bg-white rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/50 border border-slate-100 sticky top-32"
             >
               <h3 class="text-xl font-black text-slate-900 mb-2">
-                Book Your Stay
+                {{ $t("hotelDetail.booking.title") }}
               </h3>
               <p class="text-slate-500 text-sm mb-8 font-medium">
-                Get the best rates by booking directly with our agents.
+                {{ $t("hotelDetail.booking.subtitle") }}
               </p>
 
               <div class="space-y-4 mb-8">
                 <div
                   class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl"
                 >
-                  <span class="text-slate-500 font-medium text-sm"
-                    >Check-in</span
-                  >
+                  <span class="text-slate-500 font-medium text-sm">{{
+                    $t("hotelDetail.booking.checkIn")
+                  }}</span>
                   <span class="font-bold text-slate-900 text-sm">14:00 PM</span>
                 </div>
                 <div
                   class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl"
                 >
-                  <span class="text-slate-500 font-medium text-sm"
-                    >Check-out</span
-                  >
+                  <span class="text-slate-500 font-medium text-sm">{{
+                    $t("hotelDetail.booking.checkOut")
+                  }}</span>
                   <span class="font-bold text-slate-900 text-sm">12:00 PM</span>
                 </div>
               </div>
@@ -143,14 +153,14 @@
                   hotel.name
                 "
                 target="_blank"
-                class="w-full py-5 bg-emerald-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-emerald-600 transition-colors flex items-center justify-center shadow-lg shadow-emerald-500/20 active:scale-95"
+                class="w-full py-5 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-red-700 transition-colors flex items-center justify-center shadow-lg shadow-red-600/20 active:scale-95"
               >
                 <MessageCircle class="w-5 h-5 mr-3" />
-                Book via WhatsApp
+                {{ $t("hotelDetail.booking.cta") }}
               </a>
 
               <p class="text-center text-xs text-slate-400 font-medium mt-6">
-                Fast response within 5 minutes.
+                {{ $t("hotelDetail.booking.fastResponse") }}
               </p>
             </div>
           </div>
@@ -163,7 +173,9 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { hotels } from "@/data/hotels";
+import { translateText } from "@/services/translate";
 import {
   Star,
   MapPin,
@@ -176,11 +188,54 @@ import {
 } from "lucide-vue-next";
 
 const route = useRoute();
+const { locale } = useI18n();
 const hotel = ref(null);
+const translatedCache = new Map();
 
-const loadHotel = () => {
+const loadHotel = async () => {
   const slugId = route.params.id; // router was defined with :id
-  hotel.value = hotels.find((h) => h.slug === slugId);
+  const baseHotel = hotels.find((h) => h.slug === slugId);
+
+  if (!baseHotel) {
+    hotel.value = null;
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  const lang = locale.value;
+  const cacheKey = `${lang}:${baseHotel.slug}`;
+
+  if (translatedCache.has(cacheKey)) {
+    hotel.value = translatedCache.get(cacheKey);
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  if (lang === "en") {
+    const value = {
+      ...baseHotel,
+      _description: undefined,
+      _location: undefined,
+    };
+    translatedCache.set(cacheKey, value);
+    hotel.value = value;
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  const [desc, loc] = await Promise.all([
+    translateText(baseHotel.description, lang, "auto"),
+    translateText(baseHotel.location, lang, "auto"),
+  ]);
+
+  const value = {
+    ...baseHotel,
+    _description: desc,
+    _location: loc,
+  };
+
+  translatedCache.set(cacheKey, value);
+  hotel.value = value;
   window.scrollTo(0, 0);
 };
 
@@ -189,7 +244,7 @@ onMounted(() => {
 });
 
 watch(
-  () => route.params,
+  () => [route.params.id, locale.value],
   () => {
     loadHotel();
   },

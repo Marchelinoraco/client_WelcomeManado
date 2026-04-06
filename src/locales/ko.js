@@ -55,6 +55,95 @@ export default {
       chatWA: "WhatsApp 채팅",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "마나도의 호텔",
+      badge: "프리미엄 숙소",
+      title1: "럭셔리",
+      title2: "스테이",
+      description:
+        "마나도의 최고의 호텔과 리조트를 만나보세요. 해변의 천국부터 도심 랜드마크까지, 완벽한 휴식이 기다립니다.",
+    },
+    search: {
+      placeholder: "이름 또는 위치로 호텔 검색...",
+    },
+    categories: {
+      all: "전체",
+      resort: "리조트",
+      cityHotel: "도심 호텔",
+      boutique: "부티크",
+      ecoLodge: "에코 로지",
+    },
+    empty: {
+      title: "호텔을 찾을 수 없습니다",
+      description:
+        '"{query}"와(과) 일치하는 호텔이 없습니다. 다른 검색어를 입력해 보세요!',
+    },
+    card: {
+      featured: "추천 선택",
+    },
+  },
+  hotelDetail: {
+    back: "호텔로 돌아가기",
+    starsLabel: "{stars}성급 프리미엄 호텔",
+    overview: "개요",
+    amenities: {
+      breakfast: "조식",
+      wifi: "무료 Wi‑Fi",
+      parking: "주차",
+      ac: "에어컨 객실",
+    },
+    booking: {
+      title: "숙박 예약",
+      subtitle: "에이전트를 통해 직접 예약하고 최저가 혜택을 받으세요.",
+      checkIn: "체크인",
+      checkOut: "체크아웃",
+      cta: "WhatsApp으로 예약",
+      fastResponse: "5분 이내 빠른 응답.",
+    },
+  },
+  contactPage: {
+    hero: {
+      badge: "언제든 도와드릴게요",
+      title1: "함께",
+      title2: "연결해요",
+      description:
+        "다음 여행을 시작할 준비가 되셨나요? 여행 전문가에게 문의하고 세부 사항은 저희가 도와드리겠습니다.",
+    },
+    info: {
+      email: "이메일",
+      phone: "전화",
+      office: "오피스",
+      officeValue: "마나도, 북술라웨시",
+    },
+    social: {
+      title: "여정을 함께해요",
+    },
+    form: {
+      title1: "메시지",
+      title2: "보내기",
+      fields: {
+        fullName: {
+          label: "이름",
+          placeholder: "이름을 입력하세요",
+        },
+        email: {
+          label: "이메일 주소",
+          placeholder: "john@example.com",
+        },
+        subject: {
+          label: "제목",
+          placeholder: "관심 있는 내용을 알려주세요",
+        },
+        message: {
+          label: "메시지",
+          placeholder: "여행 계획이나 질문을 공유해 주세요...",
+        },
+      },
+      submit: "메시지 보내기",
+      success: "메시지를 보내주셔서 감사합니다! 곧 연락드리겠습니다.",
+    },
+  },
   food: {
     title: "마나도의 음식 및 요리",
     description:
@@ -323,11 +412,20 @@ export default {
   },
   common: {
     explore: "탐험",
+    address: "주소",
+    phone: "전화",
+    socialMedia: "소셜 미디어",
+    defaultLocation: "마나도, 북술라웨시",
+    officeAddress: "Jl. A. A. Maramis No. 171, 마나도, 북술라웨시",
+  },
+  localTourDetail: {
+    lunch: "마나도 로컬 런치",
   },
   tour: {
     duration: "기간",
     groupSize: "그룹 규모",
     language: "언어",
+    languageValue: "ID / EN",
     insurance: "보험",
     pax: "최소 2인",
     included: "포함됨",
@@ -352,9 +450,85 @@ export default {
     securePayment: "안전한 결제 및 즉시 확인",
     tailoredJourney: "맞춤형 여행?",
     customizeTour: "당신의 선호도에 맞춰 이 투어를 정확하게 맞춤화해 드립니다.",
+    perPax: "/인",
+    contactMore: "자세한 내용은 문의해 주세요",
+    priceBreakdownTitle: "패키지 가격 상세",
+    priceBreakdown: {
+      paxHeader: "인원(Pax)",
+      priceHeader: "1인 가격(IDR)",
+      disclaimer:
+        "* 가격은 변동될 수 있습니다. 잔여 좌석과 최종 가격은 문의해 주세요.",
+    },
     startingFrom: "시작 가격",
     contactForPrice: "가격 문의",
     inquiryNow: "지금 문의",
     viewDetails: "상세 보기",
+  },
+  internationalTrips: {
+    currency: "IDR",
+    hero: {
+      imageAlt: "히어로 배경",
+      badge: "해외 여행",
+      title: "해외 투어 패키지",
+      subtitle:
+        "지역을 선택하고 가격과 기간을 필터링하여 최적의 여행을 찾아보세요.",
+    },
+    regionHero: {
+      asia: "아시아 베스트 투어 모음 — 도시 여행, 문화, 미식, 숨은 명소까지. 원하는 패키지를 선택하고 여행을 시작하세요.",
+      default:
+        "출발 날짜, 기간, 예산에 따라 최적의 패키지를 선택하고 나에게 맞는 여행을 찾아보세요.",
+    },
+    showing: "{total}개 중 {shown}개 표시",
+    sort: {
+      newest: "최신순",
+      priceLow: "낮은 가격순",
+      priceHigh: "높은 가격순",
+      durationLow: "짧은 기간순",
+      durationHigh: "긴 기간순",
+    },
+    filters: {
+      title: "필터",
+      reset: "초기화",
+      region: "지역",
+      price: "가격",
+      durationDays: "기간(일)",
+      month: "월",
+      allMonths: "전체 월",
+      airlines: "항공사",
+      search: "검색",
+      searchPlaceholder: "여행 검색...",
+    },
+    pricePresets: {
+      p0_10: "IDR 5 - 10M",
+      p11_20: "IDR 11 - 20M",
+      p21_30: "IDR 21 - 30M",
+      p31_40: "IDR 31 - 40M",
+      gt_40: "> IDR 40M",
+    },
+    empty: "선택한 필터에 맞는 여행이 없습니다.",
+    card: {
+      favorite: "즐겨찾기",
+      price: "가격",
+      seatsAvailable: "좌석 가능",
+      soldOut: "매진",
+    },
+  },
+  internationalTourDetail: {
+    overview: "개요",
+    notFound: "여행을 찾을 수 없습니다",
+    backToTrips: "해외 여행으로 돌아가기",
+    period: "기간",
+    description: "설명",
+    priceDetails: "가격 상세",
+    priceSection: "가격",
+    excludedCosts: "불포함 비용",
+    bookingFee: "예약금",
+    dayTitle: "{day}일차 — {title}",
+    inclusions: "포함 사항",
+    exclusions: "불포함 사항",
+    seat: "좌석",
+    available: "가능",
+    soldOut: "매진",
+    airlines: "항공사",
   },
 };

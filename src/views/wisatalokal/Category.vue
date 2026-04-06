@@ -18,7 +18,7 @@
         class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-20 w-full"
       >
         <nav
-          class="flex mb-6 text-xs font-bold uppercase tracking-widest text-blue-400"
+          class="flex mb-6 text-xs font-bold uppercase tracking-widest text-red-400"
         >
           <router-link to="/" class="hover:text-white transition-colors"
             >Home</router-link
@@ -41,7 +41,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div v-if="loading" class="text-center py-20">
         <div
-          class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"
+          class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-600 border-t-transparent"
         ></div>
       </div>
 
@@ -56,7 +56,7 @@
               class="px-8 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300"
               :class="
                 activeTab === tab.id
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                  ? 'bg-red-600 text-white shadow-lg shadow-red-200'
                   : 'text-slate-500 hover:text-slate-900'
               "
             >
