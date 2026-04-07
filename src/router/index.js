@@ -1,20 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/home/Home.vue";
-import Category from "../views/wisatalokal/Category.vue";
-import TourDetail from "../views/wisatalokal/TourDetail.vue";
-import NasionalCategory from "../views/nasional/Category.vue";
-import NasionalTourDetail from "../views/nasional/TourDetail.vue";
-import InternationalTrips from "../views/internasional/Trips.vue";
-import InternationalTourDetail from "../views/internasional/TourDetail.vue";
-import About from "../views/about/About.vue";
-import Contact from "../views/contact/Contact.vue";
-import Hotels from "../views/hotels/Hotels.vue";
-import HotelDetail from "../views/hotels/HotelDetail.vue";
-import TravelInfo from "../views/travelinfo/TravelInfo.vue";
-import TravelCulture from "../views/travelinfo/TravelCulture.vue";
-import TravelTransport from "../views/travelinfo/TravelTransport.vue";
-import TravelShopping from "../views/travelinfo/TravelShopping.vue";
-import TravelFood from "../views/travelinfo/TravelFood.vue";
 
 const routes = [
   {
@@ -25,82 +10,82 @@ const routes = [
   {
     path: "/category/:slug",
     name: "Category",
-    component: Category,
+    component: () => import("../views/wisatalokal/Category.vue"),
   },
   {
     path: "/tour/:slug",
     name: "TourDetail",
-    component: TourDetail,
+    component: () => import("../views/wisatalokal/TourDetail.vue"),
   },
   {
     path: "/nasional/:slug",
     name: "NasionalCategory",
-    component: NasionalCategory,
+    component: () => import("../views/nasional/Category.vue"),
   },
   {
     path: "/nasional/tour/:slug",
     name: "NasionalTourDetail",
-    component: NasionalTourDetail,
+    component: () => import("../views/nasional/TourDetail.vue"),
   },
   {
     path: "/internasional",
     name: "InternationalTrips",
-    component: InternationalTrips,
+    component: () => import("../views/internasional/Trips.vue"),
   },
   {
     path: "/internasional/region/:slug",
     name: "InternationalTripsByRegion",
-    component: InternationalTrips,
+    component: () => import("../views/internasional/Trips.vue"),
   },
   {
     path: "/internasional/tour/:slug",
     name: "InternationalTourDetail",
-    component: InternationalTourDetail,
+    component: () => import("../views/internasional/TourDetail.vue"),
   },
   {
     path: "/about",
     name: "About",
-    component: About,
+    component: () => import("../views/about/About.vue"),
   },
   {
     path: "/contact",
     name: "Contact",
-    component: Contact,
+    component: () => import("../views/contact/Contact.vue"),
   },
   {
     path: "/hotels",
     name: "Hotels",
-    component: Hotels,
+    component: () => import("../views/hotels/Hotels.vue"),
   },
   {
     path: "/hotel/:id",
     name: "HotelDetail",
-    component: HotelDetail,
+    component: () => import("../views/hotels/HotelDetail.vue"),
   },
   {
     path: "/travel-info",
     name: "TravelInfo",
-    component: TravelInfo,
+    component: () => import("../views/travelinfo/TravelInfo.vue"),
   },
   {
     path: "/travel-info/history-culture",
     name: "TravelCulture",
-    component: TravelCulture,
+    component: () => import("../views/travelinfo/TravelCulture.vue"),
   },
   {
     path: "/travel-info/transportation",
     name: "TravelTransport",
-    component: TravelTransport,
+    component: () => import("../views/travelinfo/TravelTransport.vue"),
   },
   {
     path: "/travel-info/shopping",
     name: "TravelShopping",
-    component: TravelShopping,
+    component: () => import("../views/travelinfo/TravelShopping.vue"),
   },
   {
     path: "/travel-info/food-cuisine",
     name: "TravelFood",
-    component: TravelFood,
+    component: () => import("../views/travelinfo/TravelFood.vue"),
   },
 ];
 

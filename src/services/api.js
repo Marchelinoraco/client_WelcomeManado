@@ -1,8 +1,11 @@
 import axios from "axios";
 import { dummyCategories, dummyTours } from "../data/dummyTours";
 
+const envBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const defaultBaseUrl = import.meta.env.PROD ? "/api" : "http://127.0.0.1:8000/api";
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api",
+  baseURL: envBaseUrl || defaultBaseUrl,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
