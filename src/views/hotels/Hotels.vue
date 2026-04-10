@@ -182,7 +182,7 @@
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Star, MapPin, Building, ArrowRight, Search } from "lucide-vue-next";
-import { hotels } from "@/data/hotels";
+import { getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
 
 const { locale } = useI18n();
@@ -225,13 +225,39 @@ const runWithConcurrency = async (items, limit, worker) => {
   return results;
 };
 
-const buildBaseHotels = () =>
-  hotels.map((h) => ({
-    ...h,
-    categoryKey: categoryToKey[h.category] || "all",
-    _description: undefined,
-    _location: undefined,
-  }));
+const fetchHotels = async () => {
+  const res = await getHotels();
+  const arr = Array.isArray(res.data?.data?.data)
+    ? res.data.data.data
+    : Array.isArray(res.data?.data)
+    ? res.data.data
+    : [];
+  return arr.map((h) => {
+    const image =
+      h.primary_image ||
+      h.images?.[0]?.image_path ||
+      "https://images.unsplash.com/photo-1551882547-ff40c0d588fa?auto=format&fit=crop&w=2400&q=80";
+    const categoryLabel = h.category
+      ? h.category.replace(/_/g, " ").replace(/\b\w/g, (m) => m.toUpperCase())
+      : "All";
+    const categoryKey =
+      categoryToKey[categoryLabel] ||
+      (h.category || "all").replace(/ /g, "").replace(/-/g, "").toLowerCase();
+    return {
+      id: h.id,
+      name: h.name,
+      slug: h.slug,
+      description: h.description || "",
+      location: h.location || "",
+      _description: undefined,
+      _location: undefined,
+      stars: Number(h.stars || 0),
+      image,
+      category: categoryLabel,
+      categoryKey,
+    };
+  });
+};
 
 const ensureTranslatedHotels = async () => {
   const lang = locale.value;
@@ -241,7 +267,7 @@ const ensureTranslatedHotels = async () => {
     return;
   }
 
-  const base = buildBaseHotels();
+  const base = await fetchHotels();
 
   if (lang === "en") {
     translatedCache.set(lang, base);

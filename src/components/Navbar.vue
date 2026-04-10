@@ -59,7 +59,7 @@
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex lg:items-center lg:space-x-1 xl:space-x-3">
+        <div class="hidden xl:flex xl:items-center xl:space-x-1 2xl:space-x-3">
           <!-- Home Link -->
           <router-link
             to="/"
@@ -193,6 +193,18 @@
             >{{ $t("nav.hotels") }}</router-link
           >
 
+          <!-- Gallery -->
+          <router-link
+            to="/gallery"
+            class="px-4 py-2 text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            :class="
+              isScrolled
+                ? 'text-slate-600 hover:text-red-600'
+                : 'text-white/90 hover:text-white hover:bg-white/10'
+            "
+            >{{ $t("nav.gallery") }}</router-link
+          >
+
           <!-- Travel Info -->
           <div class="relative group whitespace-nowrap">
             <button
@@ -210,26 +222,38 @@
             </button>
 
             <div
-              class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform group-hover:translate-y-0 translate-y-4 pointer-events-none group-hover:pointer-events-auto"
+              class="absolute right-0 top-full pt-3 w-[22rem] max-w-[calc(100vw-2rem)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform group-hover:translate-y-0 translate-y-4 pointer-events-none group-hover:pointer-events-auto z-50"
             >
               <div
-                class="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-50 p-3 grid gap-1"
+                class="bg-white rounded-[2.25rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100/60 p-2"
               >
-                <router-link
-                  v-for="(item, index) in travelInfoMenu"
-                  :key="index"
-                  :to="item.path"
-                  class="flex items-center px-5 py-4 text-[13px] font-bold text-slate-600 hover:bg-red-50/50 hover:text-red-600 rounded-2xl transition-all group/item"
+                <div
+                  class="px-5 pt-3 pb-2 text-[10px] font-black text-slate-400 uppercase tracking-widest"
                 >
-                  <div
-                    class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center mr-4 group-hover/item:bg-white group-hover/item:shadow-sm transition-all shrink-0"
+                  {{ $t("nav.travelInfo") }}
+                </div>
+                <div class="grid gap-1">
+                  <router-link
+                    v-for="(item, index) in travelInfoMenu"
+                    :key="index"
+                    :to="item.path"
+                    class="flex items-center justify-between px-5 py-3.5 text-[13px] font-bold text-slate-700 hover:bg-red-50/60 hover:text-red-600 rounded-2xl transition-all group/item"
                   >
-                    <Compass
-                      class="w-4 h-4 text-slate-400 group-hover/item:text-red-600"
+                    <div class="flex items-center min-w-0">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-50 to-slate-50 flex items-center justify-center mr-4 group-hover/item:from-white group-hover/item:to-white group-hover/item:shadow-sm transition-all shrink-0"
+                      >
+                        <Compass
+                          class="w-4 h-4 text-slate-400 group-hover/item:text-red-600"
+                        />
+                      </div>
+                      <span class="truncate">{{ $t("nav." + item.key) }}</span>
+                    </div>
+                    <ChevronRight
+                      class="w-4 h-4 text-slate-300 opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all"
                     />
-                  </div>
-                  {{ $t("nav." + item.key) }}
-                </router-link>
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -248,7 +272,7 @@
 
         <!-- Right Side Utility -->
         <div
-          class="hidden lg:flex items-center space-x-4 ml-6 pl-6 border-l border-slate-200/20"
+          class="hidden xl:flex items-center space-x-4 ml-6 pl-6 border-l border-slate-200/20"
         >
           <!-- Language Selector -->
           <div class="relative group/lang">
@@ -303,7 +327,7 @@
         </div>
 
         <!-- Mobile Menu Button -->
-        <div class="lg:hidden flex items-center">
+        <div class="xl:hidden flex items-center">
           <button
             @click="isMobileMenuOpen = true"
             class="w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 active:scale-90"
@@ -321,7 +345,7 @@
 
     <!-- Mobile Menu Drawer -->
     <Teleport to="body">
-      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[1000] lg:hidden">
+      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[1000] xl:hidden">
         <!-- Backdrop -->
         <transition
           enter-active-class="transition duration-700 ease-out"
@@ -380,9 +404,10 @@
                 <div class="grid gap-5">
                   <router-link
                     v-for="link in [
-                      { to: '/', label: 'Home' },
-                      { to: '/hotels', label: 'Hotels' },
-                      { to: '/about', label: 'About Us' },
+                      { to: '/', label: $t('nav.home') },
+                      { to: '/gallery', label: $t('nav.gallery') },
+                      { to: '/hotels', label: $t('nav.hotels') },
+                      { to: '/about', label: $t('nav.about') },
                     ]"
                     :key="link.to"
                     :to="link.to"
@@ -467,17 +492,22 @@
                       :key="index"
                       :to="item.path"
                       @click="isMobileMenuOpen = false"
-                      class="flex items-center p-4 bg-slate-50 rounded-2xl hover:bg-red-50 transition-all group"
+                      class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-2xl hover:bg-red-50/50 hover:border-red-100 transition-all group active:scale-[0.99]"
                     >
-                      <div
-                        class="w-9 h-9 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
-                      >
-                        <Compass class="w-4 h-4 text-red-600" />
+                      <div class="flex items-center min-w-0">
+                        <div
+                          class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-50 to-slate-50 flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
+                        >
+                          <Compass class="w-4 h-4 text-red-600" />
+                        </div>
+                        <span
+                          class="font-bold text-slate-800 group-hover:text-red-600 transition-colors truncate"
+                          >{{ $t("nav." + item.key) }}</span
+                        >
                       </div>
-                      <span
-                        class="font-bold text-slate-700 group-hover:text-red-600 transition-colors"
-                        >{{ $t("nav." + item.key) }}</span
-                      >
+                      <ChevronRight
+                        class="w-5 h-5 text-slate-300 group-hover:text-red-400 transition-colors shrink-0"
+                      />
                     </router-link>
                   </div>
                 </div>

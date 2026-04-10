@@ -20,18 +20,16 @@
 
         <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <!-- Left: Image Grid (2x3) -->
-            <div
-              class="grid grid-cols-2 gap-1 rounded-2xl overflow-hidden shadow-lg"
-            >
-              <div
-                v-for="(img, idx) in displayImages"
-                :key="idx"
-                class="aspect-square bg-slate-100"
-              >
-                <img :src="img" class="w-full h-full object-cover" />
-              </div>
-            </div>
+            <!-- Left: Image Carousel -->
+            <ImageCarousel
+              v-model="galleryIndex"
+              :images="displayImages"
+              :alt="tour.title"
+              main-class="aspect-square rounded-2xl shadow-lg"
+              :show-thumbnails="displayImages.length > 1"
+              :show-controls="displayImages.length > 1"
+              :show-counter="displayImages.length > 1"
+            />
 
             <!-- Right: Content -->
             <div class="space-y-6">
@@ -61,6 +59,17 @@
                 >
                   {{ para }}
                 </p>
+              </div>
+
+              <div v-if="tour.itinerary_pdf_path" class="pt-6">
+                <a
+                  :href="tour.itinerary_pdf_path"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center px-6 py-3 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors"
+                >
+                  {{ $t("tour.downloadItineraryPdf") }}
+                </a>
               </div>
 
               <div class="pt-8 border-t border-slate-100">
@@ -170,7 +179,7 @@
             class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"
           ></div>
           <img
-            :src="mainImage"
+            :src="heroImage"
             class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
             :alt="tour.title"
           />
@@ -325,9 +334,9 @@
                 </div>
               </section>
 
-              <!-- Gallery Grid -->
+              <!-- Visual Journey (Carousel) -->
               <section
-                v-if="tour.galleries?.length > 1"
+                v-if="galleryImages.length > 1"
                 class="animate-fade-in-up delay-500"
               >
                 <div class="flex items-center space-x-4 mb-10">
@@ -338,22 +347,15 @@
                     {{ $t("tour.visualJourney") }}
                   </h2>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-                  <div
-                    v-for="(img, idx) in tour.galleries"
-                    :key="idx"
-                    class="relative aspect-square rounded-[2rem] overflow-hidden group cursor-pointer border border-slate-100"
-                    @click="mainImage = img.image_path"
-                  >
-                    <img
-                      :src="img.image_path"
-                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div
-                      class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                    ></div>
-                  </div>
-                </div>
+                <ImageCarousel
+                  v-model="galleryIndex"
+                  :images="galleryImages"
+                  :alt="tour.title"
+                  main-class="aspect-[4/3] md:aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm"
+                  thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
+                  :show-controls="galleryImages.length > 1"
+                  :show-counter="galleryImages.length > 1"
+                />
               </section>
 
               <!-- Itinerary: Modern Timeline -->
@@ -611,12 +613,26 @@ import {
 import { getNationalTourDetail } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { dummyNasionalTours } from "./dummyNasionalTours";
+import ImageCarousel from "@/components/ImageCarousel.vue";
 
 const route = useRoute();
 const { locale, t } = useI18n();
 const tour = ref(null);
 const loading = ref(true);
-const mainImage = ref("");
+const galleryIndex = ref(0);
+
+const galleryImages = computed(() => {
+  const urls = (tour.value?.galleries || [])
+    .map((g) => g.image_path)
+    .filter(Boolean);
+  return urls.length
+    ? urls
+    : [
+        "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80",
+      ];
+});
+
+const heroImage = computed(() => galleryImages.value[0]);
 
 const normalizePriceDetails = (list) => {
   if (!Array.isArray(list)) return [];
@@ -696,16 +712,7 @@ const fetchTour = async () => {
       };
     }
 
-    // Set initial main image
-    if (tour.value?.galleries?.length) {
-      const primary = tour.value.galleries.find((g) => g.is_primary);
-      mainImage.value = primary
-        ? primary.image_path
-        : tour.value.galleries[0].image_path;
-    } else {
-      mainImage.value =
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=2400";
-    }
+    galleryIndex.value = 0;
   } catch (error) {
     console.error("Error fetching tour detail:", error);
   } finally {
@@ -726,18 +733,7 @@ const isDaily = computed(() => {
 });
 
 const displayImages = computed(() => {
-  if (!tour.value?.galleries?.length) {
-    return Array(6).fill(
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=800",
-    );
-  }
-
-  const images = tour.value.galleries.map((g) => g.image_path);
-  // Fill with placeholders if less than 6
-  while (images.length < 6) {
-    images.push(images[0]);
-  }
-  return images.slice(0, 6);
+  return galleryImages.value;
 });
 
 const summaryItems = computed(() => {

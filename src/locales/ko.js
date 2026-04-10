@@ -5,6 +5,7 @@ export default {
     national: "국내 투어",
     international: "해외 투어",
     hotels: "호텔",
+    gallery: "갤러리",
     travelInfo: "여행 정보",
     about: "소개",
     contact: "연락처",
@@ -459,6 +460,7 @@ export default {
       disclaimer:
         "* 가격은 변동될 수 있습니다. 잔여 좌석과 최종 가격은 문의해 주세요.",
     },
+    downloadItineraryPdf: "일정 PDF 다운로드",
     startingFrom: "시작 가격",
     contactForPrice: "가격 문의",
     inquiryNow: "지금 문의",

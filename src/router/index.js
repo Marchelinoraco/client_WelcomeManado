@@ -87,6 +87,11 @@ const routes = [
     name: "TravelFood",
     component: () => import("../views/travelinfo/TravelFood.vue"),
   },
+  {
+    path: "/gallery",
+    name: "Gallery",
+    component: () => import("../views/gallery/Gallery.vue"),
+  },
 ];
 
 const router = createRouter({

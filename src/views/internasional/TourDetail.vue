@@ -18,7 +18,6 @@
           class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
           :alt="trip.title"
         />
-
         <div
           class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
         >
@@ -269,6 +268,51 @@
             </section>
 
             <section
+              v-if="trip.itinerary_pdf_path"
+              class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
+            >
+              <div class="flex items-center space-x-4 mb-8">
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                <h2
+                  class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+                >
+                  {{ $t("tour.plannedItinerary") }}
+                </h2>
+              </div>
+              <a
+                :href="trip.itinerary_pdf_path"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center px-8 py-4 bg-slate-900 text-white font-black rounded-2xl hover:bg-slate-800 transition-colors uppercase tracking-widest text-xs"
+              >
+                {{ $t("tour.downloadItineraryPdf") }}
+              </a>
+            </section>
+
+            <section
+              v-if="tripImages.length > 1"
+              class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm"
+            >
+              <div class="flex items-center space-x-4 mb-8">
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                <h2
+                  class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+                >
+                  {{ $t("tour.visualJourney") }}
+                </h2>
+              </div>
+              <ImageCarousel
+                v-model="galleryIndex"
+                :images="tripImages"
+                :alt="trip.title"
+                main-class="aspect-[4/3] md:aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm"
+                thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
+                :show-controls="tripImages.length > 1"
+                :show-counter="tripImages.length > 1"
+              />
+            </section>
+
+            <section
               v-if="trip.inclusions?.length || trip.exclusions?.length"
               class="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
@@ -435,7 +479,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { Calendar, MessageCircle } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
@@ -448,12 +492,21 @@ import {
   dummyInternationalTrips,
   dummyInternationalRegions,
 } from "./dummyInternationalTours";
+import ImageCarousel from "@/components/ImageCarousel.vue";
 
 const route = useRoute();
 const { locale, t } = useI18n();
 const loading = ref(true);
 const trip = ref(null);
 const regions = ref([]);
+const galleryIndex = ref(0);
+
+const tripImages = computed(() => {
+  const list = trip.value?.images;
+  if (Array.isArray(list) && list.length) return list;
+  if (trip.value?.image) return [trip.value.image];
+  return [];
+});
 
 const regionLabel = (slug) => {
   const list = regions.value.length ? regions.value : dummyInternationalRegions;
@@ -479,6 +532,11 @@ const normalizeTrip = (raw) => {
     raw.image ||
     raw.galleries?.[0]?.image_path ||
     placeholderImage;
+
+  const galleryUrls = Array.isArray(raw.galleries)
+    ? raw.galleries.map((g) => g.image_path).filter(Boolean)
+    : [];
+  const images = Array.from(new Set([image, ...galleryUrls])).filter(Boolean);
 
   const itinerary = Array.isArray(raw.itineraries)
     ? raw.itineraries.map((it) => ({
@@ -523,12 +581,14 @@ const normalizeTrip = (raw) => {
     seats_available: raw.seats_available ?? true,
     price_idr: Number(raw.base_price || raw.price_idr || 0),
     image,
+    images,
     overview: raw.overview || null,
     itinerary,
     inclusions: splitList(raw.inclusions),
     exclusions: splitList(raw.exclusions),
     excluded_costs: raw.excluded_costs || [],
     booking_fee: raw.booking_fee || null,
+    itinerary_pdf_path: raw.itinerary_pdf_path || null,
     price_breakdown,
   };
 };
@@ -666,6 +726,7 @@ const fetchTrip = async () => {
         }
       } catch (e) {}
     }
+    galleryIndex.value = 0;
     loading.value = false;
   }
 };

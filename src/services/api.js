@@ -2,7 +2,9 @@ import axios from "axios";
 import { dummyCategories, dummyTours } from "../data/dummyTours";
 
 const envBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const defaultBaseUrl = import.meta.env.PROD ? "/api" : "http://127.0.0.1:8000/api";
+const defaultBaseUrl = import.meta.env.PROD
+  ? "/api"
+  : "http://127.0.0.1:8000/api";
 
 const api = axios.create({
   baseURL: envBaseUrl || defaultBaseUrl,
@@ -143,6 +145,23 @@ export const getInternationalTours = async (params = {}) => {
 export const getInternationalTourDetail = async (slug) => {
   if (USE_DUMMY) return getTourDetail(slug);
   return api.get(`/internasional/tours/${slug}`);
+};
+
+// Hotels
+export const getHotels = async (params = {}) => {
+  return api.get("/hotels", { params });
+};
+
+export const getHotelDetail = async (slug) => {
+  return api.get(`/hotels/${slug}`);
+};
+
+// Gallery (Menu Galeri)
+export const getGalleryItems = async (params = {}) => {
+  if (USE_DUMMY) {
+    return { data: { data: [] } };
+  }
+  return api.get("/gallery-items", { params });
 };
 
 export default api;

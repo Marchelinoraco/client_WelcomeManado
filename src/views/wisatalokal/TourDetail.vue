@@ -20,18 +20,16 @@
 
         <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <!-- Left: Image Grid (3 Images) -->
-            <div
-              class="grid grid-cols-3 gap-2 rounded-2xl overflow-hidden shadow-lg"
-            >
-              <div
-                v-for="(img, idx) in displayImages"
-                :key="idx"
-                class="aspect-square bg-slate-100"
-              >
-                <img :src="img" class="w-full h-full object-cover" />
-              </div>
-            </div>
+            <!-- Left: Image Carousel -->
+            <ImageCarousel
+              v-model="galleryIndex"
+              :images="displayImages"
+              :alt="tour.title"
+              main-class="aspect-square rounded-2xl shadow-lg"
+              :show-thumbnails="displayImages.length > 1"
+              :show-controls="displayImages.length > 1"
+              :show-counter="displayImages.length > 1"
+            />
 
             <!-- Right: Content -->
             <div class="space-y-6">
@@ -168,60 +166,59 @@
       <!-- Layout 2: Premium Package (Default) -->
       <div v-else>
         <!-- Premium Hero Header -->
-        <header
-          class="relative h-[70vh] lg:h-[85vh] flex items-end overflow-hidden"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"
-          ></div>
-          <img
-            :src="mainImage"
-            class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
+        <header>
+          <ImageCarousel
+            v-model="galleryIndex"
+            :images="galleryImages"
             :alt="tour.title"
-          />
-
-          <div
-            class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
+            main-class="h-[70vh] lg:h-[85vh] flex items-end overflow-hidden"
+            img-class="scale-105 animate-subtle-zoom"
+            :overlay="true"
+            :show-thumbnails="false"
           >
             <div
-              class="flex flex-wrap items-center gap-4 mb-8 animate-fade-in-up"
-            >
-              <span
-                class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
-                >{{ tour.category?.name }}</span
-              >
-              <span
-                class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
-              >
-                <template v-if="tour.duration_hours">
-                  {{ tour.duration_hours }} {{ $t("tour.hours") }}
-                </template>
-                <template v-else>
-                  {{ tour.duration_days }} {{ $t("tour.days") }} /
-                  {{ tour.duration_nights }} {{ $t("tour.nights") }}
-                </template>
-              </span>
-            </div>
-
-            <h1
-              class="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8 animate-fade-in-up delay-100 uppercase"
-            >
-              {{ tour.title }}
-            </h1>
-
-            <div
-              class="flex items-center text-white/80 text-sm font-bold animate-fade-in-up delay-200"
+              class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
             >
               <div
-                class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
+                class="flex flex-wrap items-center gap-4 mb-8 animate-fade-in-up"
               >
-                <MapPinIcon class="w-5 h-5 text-red-400" />
+                <span
+                  class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
+                  >{{ tour.category?.name }}</span
+                >
+                <span
+                  class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
+                >
+                  <template v-if="tour.duration_hours">
+                    {{ tour.duration_hours }} {{ $t("tour.hours") }}
+                  </template>
+                  <template v-else>
+                    {{ tour.duration_days }} {{ $t("tour.days") }} /
+                    {{ tour.duration_nights }} {{ $t("tour.nights") }}
+                  </template>
+                </span>
               </div>
-              <span class="uppercase tracking-widest text-xs">{{
-                tour.location || $t("common.defaultLocation")
-              }}</span>
+
+              <h1
+                class="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8 animate-fade-in-up delay-100 uppercase"
+              >
+                {{ tour.title }}
+              </h1>
+
+              <div
+                class="flex items-center text-white/80 text-sm font-bold animate-fade-in-up delay-200"
+              >
+                <div
+                  class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
+                >
+                  <MapPinIcon class="w-5 h-5 text-red-400" />
+                </div>
+                <span class="uppercase tracking-widest text-xs">{{
+                  tour.location || $t("common.defaultLocation")
+                }}</span>
+              </div>
             </div>
-          </div>
+          </ImageCarousel>
         </header>
 
         <!-- Content Layout -->
@@ -348,7 +345,7 @@
                     v-for="(img, idx) in galleryPreview"
                     :key="idx"
                     class="relative aspect-square rounded-[2rem] overflow-hidden group cursor-pointer border border-slate-100"
-                    @click="mainImage = img.image_path"
+                    @click="galleryIndex = idx"
                   >
                     <img
                       :src="img.image_path"
@@ -616,12 +613,24 @@ import {
 import { getLocalTourDetail } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { dummyLocalTours } from "./dummyLocalTours";
+import ImageCarousel from "@/components/ImageCarousel.vue";
 
 const route = useRoute();
 const { locale, t } = useI18n();
 const tour = ref(null);
 const loading = ref(true);
-const mainImage = ref("");
+const galleryIndex = ref(0);
+
+const galleryImages = computed(() => {
+  const urls = (tour.value?.galleries || [])
+    .map((g) => g.image_path)
+    .filter(Boolean);
+  return urls.length
+    ? urls
+    : [
+        "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80",
+      ];
+});
 
 const normalizePriceDetails = (list) => {
   if (!Array.isArray(list)) return [];
@@ -701,16 +710,7 @@ const fetchTour = async () => {
       };
     }
 
-    // Set initial main image
-    if (tour.value?.galleries?.length) {
-      const primary = tour.value.galleries.find((g) => g.is_primary);
-      mainImage.value = primary
-        ? primary.image_path
-        : tour.value.galleries[0].image_path;
-    } else {
-      mainImage.value =
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=2400";
-    }
+    galleryIndex.value = 0;
   } catch (error) {
     console.error("Error fetching tour detail:", error);
   } finally {
@@ -731,22 +731,11 @@ const isDaily = computed(() => {
 });
 
 const displayImages = computed(() => {
-  if (!tour.value?.galleries?.length) {
-    return Array(3).fill(
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=800",
-    );
-  }
-
-  const images = tour.value.galleries.map((g) => g.image_path);
-  // Fill with placeholders if less than 3
-  while (images.length < 3) {
-    images.push(images[0]);
-  }
-  return images.slice(0, 3);
+  return galleryImages.value;
 });
 
 const galleryPreview = computed(() => {
-  return (tour.value?.galleries || []).slice(0, 3);
+  return (tour.value?.galleries || []).slice(0, 5);
 });
 
 const summaryItems = computed(() => {

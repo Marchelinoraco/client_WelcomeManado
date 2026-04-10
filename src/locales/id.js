@@ -5,6 +5,7 @@ export default {
     national: "Nasional",
     international: "Internasional",
     hotels: "Hotel",
+    gallery: "Galeri",
     travelInfo: "Informasi Perjalanan",
     about: "Tentang",
     contact: "Kontak",
@@ -462,6 +463,7 @@ export default {
       disclaimer:
         "* Harga dapat berubah sewaktu-waktu. Silakan hubungi kami untuk konfirmasi ketersediaan dan harga final.",
     },
+    downloadItineraryPdf: "Download Itinerary (PDF)",
   },
   internationalTrips: {
     currency: "IDR",

@@ -5,6 +5,7 @@ export default {
     national: "National",
     international: "International",
     hotels: "Hotels",
+    gallery: "Gallery",
     travelInfo: "Travel Info",
     about: "About",
     contact: "Contact",
@@ -461,6 +462,7 @@ export default {
       disclaimer:
         "* Prices may change at any time. Please contact us to confirm availability and final pricing.",
     },
+    downloadItineraryPdf: "Download Itinerary (PDF)",
     startingFrom: "Starting From",
     contactForPrice: "Contact for Price",
     inquiryNow: "Inquiry Now",
