@@ -122,7 +122,11 @@
                 <h3 class="text-xl font-bold text-slate-800 mb-4">
                   {{ $t("common.phone") }}
                 </h3>
-                <p class="text-slate-500 text-sm font-bold">+6282293935566</p>
+                <a
+                  href="tel:+6282173738822"
+                  class="text-slate-500 text-sm font-bold hover:text-red-600 transition-colors"
+                  >+62 821-7373-8822</a
+                >
               </div>
             </div>
 
@@ -139,25 +143,31 @@
                 </h3>
                 <div class="flex items-center space-x-3">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/welcomemanadotours"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
                   >
                     <Facebook class="w-5 h-5" />
                   </a>
                   <a
-                    href="#"
+                    href="https://instagram.com/welcomemanadotours"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition-all"
                   >
                     <Instagram class="w-5 h-5" />
                   </a>
                   <a
-                    href="#"
+                    :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
                   >
                     <MessageCircle class="w-5 h-5" />
                   </a>
                   <a
-                    href="#"
+                    :href="`mailto:info@welcomemanado.com?subject=${encodeURIComponent('Info Tour: ' + (tour?.title || ''))}`"
                     class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-600 hover:text-white transition-all"
                   >
                     <Mail class="w-5 h-5" />

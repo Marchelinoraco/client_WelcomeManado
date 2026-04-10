@@ -116,7 +116,8 @@ export default {
       email: "Email",
       phone: "Telepon",
       office: "Kantor",
-      officeValue: "Manado, Sulawesi Utara",
+      officeValue:
+        "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
     },
     social: {
       title: "Ikuti Perjalanan Kami",
@@ -420,7 +421,8 @@ export default {
     phone: "No Telepon",
     socialMedia: "Sosial Media",
     defaultLocation: "Manado, Sulawesi Utara",
-    officeAddress: "Jl. A. A. Maramis No. 171, Manado, Sulawesi Utara",
+    officeAddress:
+      "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
   localTourDetail: {
     lunch: "Lunch Makanan Khas Manado",

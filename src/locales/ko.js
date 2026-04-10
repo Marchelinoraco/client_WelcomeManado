@@ -115,7 +115,8 @@ export default {
       email: "이메일",
       phone: "전화",
       office: "오피스",
-      officeValue: "마나도, 북술라웨시",
+      officeValue:
+        "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
     },
     social: {
       title: "여정을 함께해요",
@@ -417,7 +418,8 @@ export default {
     phone: "전화",
     socialMedia: "소셜 미디어",
     defaultLocation: "마나도, 북술라웨시",
-    officeAddress: "Jl. A. A. Maramis No. 171, 마나도, 북술라웨시",
+    officeAddress:
+      "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
   localTourDetail: {
     lunch: "마나도 로컬 런치",

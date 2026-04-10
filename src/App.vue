@@ -19,16 +19,22 @@
               {{ $t("footer.description") }}
             </p>
             <div class="flex space-x-6">
-              <div
+              <a
+                href="https://instagram.com/welcomemanadotours"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer text-xs font-bold"
               >
                 IG
-              </div>
-              <div
+              </a>
+              <a
+                href="https://www.facebook.com/welcomemanadotours"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer text-xs font-bold"
               >
                 FB
-              </div>
+              </a>
               <a
                 href="https://wa.me/6282173738822"
                 target="_blank"
@@ -78,17 +84,30 @@
             </h4>
             <div class="space-y-6 text-gray-400 text-sm font-medium">
               <p class="flex items-start">
-                <span class="text-red-500 mr-3 mt-1 text-xs">●</span> Manado,
-                North Sulawesi, Indonesia
+                <span class="text-red-500 mr-3 mt-1 text-xs">●</span>
+                {{ $t("common.officeAddress") }}
               </p>
-              <p class="flex items-start">
+              <a
+                href="tel:+6282173738822"
+                class="flex items-start hover:text-red-500 transition-colors"
+              >
                 <span class="text-red-500 mr-3 mt-1 text-xs">●</span> +62
                 821-7373-8822
-              </p>
-              <p class="flex items-start">
+              </a>
+              <a
+                href="mailto:info@welcomemanado.com"
+                class="flex items-start hover:text-red-500 transition-colors"
+              >
                 <span class="text-red-500 mr-3 mt-1 text-xs">●</span>
                 info@welcomemanado.com
-              </p>
+              </a>
+              <a
+                href="mailto:tour.welcomemanado@gmail.com"
+                class="flex items-start hover:text-red-500 transition-colors"
+              >
+                <span class="text-red-500 mr-3 mt-1 text-xs">●</span>
+                tour.welcomemanado@gmail.com
+              </a>
             </div>
           </div>
         </div>

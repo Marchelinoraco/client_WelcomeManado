@@ -55,9 +55,25 @@
             >
               {{ $t(info.labelKey) }}
             </h3>
-            <p class="text-xl font-black text-slate-900 leading-tight">
+            <a
+              v-if="info.href"
+              :href="info.href"
+              class="text-xl font-black text-slate-900 leading-tight hover:text-red-600 transition-colors"
+            >
               {{ info.valueKey ? $t(info.valueKey) : info.value }}
-            </p>
+            </a>
+            <div v-else class="space-y-1">
+              <p class="text-xl font-black text-slate-900 leading-tight">
+                {{ info.valueKey ? $t(info.valueKey) : info.value }}
+              </p>
+              <a
+                v-if="info.value2"
+                :href="info.href2"
+                class="text-sm font-black text-slate-600 hover:text-red-600 transition-colors"
+              >
+                {{ info.value2 }}
+              </a>
+            </div>
           </div>
 
           <!-- Social Links Card -->
@@ -73,12 +89,14 @@
               </h3>
               <div class="flex space-x-4">
                 <a
-                  v-for="social in ['Facebook', 'Instagram', 'Twitter']"
-                  :key="social"
-                  href="#"
+                  v-for="social in socialLinks"
+                  :key="social.name"
+                  :href="social.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="w-12 h-12 rounded-xl bg-white/10 hover:bg-white text-white hover:text-red-600 flex items-center justify-center transition-all duration-300"
                 >
-                  <component :is="getSocialIcon(social)" class="w-5 h-5" />
+                  <component :is="getSocialIcon(social.name)" class="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -98,7 +116,9 @@
               class="text-4xl md:text-5xl font-black text-slate-900 mb-12 tracking-tighter uppercase"
             >
               {{ $t("contactPage.form.title1") }}
-              <span class="text-red-600">{{ $t("contactPage.form.title2") }}</span>
+              <span class="text-red-600">{{
+                $t("contactPage.form.title2")
+              }}</span>
             </h2>
 
             <form
@@ -113,7 +133,9 @@
                 <input
                   v-model="form.name"
                   type="text"
-                  :placeholder="$t('contactPage.form.fields.fullName.placeholder')"
+                  :placeholder="
+                    $t('contactPage.form.fields.fullName.placeholder')
+                  "
                   class="w-full bg-slate-50 border-2 border-transparent focus:border-red-600/20 rounded-2xl px-8 py-5 focus:ring-0 transition-all placeholder:text-slate-300 font-bold text-slate-900"
                   required
                 />
@@ -139,7 +161,9 @@
                 <input
                   v-model="form.subject"
                   type="text"
-                  :placeholder="$t('contactPage.form.fields.subject.placeholder')"
+                  :placeholder="
+                    $t('contactPage.form.fields.subject.placeholder')
+                  "
                   class="w-full bg-slate-50 border-2 border-transparent focus:border-red-600/20 rounded-2xl px-8 py-5 focus:ring-0 transition-all placeholder:text-slate-300 font-bold text-slate-900"
                   required
                 />
@@ -152,7 +176,9 @@
                 <textarea
                   v-model="form.message"
                   rows="6"
-                  :placeholder="$t('contactPage.form.fields.message.placeholder')"
+                  :placeholder="
+                    $t('contactPage.form.fields.message.placeholder')
+                  "
                   class="w-full bg-slate-50 border-2 border-transparent focus:border-red-600/20 rounded-[2rem] px-8 py-5 focus:ring-0 transition-all placeholder:text-slate-300 font-bold text-slate-900 resize-none"
                   required
                 ></textarea>
@@ -188,20 +214,46 @@ import {
   Palmtree,
   Facebook,
   Instagram,
-  Twitter,
 } from "lucide-vue-next";
 
 const getSocialIcon = (name) => {
-  const icons = { Facebook, Instagram, Twitter };
+  const icons = { Facebook, Instagram };
   return icons[name];
 };
 
 const { t } = useI18n();
 
 const contactInfo = [
-  { icon: Mail, labelKey: "contactPage.info.email", value: "info@welcomemanado.com" },
-  { icon: Phone, labelKey: "contactPage.info.phone", value: "+62 821-7373-8822" },
-  { icon: MapPin, labelKey: "contactPage.info.office", valueKey: "contactPage.info.officeValue" },
+  {
+    icon: Mail,
+    labelKey: "contactPage.info.email",
+    value: "info@welcomemanado.com",
+    href: "mailto:info@welcomemanado.com",
+    value2: "tour.welcomemanado@gmail.com",
+    href2: "mailto:tour.welcomemanado@gmail.com",
+  },
+  {
+    icon: Phone,
+    labelKey: "contactPage.info.phone",
+    value: "+62 821-7373-8822",
+    href: "tel:+6282173738822",
+  },
+  {
+    icon: MapPin,
+    labelKey: "contactPage.info.office",
+    valueKey: "contactPage.info.officeValue",
+  },
+];
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://instagram.com/welcomemanadotours",
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/welcomemanadotours",
+  },
 ];
 
 const form = ref({
@@ -212,7 +264,11 @@ const form = ref({
 });
 
 const handleSubmit = () => {
-  alert(t("contactPage.form.success"));
+  const subject = encodeURIComponent(form.value.subject || "");
+  const body = encodeURIComponent(
+    `Nama: ${form.value.name}\nEmail: ${form.value.email}\n\n${form.value.message}`,
+  );
+  window.location.href = `mailto:info@welcomemanado.com?subject=${subject}&body=${body}`;
   form.value = { name: "", email: "", subject: "", message: "" };
 };
 </script>

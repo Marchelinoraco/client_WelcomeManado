@@ -112,7 +112,8 @@ export default {
       email: "邮箱",
       phone: "电话",
       office: "办公室",
-      officeValue: "万鸦老，北苏拉威西",
+      officeValue:
+        "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
     },
     social: {
       title: "关注我们的旅程",
@@ -390,7 +391,8 @@ export default {
     phone: "电话",
     socialMedia: "社交媒体",
     defaultLocation: "万鸦老，北苏拉威西",
-    officeAddress: "A. A. Maramis 路 171 号，万鸦老，北苏拉威西",
+    officeAddress:
+      "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
   localTourDetail: {
     lunch: "万鸦老特色午餐",
