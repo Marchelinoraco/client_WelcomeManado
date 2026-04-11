@@ -1,1 +1,166 @@
 @import "tailwindcss";
+
+/* ========================================
+   DARK MODE GLOBAL OVERRIDES
+   ======================================== */
+
+/* Base body & page background */
+.dark body,
+.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Smooth transition for theme switching */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+html.dark {
+  background-color: #0f172a;
+  color-scheme: dark;
+}
+
+/* ---- Navbar (scrolled state) ---- */
+.dark nav.bg-white\/80 {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  border-color: rgba(51, 65, 85, 0.4) !important;
+}
+
+/* ---- Dropdown menus ---- */
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+/* ---- Cards & surfaces ---- */
+.dark .bg-slate-50,
+.dark .bg-slate-100 {
+  background-color: #1e293b;
+}
+
+.dark .bg-red-50\/50,
+.dark .bg-red-50\/60,
+.dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.15);
+}
+
+/* ---- Text colors ---- */
+.dark .text-slate-900,
+.dark .text-slate-800 {
+  color: #f1f5f9;
+}
+
+.dark .text-slate-700,
+.dark .text-slate-600 {
+  color: #cbd5e1;
+}
+
+.dark .text-slate-500 {
+  color: #94a3b8;
+}
+
+.dark .text-slate-400 {
+  color: #64748b;
+}
+
+.dark .text-gray-400 {
+  color: #94a3b8;
+}
+
+.dark .text-gray-500 {
+  color: #64748b;
+}
+
+/* ---- Borders ---- */
+.dark .border-slate-50,
+.dark .border-slate-100,
+.dark .border-slate-100\/50,
+.dark .border-slate-100\/60,
+.dark .border-slate-200\/20 {
+  border-color: rgba(51, 65, 85, 0.5);
+}
+
+.dark .border-gray-900 {
+  border-color: #1e293b;
+}
+
+/* ---- Shadows for dark mode ---- */
+.dark .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.12\)\],
+.dark .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.1\)\],
+.dark .shadow-\[0_8px_32px_rgba\(0\,0\,0\,0\.03\)\] {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Footer ---- */
+.dark .bg-gray-950 {
+  background-color: #020617;
+}
+
+.dark .bg-gray-800 {
+  background-color: #334155;
+}
+
+/* ---- Hero sections / gradient backgrounds ---- */
+.dark .bg-gradient-to-br.from-red-50.to-slate-50 {
+  background: linear-gradient(to bottom right, rgba(127, 29, 29, 0.2), rgba(30, 41, 59, 0.5));
+}
+
+/* ---- Form inputs & interactive elements ---- */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b;
+}
+
+/* ---- Specific page sections ---- */
+.dark .bg-gradient-to-b,
+.dark [class*="from-slate-50"],
+.dark [class*="from-slate-100"],
+.dark [class*="from-gray-50"],
+.dark [class*="from-gray-100"] {
+  --tw-gradient-from: #0f172a;
+  --tw-gradient-to: #1e293b;
+}
+
+/* ---- Scrollbar ---- */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* ---- Dark mode toggle button animation ---- */
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle-icon {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease;
+}
+
+.theme-toggle .sun-icon {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+.theme-toggle .moon-icon {
+  position: absolute;
+  transform: rotate(90deg) scale(0);
+  opacity: 0;
+}
+
+.dark .theme-toggle .sun-icon {
+  transform: rotate(-90deg) scale(0);
+  opacity: 0;
+}
+
+.dark .theme-toggle .moon-icon {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}

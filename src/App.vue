@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div :class="{ 'dark-app': isDark }">
     <Navbar />
     <router-view :key="$route.fullPath"></router-view>
 
     <!-- Footer -->
-    <footer class="bg-gray-950 text-white py-24 border-t border-gray-900">
+    <footer class="bg-gray-950 text-white py-24 border-t border-gray-900 dark:bg-[#020617]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
           <div class="col-span-1 md:col-span-2">
@@ -123,6 +123,9 @@
 
 <script setup>
 import Navbar from "./components/Navbar.vue";
+import { useDarkMode } from "./composables/useDarkMode";
+
+const { isDark } = useDarkMode();
 </script>
 
 <style>

@@ -2,7 +2,7 @@ export default {
   nav: {
     home: "Home",
     localTours: "Manado Tours",
-    national: "National",
+    national: "Other Destination",
     international: "International",
     hotels: "Hotels",
     gallery: "Gallery",
