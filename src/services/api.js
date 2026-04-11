@@ -156,12 +156,34 @@ export const getHotelDetail = async (slug) => {
   return api.get(`/hotels/${slug}`);
 };
 
+// Transportations
+export const getTransportations = async (params = {}) => {
+  if (USE_DUMMY) {
+    return { data: { data: [] } };
+  }
+  return api.get("/transportations", { params });
+};
+
+export const createTransportationBooking = async (payload) => {
+  if (USE_DUMMY) {
+    return { data: { data: { id: 0, ...payload } } };
+  }
+  return api.post("/transportation-bookings", payload);
+};
+
 // Gallery (Menu Galeri)
 export const getGalleryItems = async (params = {}) => {
   if (USE_DUMMY) {
     return { data: { data: [] } };
   }
   return api.get("/gallery-items", { params });
+};
+
+export const getTravelInfoItems = async (params = {}) => {
+  if (USE_DUMMY) {
+    return { data: { data: [] } };
+  }
+  return api.get("/travel-info-items", { params });
 };
 
 export default api;

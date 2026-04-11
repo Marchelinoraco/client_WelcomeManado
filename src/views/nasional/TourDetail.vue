@@ -190,9 +190,21 @@
           ></div>
           <img
             :src="heroImage"
-            class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
+            class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom cursor-zoom-in"
             :alt="tour.title"
+            @click="openImageModal(heroImage)"
           />
+
+          <div class="absolute top-6 right-6 z-20">
+            <button
+              type="button"
+              class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+              @click.stop="openImageModal(heroImage)"
+              aria-label="Open image"
+            >
+              ⤢
+            </button>
+          </div>
 
           <div
             class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
@@ -287,7 +299,7 @@
 
               <!-- Price Breakdown Table -->
               <section
-                v-if="tour.price_details?.length"
+                v-if="false && tour.price_details?.length"
                 class="animate-fade-in-up delay-450"
               >
                 <div class="flex items-center space-x-4 mb-8">
@@ -365,7 +377,18 @@
                   thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
                   :show-controls="galleryImages.length > 1"
                   :show-counter="galleryImages.length > 1"
-                />
+                >
+                  <div class="absolute top-6 right-6 z-30">
+                    <button
+                      type="button"
+                      class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+                      @click.stop="openImageModal(galleryImages[galleryIndex])"
+                      aria-label="Open image"
+                    >
+                      ⤢
+                    </button>
+                  </div>
+                </ImageCarousel>
               </section>
 
               <!-- Itinerary: Modern Timeline -->
@@ -474,7 +497,7 @@
                       >{{ $t("tour.bestPrice") }}</span
                     >
 
-                    <div v-if="tour.base_price">
+                    <div v-if="false && tour.base_price">
                       <p
                         class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
                       >
@@ -520,7 +543,7 @@
                     </div>
 
                     <button
-                      v-if="tour.base_price"
+                      v-if="false && tour.base_price"
                       class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/40 active:scale-95 flex items-center justify-center group/btn mb-4"
                     >
                       {{ $t("tour.reserveSpot") }}
@@ -576,6 +599,33 @@
         </main>
       </div>
 
+      <section
+        v-if="recommendedTours.length"
+        class="max-w-7xl mx-auto px-6 lg:px-10 mt-24"
+      >
+        <div class="flex items-center space-x-4 mb-10">
+          <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+          <div>
+            <h2
+              class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+            >
+              {{ $t("tour.recommendedTitle") }}
+            </h2>
+            <p class="text-slate-500 font-bold mt-2">
+              {{ $t("tour.recommendedDescription") }}
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <TourCard
+            v-for="rt in recommendedTours"
+            :key="rt.id || rt.slug"
+            :tour="rt"
+            detail-base-path="/nasional/tour"
+          />
+        </div>
+      </section>
+
       <!-- Floating WhatsApp Button -->
       <a
         :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
@@ -593,6 +643,30 @@
           ></span>
         </span>
       </a>
+    </div>
+
+    <div
+      v-if="isImageModalOpen"
+      class="fixed inset-0 z-[200] flex items-center justify-center p-6"
+    >
+      <div
+        class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"
+        @click="closeImageModal"
+      ></div>
+      <div class="relative w-full max-w-6xl">
+        <button
+          type="button"
+          class="absolute -top-4 -right-4 h-12 w-12 rounded-2xl bg-white text-slate-900 font-black shadow-2xl hover:bg-slate-100 transition-colors"
+          @click="closeImageModal"
+          aria-label="Close image"
+        >
+          ✕
+        </button>
+        <img
+          :src="imageModalSrc"
+          class="w-full max-h-[85vh] object-contain rounded-3xl bg-black"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -620,16 +694,20 @@ import {
   Instagram,
   Mail,
 } from "lucide-vue-next";
-import { getNationalTourDetail } from "@/services/api";
+import { getNationalTourDetail, getNationalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { dummyNasionalTours } from "./dummyNasionalTours";
 import ImageCarousel from "@/components/ImageCarousel.vue";
+import TourCard from "@/components/TourCard.vue";
 
 const route = useRoute();
 const { locale, t } = useI18n();
 const tour = ref(null);
 const loading = ref(true);
 const galleryIndex = ref(0);
+const recommendedTours = ref([]);
+const isImageModalOpen = ref(false);
+const imageModalSrc = ref("");
 
 const galleryImages = computed(() => {
   const urls = (tour.value?.galleries || [])
@@ -673,8 +751,14 @@ const fetchTour = async () => {
 
     if (!rawTour) {
       tour.value = null;
+      recommendedTours.value = [];
       return;
     }
+
+    const categorySlug =
+      typeof rawTour.category === "string"
+        ? rawTour.category
+        : rawTour.category?.slug;
 
     if (locale.value !== "id" && rawTour) {
       // Translate main tour info
@@ -720,6 +804,51 @@ const fetchTour = async () => {
         ...rawTour,
         price_details: normalizePriceDetails(rawTour.price_details),
       };
+    }
+
+    const fetchRecommended = async () => {
+      try {
+        const res = await getNationalTours({ category: categorySlug });
+        const list = Array.isArray(res.data?.data) ? res.data.data : [];
+        return list;
+      } catch {
+        return dummyNasionalTours.filter((t) => {
+          const slug =
+            typeof t.category === "string" ? t.category : t.category?.slug;
+          return slug && slug === categorySlug;
+        });
+      }
+    };
+
+    const list = await fetchRecommended();
+    const base = list
+      .filter((t) => t?.slug && t.slug !== rawTour.slug)
+      .slice(0, 3);
+
+    if (locale.value !== "id" && base.length) {
+      const translated = await Promise.all(
+        base.map(async (it) => {
+          const [title, description, location, categoryName] =
+            await Promise.all([
+              autoTranslate(it.title || "", locale.value),
+              autoTranslate(it.description || "", locale.value),
+              autoTranslate(it.location || "", locale.value),
+              autoTranslate(it.category?.name || "", locale.value),
+            ]);
+          return {
+            ...it,
+            title,
+            description,
+            location,
+            category: it.category
+              ? { ...it.category, name: categoryName }
+              : it.category,
+          };
+        }),
+      );
+      recommendedTours.value = translated;
+    } else {
+      recommendedTours.value = base;
     }
 
     galleryIndex.value = 0;
@@ -792,6 +921,17 @@ const featureList = computed(() => {
     t("tour.instantBooking"),
   ];
 });
+
+const openImageModal = (src) => {
+  if (!src) return;
+  imageModalSrc.value = src;
+  isImageModalOpen.value = true;
+};
+
+const closeImageModal = () => {
+  isImageModalOpen.value = false;
+  imageModalSrc.value = "";
+};
 </script>
 
 <style scoped>

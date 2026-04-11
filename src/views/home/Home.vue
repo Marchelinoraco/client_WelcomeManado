@@ -85,21 +85,21 @@
     </header>
 
     <!-- Main Content -->
-    <main class="bg-white">
+    <main class="bg-slate-50">
       <!-- Section 1: Manado -->
       <section
         id="manado-tours"
-        class="py-32 lg:py-48 px-6 lg:px-10 overflow-hidden relative"
+        class="pt-24 pb-28 lg:pt-32 lg:pb-44 px-6 lg:px-10 overflow-hidden relative"
       >
         <!-- Floating Stats Section -->
         <div
-          class="max-w-7xl mx-auto -mt-48 lg:-mt-64 relative z-30 mb-32 px-6"
+          class="max-w-7xl mx-auto -mt-32 lg:-mt-44 relative z-30 mb-16 lg:mb-24"
         >
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
             <div
               v-for="(stat, idx) in stats"
               :key="idx"
-              class="bg-white/90 backdrop-blur-3xl p-8 lg:p-10 rounded-[2.5rem] border border-white/50 shadow-[0_30px_60px_rgba(0,0,0,0.08)] text-center group hover:-translate-y-3 transition-all duration-700 ease-spring relative overflow-hidden"
+              class="bg-white/90 backdrop-blur-3xl p-7 lg:p-9 rounded-[2.5rem] border border-white/60 shadow-[0_30px_60px_rgba(0,0,0,0.08)] text-center group hover:-translate-y-2 transition-all duration-700 ease-spring relative overflow-hidden"
             >
               <!-- Animated Background Decoration -->
               <div

@@ -230,8 +230,8 @@ const fetchHotels = async () => {
   const arr = Array.isArray(res.data?.data?.data)
     ? res.data.data.data
     : Array.isArray(res.data?.data)
-    ? res.data.data
-    : [];
+      ? res.data.data
+      : [];
   return arr.map((h) => {
     const image =
       h.primary_image ||

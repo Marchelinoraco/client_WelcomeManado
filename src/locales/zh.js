@@ -1,7 +1,7 @@
 export default {
   nav: {
     home: "首页",
-    localTours: "当地游",
+    localTours: "万鸦老行程",
     national: "国内游",
     international: "出境游",
     hotels: "酒店",
@@ -266,6 +266,7 @@ export default {
     },
   },
   transport: {
+    rentalBadge: "租车与交通",
     hero: {
       badge: "交通",
       title1: "万鸦老",
@@ -274,7 +275,55 @@ export default {
         "到达万鸦老有很多种方式。无论是通过陆路、海路还是航空，万鸦老市都非常容易到达。我们的“万鸦老交通指南”将告诉您在万鸦老及其周边地区的旅行方式。",
     },
     section: {
+      badge: "交通信息",
       title: "周边出行",
+    },
+    rentalSection: {
+      title: "交通列表",
+      description: "选择适合行程的可用车辆。",
+      searchPlaceholder: "搜索车辆名称/类型...",
+      showing: "显示 {count} 辆车辆",
+      loadErrorTitle: "加载交通信息失败",
+      retry: "重试",
+      emptyTitle: "暂无数据",
+      emptyDescription: "请调整筛选或搜索关键词。",
+      bookButton: "通过 WhatsApp 预订",
+      genericLoadError: "无法从服务器加载交通数据。",
+      filters: {
+        all: "全部",
+        available: "可用",
+        unavailable: "不可用",
+      },
+      availability: {
+        available: "可用",
+        unavailable: "不可用",
+      },
+    },
+    booking: {
+      title: "交通预订",
+      subtitle: "填写预订信息",
+      formTitle: "完善预订",
+      helpText: "点击“发送 WhatsApp”以自动模板联系管理员。",
+      customerName: "预订人姓名",
+      customerWhatsapp: "WhatsApp 号码",
+      rentalDate: "租用日期",
+      summary: "摘要",
+      vehicle: "车辆",
+      type: "类型",
+      notesOptional: "备注（可选）",
+      cancel: "取消",
+      sendWhatsapp: "发送 WhatsApp",
+    },
+    whatsapp: {
+      intro: "你好 Welcome Manado 管理员，我想预订交通服务。",
+      customerName: "预订人",
+      customerWhatsapp: "WhatsApp",
+      rentalDate: "租用日期",
+      vehicle: "车辆",
+      type: "类型",
+      availability: "可用性",
+      notes: "备注",
+      bookingId: "预订编号",
     },
     items: {
       air: "航空出行",
@@ -439,6 +488,8 @@ export default {
     contactForPrice: "联系获取价格",
     inquiryNow: "立即咨询",
     viewDetails: "查看详情",
+    recommendedTitle: "更多推荐行程",
+    recommendedDescription: "浏览同一类别的其他行程。",
   },
   internationalTrips: {
     currency: "IDR",

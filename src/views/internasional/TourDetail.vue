@@ -15,9 +15,20 @@
         ></div>
         <img
           :src="trip.image"
-          class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
+          class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom cursor-zoom-in"
           :alt="trip.title"
+          @click="openImageModal(trip.image)"
         />
+        <div class="absolute top-6 right-6 z-20">
+          <button
+            type="button"
+            class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+            @click.stop="openImageModal(trip.image)"
+            aria-label="Open image"
+          >
+            ⤢
+          </button>
+        </div>
         <div
           class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
         >
@@ -309,7 +320,18 @@
                 thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
                 :show-controls="tripImages.length > 1"
                 :show-counter="tripImages.length > 1"
-              />
+              >
+                <div class="absolute top-6 right-6 z-30">
+                  <button
+                    type="button"
+                    class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+                    @click.stop="openImageModal(tripImages[galleryIndex])"
+                    aria-label="Open image"
+                  >
+                    ⤢
+                  </button>
+                </div>
+              </ImageCarousel>
             </section>
 
             <section
@@ -458,6 +480,33 @@
           </div>
         </div>
       </main>
+
+      <section
+        v-if="recommendedTripsForCard.length"
+        class="max-w-7xl mx-auto px-6 lg:px-10 mt-24"
+      >
+        <div class="flex items-center space-x-4 mb-10">
+          <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+          <div>
+            <h2
+              class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+            >
+              {{ $t("tour.recommendedTitle") }}
+            </h2>
+            <p class="text-slate-500 font-bold mt-2">
+              {{ $t("tour.recommendedDescription") }}
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <TourCard
+            v-for="rt in recommendedTripsForCard"
+            :key="rt.slug"
+            :tour="rt"
+            detail-base-path="/internasional/tour"
+          />
+        </div>
+      </section>
     </div>
 
     <div v-else class="pt-32 pb-20 px-6 lg:px-10">
@@ -475,6 +524,30 @@
         </router-link>
       </div>
     </div>
+
+    <div
+      v-if="isImageModalOpen"
+      class="fixed inset-0 z-[200] flex items-center justify-center p-6"
+    >
+      <div
+        class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"
+        @click="closeImageModal"
+      ></div>
+      <div class="relative w-full max-w-6xl">
+        <button
+          type="button"
+          class="absolute -top-4 -right-4 h-12 w-12 rounded-2xl bg-white text-slate-900 font-black shadow-2xl hover:bg-slate-100 transition-colors"
+          @click="closeImageModal"
+          aria-label="Close image"
+        >
+          ✕
+        </button>
+        <img
+          :src="imageModalSrc"
+          class="w-full max-h-[85vh] object-contain rounded-3xl bg-black"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -485,6 +558,7 @@ import { Calendar, MessageCircle } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import {
   getInternationalRegions,
+  getInternationalTours,
   getInternationalTourDetail,
 } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
@@ -493,6 +567,7 @@ import {
   dummyInternationalRegions,
 } from "./dummyInternationalTours";
 import ImageCarousel from "@/components/ImageCarousel.vue";
+import TourCard from "@/components/TourCard.vue";
 
 const route = useRoute();
 const { locale, t } = useI18n();
@@ -500,6 +575,9 @@ const loading = ref(true);
 const trip = ref(null);
 const regions = ref([]);
 const galleryIndex = ref(0);
+const recommendedTrips = ref([]);
+const isImageModalOpen = ref(false);
+const imageModalSrc = ref("");
 
 const tripImages = computed(() => {
   const list = trip.value?.images;
@@ -689,6 +767,24 @@ const translateTrip = async (tripData, targetLocale) => {
   };
 };
 
+const toTourCard = (t) => {
+  const image = t.image || t.images?.[0] || placeholderImage;
+  return {
+    slug: t.slug,
+    title: t.title,
+    description: t.description,
+    location: "International",
+    duration_days: t.duration_days,
+    duration_nights: t.duration_nights,
+    galleries: [{ image_path: image }],
+    category: { name: regionLabel(t.region) },
+  };
+};
+
+const recommendedTripsForCard = computed(() => {
+  return (recommendedTrips.value || []).map(toTourCard);
+});
+
 const fetchTrip = async () => {
   loading.value = true;
   try {
@@ -726,9 +822,66 @@ const fetchTrip = async () => {
         }
       } catch (e) {}
     }
+    try {
+      const regionSlug = trip.value?.region;
+      if (!regionSlug) {
+        recommendedTrips.value = [];
+      } else {
+        let all = [];
+        try {
+          const listRes = await getInternationalTours();
+          all = Array.isArray(listRes.data?.data) ? listRes.data.data : [];
+        } catch (e) {
+          all = dummyInternationalTrips;
+        }
+
+        const normalized = (all || []).map((raw) => {
+          try {
+            return normalizeTrip(raw);
+          } catch {
+            return raw;
+          }
+        });
+
+        const base = normalized
+          .filter((x) => x?.slug && x.slug !== trip.value?.slug)
+          .filter((x) => (x.category?.slug || x.region || "-") === regionSlug)
+          .slice(0, 3);
+
+        if (locale.value !== "id" && base.length) {
+          const translated = await Promise.all(
+            base.map(async (it) => {
+              const [title, description] = await Promise.all([
+                it.title ? autoTranslate(it.title, locale.value) : it.title,
+                it.description
+                  ? autoTranslate(it.description, locale.value)
+                  : it.description,
+              ]);
+              return { ...it, title, description };
+            }),
+          );
+          recommendedTrips.value = translated;
+        } else {
+          recommendedTrips.value = base;
+        }
+      }
+    } catch (e) {
+      recommendedTrips.value = [];
+    }
     galleryIndex.value = 0;
     loading.value = false;
   }
+};
+
+const openImageModal = (src) => {
+  if (!src) return;
+  imageModalSrc.value = src;
+  isImageModalOpen.value = true;
+};
+
+const closeImageModal = () => {
+  isImageModalOpen.value = false;
+  imageModalSrc.value = "";
 };
 
 onMounted(fetchTrip);

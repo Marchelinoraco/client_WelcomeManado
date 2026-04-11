@@ -1,7 +1,7 @@
 export default {
   nav: {
     home: "Beranda",
-    localTours: "Wisata Lokal",
+    localTours: "Manado Tour",
     national: "Nasional",
     international: "Internasional",
     hotels: "Hotel",
@@ -280,6 +280,7 @@ export default {
     },
   },
   transport: {
+    rentalBadge: "Rental & Transport",
     hero: {
       badge: "Transportasi",
       title1: "TRANSPORTASI DI",
@@ -288,7 +289,56 @@ export default {
         "Ada banyak cara untuk sampai ke Manado. Melalui darat, laut, dan udara, Kota Manado sangat mudah dijangkau. Panduan Transportasi Manado kami akan memberitahu Anda tentang perjalanan di dalam dan sekitar Manado.",
     },
     section: {
+      badge: "Info Transport",
       title: "Berkeliling",
+    },
+    rentalSection: {
+      title: "Daftar Transportasi",
+      description: "Pilih kendaraan yang tersedia sesuai kebutuhan perjalanan.",
+      searchPlaceholder: "Cari nama/type mobil...",
+      showing: "Menampilkan {count} kendaraan",
+      loadErrorTitle: "Gagal memuat transportasi",
+      retry: "Coba Lagi",
+      emptyTitle: "Tidak ada data",
+      emptyDescription: "Coba ubah filter atau kata kunci pencarian.",
+      bookButton: "Pesan via WhatsApp",
+      genericLoadError: "Tidak dapat memuat data transportasi dari server.",
+      filters: {
+        all: "Semua",
+        available: "Tersedia",
+        unavailable: "Tidak Tersedia",
+      },
+      availability: {
+        available: "Tersedia",
+        unavailable: "Tidak Tersedia",
+      },
+    },
+    booking: {
+      title: "Booking Transportasi",
+      subtitle: "Isi Data Pemesan",
+      formTitle: "Lengkapi booking",
+      helpText:
+        "Klik “Kirim WhatsApp” untuk menghubungi admin dengan template otomatis.",
+      customerName: "Nama Pemesan",
+      customerWhatsapp: "No. WhatsApp",
+      rentalDate: "Tanggal Sewa",
+      summary: "Ringkasan",
+      vehicle: "Mobil",
+      type: "Type",
+      notesOptional: "Catatan (Opsional)",
+      cancel: "Batal",
+      sendWhatsapp: "Kirim WhatsApp",
+    },
+    whatsapp: {
+      intro: "Halo Admin Welcome Manado, saya ingin booking transportasi.",
+      customerName: "Nama Pemesan",
+      customerWhatsapp: "No. WhatsApp",
+      rentalDate: "Tanggal Sewa",
+      vehicle: "Mobil",
+      type: "Type",
+      availability: "Ketersediaan",
+      notes: "Catatan",
+      bookingId: "ID Booking",
     },
     items: {
       air: "Melalui Udara",
@@ -466,6 +516,9 @@ export default {
         "* Harga dapat berubah sewaktu-waktu. Silakan hubungi kami untuk konfirmasi ketersediaan dan harga final.",
     },
     downloadItineraryPdf: "Download Itinerary (PDF)",
+    viewDetails: "Lihat Detail",
+    recommendedTitle: "Rekomendasi Tour Lainnya",
+    recommendedDescription: "Jelajahi tour lain dalam kategori yang sama.",
   },
   internationalTrips: {
     currency: "IDR",

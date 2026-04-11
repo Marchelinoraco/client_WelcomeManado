@@ -13,33 +13,19 @@
         <div class="flex-shrink-0 flex items-center lg:mr-8">
           <router-link to="/" class="group flex items-center space-x-3">
             <div
-              class="w-11 h-11 rounded-2xl overflow-hidden shadow-xl group-hover:rotate-[15deg] transition-all duration-500 ease-spring ring-1"
+              class="w-11 h-11 rounded-2xl overflow-hidden shadow-xl group-hover:rotate-[15deg] transition-all duration-500 ease-spring ring-1 bg-black"
               :class="[
                 isScrolled
-                  ? 'bg-gradient-to-br from-slate-900 to-slate-700 ring-slate-200/60 shadow-slate-900/10'
-                  : 'bg-white/10 backdrop-blur-md ring-white/20 shadow-red-900/20',
+                  ? 'ring-slate-200/60 shadow-slate-900/10'
+                  : 'ring-white/20 shadow-red-900/20',
               ]"
             >
-              <svg
-                viewBox="0 0 100 100"
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-full h-full"
-                aria-label="WelcomeManado"
-                role="img"
-              >
-                <path
-                  d="M12 18 L26 82 L42 46 L56 82 L70 18 L57 18 L50 55 L42 18 L34 55 L27 18 Z"
-                  fill="#DC2626"
-                  stroke="rgba(255,255,255,0.9)"
-                  stroke-width="2.5"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M32 86 L32 44 L44 44 L50 58 L56 44 L68 44 L68 86 L56 86 L56 62 L50 72 L44 62 L44 86 Z"
-                  fill="#F8FAFC"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <img
+                src="@/assets/logo.png"
+                alt="WelcomeManado"
+                class="w-full h-full object-cover"
+                loading="eager"
+              />
             </div>
             <div class="flex flex-col">
               <span

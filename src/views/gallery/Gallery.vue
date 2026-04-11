@@ -1,6 +1,60 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <section class="pt-28 lg:pt-32 pb-10">
+    <section class="relative px-6 lg:px-10 bg-slate-900 overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <div
+          class="absolute -top-24 left-1/2 -translate-x-1/2 h-80 w-[36rem] rounded-full bg-red-500/10 blur-3xl"
+        ></div>
+        <div
+          class="absolute -bottom-28 -right-24 h-80 w-80 rounded-full bg-white/5 blur-3xl"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950"
+        ></div>
+      </div>
+
+      <div
+        class="max-w-[95rem] mx-auto pt-28 pb-16 lg:pt-36 lg:pb-20 text-center"
+      >
+        <div
+          class="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 shadow-lg shadow-black/20"
+        >
+          <ImageIcon class="w-4 h-4 text-red-300" />
+          <span
+            class="text-xs font-black text-white uppercase tracking-[0.3em]"
+          >
+            Galeri
+          </span>
+        </div>
+
+        <h2
+          class="mt-8 text-5xl md:text-7xl font-black text-white tracking-tighter leading-[0.95]"
+        >
+          Momen di
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-red-300 to-red-600"
+            >WelcomeManado</span
+          >
+        </h2>
+
+        <p
+          class="mt-6 text-white/75 max-w-2xl mx-auto leading-relaxed font-medium"
+        >
+          Jelajahi koleksi foto pilihan dan video YouTube. Klik kartu untuk
+          melihat lebih besar.
+        </p>
+
+        <div class="mt-10 flex items-center justify-center gap-3">
+          <div class="h-px w-12 bg-white/15"></div>
+          <div
+            class="h-1 w-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full"
+          ></div>
+          <div class="h-px w-12 bg-white/15"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pt-8 lg:pt-10 pb-10">
       <div class="max-w-[95rem] mx-auto px-6 lg:px-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           <div class="lg:col-span-12">

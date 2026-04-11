@@ -46,7 +46,7 @@
           :to="detailHref"
           class="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center group/btn"
         >
-          View Details
+          {{ t("tour.viewDetails") }}
           <ArrowRight
             class="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
           />
@@ -78,28 +78,18 @@
         {{ tour.description }}
       </p>
 
-      <!-- Footer Price -->
       <div
         class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between"
       >
         <div class="flex flex-col">
           <span
             class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1"
-            >{{ tour.base_price ? "Starting From" : "Contact for Price" }}</span
+            >{{ ctaLabel }}</span
           >
-          <div v-if="tour.base_price" class="flex items-baseline space-x-1">
-            <span class="text-xs font-black text-red-600">IDR</span>
-            <span
-              class="text-2xl font-black text-slate-900 group-hover:text-red-600 transition-colors"
-              >{{ formatPrice(tour.base_price) }}</span
-            >
-          </div>
-          <div v-else class="flex items-baseline space-x-1">
-            <span
-              class="text-sm font-black text-red-600 uppercase tracking-widest"
-              >Inquiry Now</span
-            >
-          </div>
+          <span
+            class="text-base font-black text-slate-900 group-hover:text-red-600 transition-colors"
+            >{{ subtitleLabel }}</span
+          >
         </div>
 
         <div
@@ -135,27 +125,27 @@ const detailHref = computed(() => {
   return `${base}/${props.tour.slug}`;
 });
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
+const isId = computed(() => locale.value === "id");
+
+const ctaLabel = computed(() => (isId.value ? "Info" : "Info"));
+const subtitleLabel = computed(() => t("tour.viewDetails"));
 
 const durationLabel = computed(() => {
   const t = props.tour || {};
-  const isId = locale.value === "id";
 
   const min = Number(t.duration_hours_min || 0);
   const max = Number(t.duration_hours_max || 0);
   const hours = Number(t.duration_hours || 0);
 
-  if (min && max) return isId ? `${min}-${max} Jam` : `${min}-${max} Hours`;
-  if (hours) return isId ? `${hours} Jam` : `${hours} Hours`;
-  if (min) return isId ? `${min} Jam` : `${min} Hours`;
-  if (max) return isId ? `${max} Jam` : `${max} Hours`;
+  if (min && max)
+    return isId.value ? `${min}-${max} Jam` : `${min}-${max} Hours`;
+  if (hours) return isId.value ? `${hours} Jam` : `${hours} Hours`;
+  if (min) return isId.value ? `${min} Jam` : `${min} Hours`;
+  if (max) return isId.value ? `${max} Jam` : `${max} Hours`;
 
   const days = t.duration_days ?? 0;
   const nights = t.duration_nights ?? 0;
   return `${days}D / ${nights}N`;
 });
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat("id-ID").format(price);
-};
 </script>

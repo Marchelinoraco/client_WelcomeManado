@@ -1,7 +1,7 @@
 export default {
   nav: {
     home: "홈",
-    localTours: "현지 투어",
+    localTours: "마나도 투어",
     national: "국내 투어",
     international: "해외 투어",
     hotels: "호텔",
@@ -278,6 +278,7 @@ export default {
     },
   },
   transport: {
+    rentalBadge: "렌탈 & 교통",
     hero: {
       badge: "교통",
       title1: "마나도의",
@@ -286,7 +287,56 @@ export default {
         "마나도에 도착하는 방법은 다양합니다. 육로, 해로, 항공을 통해 마나도 시에 매우 쉽게 도달할 수 있습니다. 당사의 '마나도 교통 가이드'가 마나도 시내 및 주변 여행에 대해 안내해 드립니다.",
     },
     section: {
+      badge: "교통 정보",
       title: "둘러보기",
+    },
+    rentalSection: {
+      title: "교통수단 목록",
+      description: "여행에 맞는 차량을 선택하세요.",
+      searchPlaceholder: "차량 이름/종류 검색...",
+      showing: "{count}대 표시",
+      loadErrorTitle: "교통수단을 불러오지 못했습니다",
+      retry: "다시 시도",
+      emptyTitle: "데이터 없음",
+      emptyDescription: "필터 또는 검색어를 변경해 보세요.",
+      bookButton: "WhatsApp으로 예약",
+      genericLoadError: "서버에서 교통수단 데이터를 불러올 수 없습니다.",
+      filters: {
+        all: "전체",
+        available: "이용 가능",
+        unavailable: "이용 불가",
+      },
+      availability: {
+        available: "이용 가능",
+        unavailable: "이용 불가",
+      },
+    },
+    booking: {
+      title: "교통 예약",
+      subtitle: "예약자 정보",
+      formTitle: "예약 정보 입력",
+      helpText:
+        "“WhatsApp 보내기”를 눌러 자동 템플릿으로 관리자에게 문의하세요.",
+      customerName: "예약자 이름",
+      customerWhatsapp: "WhatsApp 번호",
+      rentalDate: "대여 날짜",
+      summary: "요약",
+      vehicle: "차량",
+      type: "종류",
+      notesOptional: "메모(선택)",
+      cancel: "취소",
+      sendWhatsapp: "WhatsApp 보내기",
+    },
+    whatsapp: {
+      intro: "안녕하세요 Welcome Manado 관리자님, 교통 예약을 하고 싶습니다.",
+      customerName: "예약자 이름",
+      customerWhatsapp: "WhatsApp",
+      rentalDate: "대여 날짜",
+      vehicle: "차량",
+      type: "종류",
+      availability: "이용 가능 여부",
+      notes: "메모",
+      bookingId: "예약 ID",
     },
     items: {
       air: "항공 이용",
@@ -467,6 +517,8 @@ export default {
     contactForPrice: "가격 문의",
     inquiryNow: "지금 문의",
     viewDetails: "상세 보기",
+    recommendedTitle: "다른 추천 투어",
+    recommendedDescription: "같은 카테고리의 다른 투어를 확인해 보세요.",
   },
   internationalTrips: {
     currency: "IDR",

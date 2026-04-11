@@ -1,7 +1,7 @@
 export default {
   nav: {
     home: "Home",
-    localTours: "Local Tours",
+    localTours: "Manado Tours",
     national: "National",
     international: "International",
     hotels: "Hotels",
@@ -279,6 +279,7 @@ export default {
     },
   },
   transport: {
+    rentalBadge: "Rental & Transport",
     hero: {
       badge: "Transportation",
       title1: "TRANSPORT IN",
@@ -287,7 +288,56 @@ export default {
         "There are many ways to arrive at Manado. By land, sea, and air, Manado City is very easy to reach. Our 'Manado Transportation Guide' will tell you about travelling in and around Manado.",
     },
     section: {
+      badge: "Transport Info",
       title: "Getting Around",
+    },
+    rentalSection: {
+      title: "Transportation List",
+      description: "Choose a vehicle that suits your trip.",
+      searchPlaceholder: "Search car name/type...",
+      showing: "Showing {count} vehicles",
+      loadErrorTitle: "Failed to load transportations",
+      retry: "Try Again",
+      emptyTitle: "No data",
+      emptyDescription: "Try adjusting filters or search keywords.",
+      bookButton: "Book via WhatsApp",
+      genericLoadError: "Unable to load transportations from server.",
+      filters: {
+        all: "All",
+        available: "Available",
+        unavailable: "Unavailable",
+      },
+      availability: {
+        available: "Available",
+        unavailable: "Unavailable",
+      },
+    },
+    booking: {
+      title: "Transportation Booking",
+      subtitle: "Customer Details",
+      formTitle: "Complete booking",
+      helpText:
+        "Click “Send WhatsApp” to contact admin with an automatic template.",
+      customerName: "Customer Name",
+      customerWhatsapp: "WhatsApp Number",
+      rentalDate: "Rental Date",
+      summary: "Summary",
+      vehicle: "Vehicle",
+      type: "Type",
+      notesOptional: "Notes (Optional)",
+      cancel: "Cancel",
+      sendWhatsapp: "Send WhatsApp",
+    },
+    whatsapp: {
+      intro: "Hello Welcome Manado Admin, I'd like to book transportation.",
+      customerName: "Customer Name",
+      customerWhatsapp: "WhatsApp",
+      rentalDate: "Rental Date",
+      vehicle: "Vehicle",
+      type: "Type",
+      availability: "Availability",
+      notes: "Notes",
+      bookingId: "Booking ID",
     },
     items: {
       air: "By Air",
@@ -469,6 +519,8 @@ export default {
     contactForPrice: "Contact for Price",
     inquiryNow: "Inquiry Now",
     viewDetails: "View Details",
+    recommendedTitle: "More Tours You Might Like",
+    recommendedDescription: "Explore other tours in the same category.",
   },
   internationalTrips: {
     currency: "IDR",
