@@ -8,12 +8,21 @@
       <div
         class="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/80"
       ></div>
-      <div class="absolute inset-0 z-0 scale-110 animate-subtle-zoom">
-        <img
-          src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=2400"
-          class="w-full h-full object-cover opacity-80"
-          alt="Manado Hero"
-        />
+      <div class="absolute inset-0 z-0">
+        <transition-group name="fade" tag="div" class="w-full h-full relative bg-slate-900">
+          <div
+            v-for="(img, index) in heroImages"
+            :key="img"
+            v-show="currentHeroImageIndex === index"
+            class="absolute inset-0 w-full h-full"
+          >
+            <img
+              :src="img"
+              class="w-full h-full object-cover opacity-80 scale-110 animate-subtle-zoom"
+              :alt="'Manado Hero ' + (index + 1)"
+            />
+          </div>
+        </transition-group>
       </div>
 
       <!-- Animated Decorative Elements -->
@@ -91,42 +100,7 @@
         id="manado-tours"
         class="pt-24 pb-28 lg:pt-32 lg:pb-44 px-6 lg:px-10 overflow-hidden relative"
       >
-        <!-- Floating Stats Section -->
-        <div
-          class="max-w-7xl mx-auto -mt-32 lg:-mt-44 relative z-30 mb-16 lg:mb-24"
-        >
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-            <div
-              v-for="(stat, idx) in stats"
-              :key="idx"
-              class="bg-white/90 backdrop-blur-3xl p-7 lg:p-9 rounded-[2.5rem] border border-white/60 shadow-[0_30px_60px_rgba(0,0,0,0.08)] text-center group hover:-translate-y-2 transition-all duration-700 ease-spring relative overflow-hidden"
-            >
-              <!-- Animated Background Decoration -->
-              <div
-                class="absolute -right-4 -bottom-4 w-20 h-20 bg-red-500/5 rounded-full group-hover:scale-[3] transition-transform duration-700"
-              ></div>
-
-              <div class="relative z-10">
-                <div
-                  class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-50 to-red-100/50 text-red-600 flex items-center justify-center mx-auto mb-6 group-hover:from-red-600 group-hover:to-red-700 group-hover:text-white group-hover:shadow-xl group-hover:shadow-red-600/30 transition-all duration-500"
-                >
-                  <component :is="stat.icon" class="w-7 h-7" />
-                </div>
-                <p
-                  class="text-4xl font-black text-slate-900 mb-2 tracking-tighter"
-                >
-                  {{ stat.value }}
-                </p>
-                <p
-                  class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]"
-                >
-                  {{ stat.label }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+       
         <div class="max-w-7xl mx-auto">
           <div
             class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-10"
@@ -430,7 +404,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import TourCard from "@/components/TourCard.vue";
 import { getTours } from "@/services/api";
@@ -486,6 +460,20 @@ const tours = ref({
 });
 const loading = ref(true);
 
+// === Hero Carousel Logic ===
+const currentHeroImageIndex = ref(0);
+let heroCarouselInterval = null;
+
+// Ganti URL gambar di bawah ini dengan gambar asli (Tarsius, Bunaken, Yesus Memberkati, dll). 
+// Saat ini saya cantumkan sebagai gambaran (proxy).
+const heroImages = [
+  "https://live.staticflickr.com/1952/30570720147_cd23c2b225_h.jpg", // Simbol Manado Proxy  
+  "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&q=80&w=2400", // Proxy Tarsius / Macaque (Tangkoko)
+  "https://asset.kompas.com/crops/JKmVlp4tEmfKRlPM3q28A4uEimc=/0x27:1000x693/1200x800/data/photo/2020/04/20/5e9d07ee9089f.jpg", // Manado City / Sea
+  "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=2400", // Bunaken / Coral Reef
+  "https://ik.imagekit.io/tvlk/blog/2024/08/shutterstock_1814394446.jpg?tr=q-70,c-at_max,w-1000,h-600"  // Danau Linow Proxy / Landscape
+];
+
 const localTours = computed(() => tours.value.local?.slice(0, 3) || []);
 const nationalTours = computed(() => tours.value.national?.slice(0, 3) || []);
 const internationalTours = computed(
@@ -527,11 +515,33 @@ const fetchTours = async () => {
   }
 };
 
-onMounted(fetchTours);
+onMounted(() => {
+  fetchTours();
+  
+  // Memulai slideshow ganti gambar hero setiap 5 detik
+  heroCarouselInterval = setInterval(() => {
+    currentHeroImageIndex.value = (currentHeroImageIndex.value + 1) % heroImages.length;
+  }, 5000);
+});
+
+onUnmounted(() => {
+  if (heroCarouselInterval) clearInterval(heroCarouselInterval);
+});
+
 watch(locale, fetchTours);
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 @keyframes subtle-zoom {
   from {
     transform: scale(1.1);

@@ -34,7 +34,7 @@ export default {
     },
     national: {
       badge: "Across Indonesia",
-      title1: "National",
+      title1: "Other",
       title2: "Destinations",
       description:
         "Experience the soul of Indonesia. From the spiritual heart of Bali to the ancient dragons of Komodo Island.",

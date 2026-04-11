@@ -35,7 +35,7 @@ export default {
     national: {
       badge: "Seluruh Indonesia",
       title1: "Destinasi",
-      title2: "Nasional",
+      title2: "Lainnya",
       description:
         "Rasakan jiwa Indonesia. Dari jantung spiritual Bali hingga naga kuno Pulau Komodo.",
       exploreArchipelago: "Jelajahi Nusantara",
