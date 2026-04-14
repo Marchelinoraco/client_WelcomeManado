@@ -175,20 +175,19 @@
               >
                 <ShieldCheck class="w-4 h-4 mr-2" />
                 <span class="text-[10px] font-black uppercase tracking-[0.2em]"
-                  >The Welcome Manado Advantage</span
+                  >{{ $t("home.whychooseus.badge") }}</span
                 >
               </div>
               <h2
                 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-10 leading-[0.9] uppercase"
               >
-                Why Travel <br />
-                <span class="text-red-600 italic">With Us?</span>
+                {{ $t("home.whychooseus.title1") }} <br />
+                <span class="text-red-600 italic">{{ $t("home.whychooseus.title2") }}</span>
               </h2>
               <p
                 class="text-slate-500 text-xl font-medium leading-relaxed mb-12"
               >
-                We don't just organize trips; we craft lifelong memories with a
-                touch of local heart and international standards.
+                {{ $t("home.whychooseus.description") }}
               </p>
               <div class="flex items-center space-x-6">
                 <div class="flex -space-x-4">
@@ -199,9 +198,7 @@
                     class="w-12 h-12 rounded-full border-4 border-white object-cover"
                   />
                 </div>
-                <p class="text-sm font-bold text-slate-900">
-                  Joined by 10,000+ <br />
-                  happy travelers
+                <p class="text-sm font-bold text-slate-900" v-html="$t('home.whychooseus.happyTravelers')">
                 </p>
               </div>
             </div>
@@ -431,28 +428,25 @@ const stats = [
   { label: "Tour Guides", value: "25+", icon: Palmtree },
 ];
 
-const features = [
+const { locale, t } = useI18n();
+
+const features = computed(() => [
   {
-    title: "Instant Booking",
-    description:
-      "Secure your dream vacation in seconds with our seamless real-time booking system.",
+    title: t("home.whychooseus.features.instantBooking.title"),
+    description: t("home.whychooseus.features.instantBooking.description"),
     icon: Zap,
   },
   {
-    title: "Best Price",
-    description:
-      "We guarantee the best value for your investment with no hidden fees or charges.",
+    title: t("home.whychooseus.features.bestPrice.title"),
+    description: t("home.whychooseus.features.bestPrice.description"),
     icon: Star,
   },
   {
-    title: "24/7 Support",
-    description:
-      "Our dedicated travel experts are always ready to assist you at every step of your journey.",
+    title: t("home.whychooseus.features.support.title"),
+    description: t("home.whychooseus.features.support.description"),
     icon: Clock,
   },
-];
-
-const { locale } = useI18n();
+]);
 const tours = ref({
   local: [],
   national: [],

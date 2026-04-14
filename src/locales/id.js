@@ -24,6 +24,27 @@ export default {
     nationalTours: "TUR NASIONAL",
   },
   home: {
+    whychooseus: {
+      badge: 'Keunggulan Welcome Manado',
+      title1: 'Mengapa Memilih',
+      title2: 'Kami?',
+      description: 'Kami tidak sekadar mengatur perjalanan; kami merangkai kenangan seumur hidup dengan sentuhan hati lokal dan standar internasional.',
+      happyTravelers: 'Telah dipercaya oleh 10,000+ <br /> wisatawan',
+      features: {
+        instantBooking: {
+          title: 'Pemesanan Instan',
+          description: 'Amankan liburan impian Anda dalam hitungan detik dengan sistem pemesanan real-time kami.'
+        },
+        bestPrice: {
+          title: 'Harga Terbaik',
+          description: 'Kami menjamin nilai terbaik untuk investasi Anda tanpa biaya tersembunyi.'
+        },
+        support: {
+          title: 'Dukungan 24/7',
+          description: 'Pakar perjalanan kami selalu siap membantu Anda di setiap langkah perjalanan Anda.'
+        }
+      }
+    },
     local: {
       badge: "Surga Lokal",
       title1: "HARTA KARUN",

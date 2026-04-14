@@ -24,6 +24,27 @@ export default {
     nationalTours: "NATIONAL TOURS",
   },
   home: {
+    whychooseus: {
+      badge: 'The Welcome Manado Advantage',
+      title1: 'Why Travel',
+      title2: 'With Us?',
+      description: 'We do not just organize trips; we craft lifelong memories with a touch of local heart and international standards.',
+      happyTravelers: 'Joined by 10,000+ <br /> happy travelers',
+      features: {
+        instantBooking: {
+          title: 'Instant Booking',
+          description: 'Secure your dream vacation in seconds with our seamless real-time booking system.'
+        },
+        bestPrice: {
+          title: 'Best Price',
+          description: 'We guarantee the best value for your investment with no hidden fees or charges.'
+        },
+        support: {
+          title: '24/7 Support',
+          description: 'Our dedicated travel experts are always ready to assist you at every step of your journey.'
+        }
+      }
+    },
     local: {
       badge: "Local Paradise",
       title1: "MANADO",

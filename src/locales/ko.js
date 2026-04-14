@@ -24,6 +24,27 @@ export default {
     nationalTours: "국내 투어",
   },
   home: {
+    whychooseus: {
+      badge: 'Welcome Manado의 장점',
+      title1: '왜 우리와 함께',
+      title2: '여행해야 할까요?',
+      description: '우리는 단순한 여행을 기획하는 것이 아니라, 현지의 정성과 국제적인 수준으로 평생 잊지 못할 추억을 만들어 드립니다.',
+      happyTravelers: '10,000명 이상의 <br /> 행복한 여행자들이 선택했습니다',
+      features: {
+        instantBooking: {
+          title: '즉시 예약',
+          description: '원활한 실시간 예약 시스템으로 단 몇 초 만에 꿈에 그리던 휴가를 확보하세요.'
+        },
+        bestPrice: {
+          title: '최저가 보장',
+          description: '숨겨진 수수료 없이 투자 대비 최고의 가치를 보장합니다.'
+        },
+        support: {
+          title: '연중무휴 지원',
+          description: '우리의 전문 여행 전문가들이 여행의 모든 단계에서 항상 여러분을 도울 준비가 되어 있습니다.'
+        }
+      }
+    },
     local: {
       badge: "로컬 파라다이스",
       title1: "마나도",

@@ -24,6 +24,27 @@ export default {
     nationalTours: "国内游",
   },
   home: {
+    whychooseus: {
+      badge: 'Welcome Manado 的优势',
+      title1: '为什么选择',
+      title2: '我们？',
+      description: '我们不仅组织旅行，我们还以当地的热情和国际标准打造终生难忘的回忆。',
+      happyTravelers: '超过 10,000 名 <br /> 满意旅客的选择',
+      features: {
+        instantBooking: {
+          title: '即时预订',
+          description: '通过我们无缝的实时预订系统，在几秒钟内锁定您的梦想假期。'
+        },
+        bestPrice: {
+          title: '最优惠价格',
+          description: '我们保证您的投资获得最大价值，且无任何隐藏费用。'
+        },
+        support: {
+          title: '全天候客户支持',
+          description: '我们专业的旅行专家随时准备在您旅程的每一步为您提供帮助。'
+        }
+      }
+    },
     local: {
       badge: "当地天堂",
       title1: "万鸦老",
