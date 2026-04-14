@@ -7,13 +7,13 @@
         : 'bg-transparent py-6',
     ]"
   >
-    <div class="w-full mx-auto px-4 lg:px-6 xl:px-8 2xl:px-10 max-w-[95rem]">
-      <div class="flex justify-between items-center h-14">
+    <div class="w-full mx-auto px-4 lg:px-6 xl:px-4 max-w-[95rem]">
+      <div class="flex justify-between items-center h-14 w-full">
         <!-- Logo Section -->
-        <div class="flex-shrink-0 flex items-center lg:mr-4 2xl:mr-8">
+        <div class="flex-shrink-0 flex justify-start items-center lg:mr-4">
           <router-link to="/" class="group flex items-center space-x-3">
             <div
-              class="w-11 h-11 rounded-2xl overflow-hidden shadow-xl group-hover:rotate-[15deg] transition-all duration-500 ease-spring ring-1 bg-black"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-2xl overflow-hidden shadow-xl group-hover:rotate-[15deg] transition-all duration-500 ease-spring ring-1 bg-black"
               :class="[
                 isScrolled
                   ? 'ring-slate-200/60 shadow-slate-900/10'
@@ -29,7 +29,7 @@
             </div>
             <div class="flex flex-col">
               <span
-                class="text-xl 2xl:text-2xl font-black tracking-tighter leading-none transition-colors"
+                class="text-lg lg:text-xl font-black tracking-tighter leading-none transition-colors"
                 :class="isScrolled ? 'text-slate-900' : 'text-white'"
               >
                 Welcome<span class="text-red-600">Manado</span>
@@ -45,11 +45,11 @@
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden xl:flex xl:items-center xl:space-x-0.5 2xl:space-x-2">
+        <div class="hidden xl:flex flex-1 justify-center items-center space-x-1 lg:space-x-1.5">
           <!-- Home Link -->
           <router-link
             to="/"
-            class="px-2.5 2xl:px-4 py-2 text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
                 ? 'text-slate-600 hover:text-red-600'
@@ -65,7 +65,7 @@
             class="relative group whitespace-nowrap"
           >
             <button
-              class="px-2.5 2xl:px-4 py-2 flex items-center text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
+              class="px-1.5 lg:px-2.5 py-2 flex items-center text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
               :class="
                 isScrolled
                   ? 'text-slate-600'
@@ -170,7 +170,7 @@
           <!-- Hotels -->
           <router-link
             to="/hotels"
-            class="px-2.5 2xl:px-4 py-2 text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
                 ? 'text-slate-600 hover:text-red-600'
@@ -182,7 +182,7 @@
           <!-- Gallery -->
           <router-link
             to="/gallery"
-            class="px-2.5 2xl:px-4 py-2 text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
                 ? 'text-slate-600 hover:text-red-600'
@@ -194,7 +194,7 @@
           <!-- Travel Info -->
           <div class="relative group whitespace-nowrap">
             <button
-              class="px-2.5 2xl:px-4 py-2 flex items-center text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
+              class="px-1.5 lg:px-2.5 py-2 flex items-center text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap group-hover:text-red-600"
               :class="
                 isScrolled
                   ? 'text-slate-600'
@@ -246,7 +246,7 @@
 
           <router-link
             to="/about"
-            class="px-2.5 2xl:px-4 py-2 text-[11.5px] 2xl:text-[13px] font-bold tracking-wide uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
             :class="
               isScrolled
                 ? 'text-slate-600 hover:text-red-600'
@@ -257,13 +257,14 @@
         </div>
 
         <!-- Right Side Utility -->
-        <div
-          class="hidden xl:flex items-center space-x-2 2xl:space-x-4 ml-3 2xl:ml-6 pl-3 2xl:pl-6 border-l border-slate-200/20"
-        >
+        <div class="hidden xl:flex flex-shrink-0 justify-end items-center">
+          <div
+            class="flex items-center space-x-2 lg:space-x-3 ml-3 border-l border-slate-200/20 pl-3"
+          >
           <!-- Dark Mode Toggle -->
           <button
             @click="toggleDarkMode"
-            class="theme-toggle w-9 h-9 2xl:w-11 2xl:h-11 flex items-center justify-center transition-all rounded-xl 2xl:rounded-2xl border hover:shadow-lg active:scale-95"
+            class="theme-toggle w-9 h-9 lg:w-10 lg:h-10 flex items-center justify-center transition-all rounded-xl border hover:shadow-lg active:scale-95"
             :class="
               isScrolled
                 ? 'border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:bg-white dark:hover:bg-slate-700'
@@ -278,7 +279,7 @@
           <!-- Language Selector -->
           <div class="relative group/lang">
             <button
-              class="w-9 h-9 2xl:w-11 2xl:h-11 flex items-center justify-center transition-all rounded-xl 2xl:rounded-2xl border hover:shadow-lg active:scale-95"
+              class="w-9 h-9 lg:w-10 lg:h-10 flex items-center justify-center transition-all rounded-xl border hover:shadow-lg active:scale-95"
               :class="
                 isScrolled
                   ? 'border-slate-100 bg-slate-50 text-slate-600 hover:bg-white'
@@ -321,10 +322,11 @@
           <!-- Contact Button -->
           <router-link
             to="/contact"
-            class="px-5 2xl:px-8 py-2.5 2xl:py-3.5 bg-red-600 text-white text-[10px] 2xl:text-[11px] font-black uppercase tracking-widest rounded-xl 2xl:rounded-2xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 hover:shadow-red-600/30 hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
+            class="px-4 lg:px-5 py-2 lg:py-2.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 hover:shadow-red-600/30 hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
           >
             {{ $t("nav.contact") }}
           </router-link>
+          </div>
         </div>
 
         <!-- Mobile Menu Button -->
