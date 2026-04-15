@@ -4,7 +4,7 @@
     :class="[
       isScrolled
         ? 'bg-white/80 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.03)] py-3 border-b border-slate-100/50'
-        : 'bg-transparent py-6',
+        : 'bg-gradient-to-b from-slate-950/35 via-slate-900/15 to-transparent py-6',
     ]"
   >
     <div class="w-full mx-auto px-4 lg:px-6 xl:px-4 max-w-[95rem]">

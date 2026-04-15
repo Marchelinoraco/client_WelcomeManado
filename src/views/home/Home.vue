@@ -9,7 +9,11 @@
         class="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/40 via-slate-900/20 to-slate-900/80"
       ></div>
       <div class="absolute inset-0 z-0">
-        <transition-group name="fade" tag="div" class="w-full h-full relative bg-slate-900">
+        <transition-group
+          name="fade"
+          tag="div"
+          class="w-full h-full relative bg-slate-900"
+        >
           <div
             v-for="(img, index) in heroImages"
             :key="img"
@@ -82,15 +86,6 @@
           </a>
         </div>
       </div>
-
-      <!-- Floating Scroll Indicator -->
-      <div
-        class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce"
-      >
-        <div
-          class="w-1 h-12 rounded-full bg-gradient-to-b from-white/40 to-transparent"
-        ></div>
-      </div>
     </header>
 
     <!-- Main Content -->
@@ -100,7 +95,6 @@
         id="manado-tours"
         class="pt-24 pb-28 lg:pt-32 lg:pb-44 px-6 lg:px-10 overflow-hidden relative"
       >
-       
         <div class="max-w-7xl mx-auto">
           <div
             class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-10"
@@ -174,7 +168,8 @@
                 class="inline-flex items-center px-4 py-1.5 bg-red-50 text-red-600 rounded-full mb-8"
               >
                 <ShieldCheck class="w-4 h-4 mr-2" />
-                <span class="text-[10px] font-black uppercase tracking-[0.2em]"
+                <span
+                  class="text-[10px] font-black uppercase tracking-[0.2em]"
                   >{{ $t("home.whychooseus.badge") }}</span
                 >
               </div>
@@ -182,7 +177,9 @@
                 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-10 leading-[0.9] uppercase"
               >
                 {{ $t("home.whychooseus.title1") }} <br />
-                <span class="text-red-600 italic">{{ $t("home.whychooseus.title2") }}</span>
+                <span class="text-red-600 italic">{{
+                  $t("home.whychooseus.title2")
+                }}</span>
               </h2>
               <p
                 class="text-slate-500 text-xl font-medium leading-relaxed mb-12"
@@ -198,8 +195,10 @@
                     class="w-12 h-12 rounded-full border-4 border-white object-cover"
                   />
                 </div>
-                <p class="text-sm font-bold text-slate-900" v-html="$t('home.whychooseus.happyTravelers')">
-                </p>
+                <p
+                  class="text-sm font-bold text-slate-900"
+                  v-html="$t('home.whychooseus.happyTravelers')"
+                ></p>
               </div>
             </div>
 
@@ -458,14 +457,14 @@ const loading = ref(true);
 const currentHeroImageIndex = ref(0);
 let heroCarouselInterval = null;
 
-// Ganti URL gambar di bawah ini dengan gambar asli (Tarsius, Bunaken, Yesus Memberkati, dll). 
+// Ganti URL gambar di bawah ini dengan gambar asli (Tarsius, Bunaken, Yesus Memberkati, dll).
 // Saat ini saya cantumkan sebagai gambaran (proxy).
 const heroImages = [
-  "https://live.staticflickr.com/1952/30570720147_cd23c2b225_h.jpg", // Simbol Manado Proxy  
+  "https://live.staticflickr.com/1952/30570720147_cd23c2b225_h.jpg", // Simbol Manado Proxy
   "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&q=80&w=2400", // Proxy Tarsius / Macaque (Tangkoko)
   "https://asset.kompas.com/crops/JKmVlp4tEmfKRlPM3q28A4uEimc=/0x27:1000x693/1200x800/data/photo/2020/04/20/5e9d07ee9089f.jpg", // Manado City / Sea
   "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=2400", // Bunaken / Coral Reef
-  "https://ik.imagekit.io/tvlk/blog/2024/08/shutterstock_1814394446.jpg?tr=q-70,c-at_max,w-1000,h-600"  // Danau Linow Proxy / Landscape
+  "https://ik.imagekit.io/tvlk/blog/2024/08/shutterstock_1814394446.jpg?tr=q-70,c-at_max,w-1000,h-600", // Danau Linow Proxy / Landscape
 ];
 
 const localTours = computed(() => tours.value.local?.slice(0, 3) || []);
@@ -511,10 +510,11 @@ const fetchTours = async () => {
 
 onMounted(() => {
   fetchTours();
-  
+
   // Memulai slideshow ganti gambar hero setiap 5 detik
   heroCarouselInterval = setInterval(() => {
-    currentHeroImageIndex.value = (currentHeroImageIndex.value + 1) % heroImages.length;
+    currentHeroImageIndex.value =
+      (currentHeroImageIndex.value + 1) % heroImages.length;
   }, 5000);
 });
 

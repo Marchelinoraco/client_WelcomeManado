@@ -1,60 +1,70 @@
 <template>
   <div
-    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50 pt-20"
+    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50"
   >
-    <div v-if="!hotel" class="flex items-center justify-center min-h-screen">
+    <div
+      v-if="isLoading"
+      class="flex items-center justify-center min-h-screen"
+    >
       <div
         class="animate-spin rounded-full h-12 w-12 border-4 border-red-600 border-t-transparent"
       ></div>
     </div>
 
-    <div v-else>
+    <div v-else-if="hotel">
       <!-- Hero Section -->
-      <div class="relative h-[60vh] lg:h-[70vh] group overflow-hidden">
+      <div class="relative min-h-[72vh] lg:min-h-[82vh] group overflow-hidden">
         <img
-          :src="hotel.image"
+          :src="hotel.heroImage"
           :alt="hotel.name"
-          class="w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover object-center scale-[1.03]"
         />
         <div
-          class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"
+          class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-900/15 to-transparent"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-transparent"
         ></div>
 
         <div
-          class="absolute bottom-0 left-0 right-0 p-8 lg:p-16 max-w-7xl mx-auto"
+          class="relative z-10 flex min-h-[72vh] lg:min-h-[82vh] items-end"
         >
-          <router-link
-            to="/hotels"
-            class="inline-flex items-center text-white/70 hover:text-white mb-6 transition-colors uppercase tracking-widest text-xs font-bold"
-          >
-            <ArrowLeft class="w-4 h-4 mr-2" />
-            {{ $t("hotelDetail.back") }}
-          </router-link>
+          <div class="w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 lg:pb-16">
+            <router-link
+              to="/hotels"
+              class="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white/80 hover:text-white hover:bg-white/15 mb-6 transition-colors uppercase tracking-widest text-xs font-bold backdrop-blur-md"
+            >
+              <ArrowLeft class="w-4 h-4 mr-2" />
+              {{ $t("hotelDetail.back") }}
+            </router-link>
 
-          <div class="flex items-center space-x-2 mb-4">
-            <div class="flex">
-              <Star
-                v-for="i in hotel.stars"
-                :key="i"
-                class="w-5 h-5 text-amber-500 fill-amber-500"
-              />
+            <div class="max-w-4xl">
+              <div class="flex items-center space-x-2 mb-4">
+                <div class="flex">
+                  <Star
+                    v-for="i in hotel.stars"
+                    :key="i"
+                    class="w-5 h-5 text-amber-500 fill-amber-500"
+                  />
+                </div>
+                <span class="text-white font-bold ml-2">{{
+                  $t("hotelDetail.starsLabel", { stars: hotel.stars })
+                }}</span>
+              </div>
+
+              <h1
+                class="text-4xl md:text-6xl xl:text-7xl font-black text-white tracking-tighter leading-[0.95] mb-4"
+              >
+                {{ hotel.name }}
+              </h1>
+
+              <div class="flex items-center text-white/85 space-x-2">
+                <MapPin class="w-5 h-5 text-red-400 shrink-0" />
+                <span class="text-lg font-medium">{{
+                  hotel._location || hotel.location
+                }}</span>
+              </div>
             </div>
-            <span class="text-white font-bold ml-2">{{
-              $t("hotelDetail.starsLabel", { stars: hotel.stars })
-            }}</span>
-          </div>
-
-          <h1
-            class="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-4"
-          >
-            {{ hotel.name }}
-          </h1>
-
-          <div class="flex items-center text-white/80 space-x-2">
-            <MapPin class="w-5 h-5 text-red-500" />
-            <span class="text-lg font-medium">{{
-              hotel._location || hotel.location
-            }}</span>
           </div>
         </div>
       </div>
@@ -167,6 +177,28 @@
         </div>
       </main>
     </div>
+
+    <div
+      v-else
+      class="min-h-screen flex items-center justify-center px-6 text-center"
+    >
+      <div class="max-w-lg">
+        <h1 class="text-3xl font-black text-slate-900 mb-3">
+          Hotel tidak ditemukan
+        </h1>
+        <p class="text-slate-500 text-lg mb-8">
+          Data hotel ini belum tersedia atau slug hotel berubah setelah admin
+          memperbarui data.
+        </p>
+        <router-link
+          to="/hotels"
+          class="inline-flex items-center justify-center rounded-2xl bg-red-600 px-6 py-4 text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-red-700"
+        >
+          <ArrowLeft class="w-4 h-4 mr-2" />
+          Kembali ke daftar hotel
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -174,7 +206,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { hotels } from "@/data/hotels";
+import { getHotelDetail, getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
 import {
   Star,
@@ -190,53 +222,115 @@ import {
 const route = useRoute();
 const { locale } = useI18n();
 const hotel = ref(null);
+const isLoading = ref(true);
 const translatedCache = new Map();
 
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1551882547-ff40c0d588fa?auto=format&fit=crop&w=2400&q=80";
+
+const unwrapHotelPayload = (payload) => {
+  if (!payload) return null;
+  if (payload.data && !Array.isArray(payload.data)) return unwrapHotelPayload(payload.data);
+  return payload;
+};
+
+const normalizeHotel = (rawHotel) => {
+  if (!rawHotel) return null;
+
+  const heroImage =
+    rawHotel.primary_image ||
+    rawHotel.thumbnail ||
+    rawHotel.image ||
+    rawHotel.images?.find((img) => img?.is_primary)?.image_path ||
+    rawHotel.images?.[0]?.image_path ||
+    FALLBACK_IMAGE;
+
+  return {
+    id: rawHotel.id,
+    slug: rawHotel.slug,
+    name: rawHotel.name || "Hotel",
+    description: rawHotel.description || "",
+    location: rawHotel.location || "",
+    stars: Number(rawHotel.stars || 0),
+    image: heroImage,
+    heroImage,
+  };
+};
+
+const findHotelFromCollection = async (slugOrId) => {
+  const res = await getHotels();
+  const arr = Array.isArray(res.data?.data?.data)
+    ? res.data.data.data
+    : Array.isArray(res.data?.data)
+      ? res.data.data
+      : [];
+
+  const matched = arr.find(
+    (item) => String(item.slug) === String(slugOrId) || String(item.id) === String(slugOrId),
+  );
+
+  return normalizeHotel(matched || null);
+};
+
 const loadHotel = async () => {
-  const slugId = route.params.id; // router was defined with :id
-  const baseHotel = hotels.find((h) => h.slug === slugId);
+  isLoading.value = true;
 
-  if (!baseHotel) {
-    hotel.value = null;
-    window.scrollTo(0, 0);
-    return;
-  }
+  try {
+    const slugId = route.params.id;
+    let baseHotel = null;
 
-  const lang = locale.value;
-  const cacheKey = `${lang}:${baseHotel.slug}`;
+    try {
+      const response = await getHotelDetail(slugId);
+      baseHotel = normalizeHotel(unwrapHotelPayload(response.data));
+    } catch (error) {
+      baseHotel = null;
+    }
 
-  if (translatedCache.has(cacheKey)) {
-    hotel.value = translatedCache.get(cacheKey);
-    window.scrollTo(0, 0);
-    return;
-  }
+    if (!baseHotel) {
+      baseHotel = await findHotelFromCollection(slugId);
+    }
 
-  if (lang === "en") {
+    if (!baseHotel) {
+      hotel.value = null;
+      return;
+    }
+
+    const lang = locale.value;
+    const cacheKey = `${lang}:${baseHotel.slug || slugId}`;
+
+    if (translatedCache.has(cacheKey)) {
+      hotel.value = translatedCache.get(cacheKey);
+      return;
+    }
+
+    if (lang === "en") {
+      const value = {
+        ...baseHotel,
+        _description: undefined,
+        _location: undefined,
+      };
+      translatedCache.set(cacheKey, value);
+      hotel.value = value;
+      return;
+    }
+
+    const [desc, loc] = await Promise.all([
+      translateText(baseHotel.description, lang, "auto"),
+      translateText(baseHotel.location, lang, "auto"),
+    ]);
+
     const value = {
       ...baseHotel,
-      _description: undefined,
-      _location: undefined,
+      _description: desc,
+      _location: loc,
     };
+
     translatedCache.set(cacheKey, value);
     hotel.value = value;
+  } finally {
+    isLoading.value = false;
     window.scrollTo(0, 0);
-    return;
   }
-
-  const [desc, loc] = await Promise.all([
-    translateText(baseHotel.description, lang, "auto"),
-    translateText(baseHotel.location, lang, "auto"),
-  ]);
-
-  const value = {
-    ...baseHotel,
-    _description: desc,
-    _location: loc,
-  };
-
-  translatedCache.set(cacheKey, value);
-  hotel.value = value;
-  window.scrollTo(0, 0);
 };
 
 onMounted(() => {
