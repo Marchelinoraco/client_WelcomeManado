@@ -697,6 +697,7 @@ import {
 } from "lucide-vue-next";
 import { getLocalTourDetail, getLocalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { applySeo } from "@/utils/seo";
 import { dummyLocalTours } from "./dummyLocalTours";
 import ImageCarousel from "@/components/ImageCarousel.vue";
 import TourCard from "@/components/TourCard.vue";
@@ -751,6 +752,13 @@ const fetchTour = async () => {
     if (!rawTour) {
       tour.value = null;
       recommendedTours.value = [];
+      applySeo({
+        title: "Detail Tour Lokal Manado",
+        description:
+          "Lihat detail paket tour lokal Manado lengkap dengan itinerary, durasi, dan informasi penting lainnya.",
+        url: route.fullPath,
+        type: "article",
+      });
       return;
     }
 
@@ -804,6 +812,14 @@ const fetchTour = async () => {
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     }
+
+    applySeo({
+      title: tour.value.title,
+      description: tour.value.description,
+      image: galleryImages.value[0],
+      url: route.fullPath,
+      type: "article",
+    });
 
     const fetchRecommended = async () => {
       try {

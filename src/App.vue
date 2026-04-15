@@ -176,10 +176,27 @@
 </template>
 
 <script setup>
+import { watch } from "vue";
+import { useI18n } from "vue-i18n";
 import Navbar from "./components/Navbar.vue";
 import { useDarkMode } from "./composables/useDarkMode";
 
 const { isDark } = useDarkMode();
+const { locale } = useI18n();
+
+watch(
+  locale,
+  (value) => {
+    const langMap = {
+      id: "id",
+      en: "en",
+      ko: "ko",
+      zh: "zh-CN",
+    };
+    document.documentElement.lang = langMap[value] || "en";
+  },
+  { immediate: true },
+);
 </script>
 
 <style>

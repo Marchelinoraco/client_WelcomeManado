@@ -310,7 +310,7 @@
               v-for="trip in sortedTrips"
               :key="trip.id"
               :to="`/internasional/tour/${trip.slug}`"
-              class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-red-900/10 transition-all overflow-hidden"
+              class="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40 hover:shadow-2xl hover:shadow-red-900/10 transition-all overflow-hidden"
             >
               <div class="relative h-56 overflow-hidden">
                 <img
@@ -323,7 +323,7 @@
                 ></div>
                 <div class="absolute top-5 left-5">
                   <span
-                    class="px-4 py-1.5 bg-amber-400 text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl"
+                    class="px-4 py-1.5 bg-amber-400 dark:bg-amber-300 text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-amber-500/20"
                   >
                     {{ trip.duration_days }} {{ $t("tour.days") }}
                   </span>
@@ -331,7 +331,7 @@
                 <div class="absolute top-5 right-5">
                   <button
                     @click.prevent
-                    class="w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-600 hover:text-red-500 transition-colors"
+                    class="w-11 h-11 rounded-2xl bg-white/90 dark:bg-slate-950/90 border border-white/70 dark:border-slate-700/80 backdrop-blur-md flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors"
                     :title="$t('internationalTrips.card.favorite')"
                   >
                     <Heart class="w-5 h-5" />
@@ -341,19 +341,19 @@
 
               <div class="p-7">
                 <div
-                  class="text-[11px] font-black text-red-600 uppercase tracking-widest"
+                  class="text-[11px] font-black text-red-600 dark:text-red-400 uppercase tracking-widest"
                 >
                   {{ regionLabel(trip.region) }}
                 </div>
                 <h3
-                  class="mt-2 text-lg font-black text-slate-900 leading-snug line-clamp-2"
+                  class="mt-2 text-lg font-black text-slate-900 dark:text-white leading-snug line-clamp-2"
                 >
                   {{ trip.title }}
                 </h3>
 
                 <div class="mt-4 space-y-2">
                   <div
-                    class="flex items-center justify-between text-xs font-bold text-slate-500"
+                    class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400"
                   >
                     <span>{{
                       formatDateRange(trip.start_date, trip.end_date)
@@ -365,11 +365,11 @@
                   <div class="flex items-end justify-between">
                     <div>
                       <div
-                        class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]"
+                        class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]"
                       >
                         {{ $t("internationalTrips.card.price") }}
                       </div>
-                      <div class="text-xl font-black text-red-500">
+                      <div class="text-xl font-black text-red-500 dark:text-red-400">
                         {{ $t("internationalTrips.currency") }}
                         {{ formatPriceShort(trip.price_idr) }}
                       </div>

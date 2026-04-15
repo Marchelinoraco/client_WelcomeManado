@@ -696,6 +696,7 @@ import {
 } from "lucide-vue-next";
 import { getNationalTourDetail, getNationalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { applySeo } from "@/utils/seo";
 import { dummyNasionalTours } from "./dummyNasionalTours";
 import ImageCarousel from "@/components/ImageCarousel.vue";
 import TourCard from "@/components/TourCard.vue";
@@ -752,6 +753,13 @@ const fetchTour = async () => {
     if (!rawTour) {
       tour.value = null;
       recommendedTours.value = [];
+      applySeo({
+        title: "Detail Tour Nasional",
+        description:
+          "Lihat detail paket tour nasional lengkap dengan itinerary, harga, dan durasi perjalanan.",
+        url: route.fullPath,
+        type: "article",
+      });
       return;
     }
 
@@ -805,6 +813,14 @@ const fetchTour = async () => {
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     }
+
+    applySeo({
+      title: tour.value.title,
+      description: tour.value.description,
+      image: heroImage.value,
+      url: route.fullPath,
+      type: "article",
+    });
 
     const fetchRecommended = async () => {
       try {

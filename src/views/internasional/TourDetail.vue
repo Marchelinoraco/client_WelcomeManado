@@ -562,6 +562,7 @@ import {
   getInternationalTourDetail,
 } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { applySeo } from "@/utils/seo";
 import {
   dummyInternationalTrips,
   dummyInternationalRegions,
@@ -868,6 +869,27 @@ const fetchTrip = async () => {
     } catch (e) {
       recommendedTrips.value = [];
     }
+
+    if (trip.value) {
+      applySeo({
+        title: trip.value.title || "Detail Tour Internasional",
+        description:
+          trip.value.description ||
+          "Lihat detail tour internasional lengkap dengan itinerary, durasi, harga, dan informasi perjalanan.",
+        image: tripImages.value[0],
+        url: route.fullPath,
+        type: "article",
+      });
+    } else {
+      applySeo({
+        title: "Detail Tour Internasional",
+        description:
+          "Lihat detail tour internasional lengkap dengan itinerary, durasi, harga, dan informasi perjalanan.",
+        url: route.fullPath,
+        type: "article",
+      });
+    }
+
     galleryIndex.value = 0;
     loading.value = false;
   }

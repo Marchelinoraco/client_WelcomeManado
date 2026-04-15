@@ -208,6 +208,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { getHotelDetail, getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
+import { applySeo } from "@/utils/seo";
 import {
   Star,
   MapPin,
@@ -292,6 +293,13 @@ const loadHotel = async () => {
 
     if (!baseHotel) {
       hotel.value = null;
+      applySeo({
+        title: "Detail Hotel",
+        description:
+          "Lihat detail hotel, lokasi, fasilitas, dan informasi pemesanan hotel di WelcomeManado.",
+        url: route.fullPath,
+        type: "article",
+      });
       return;
     }
 
@@ -300,6 +308,13 @@ const loadHotel = async () => {
 
     if (translatedCache.has(cacheKey)) {
       hotel.value = translatedCache.get(cacheKey);
+      applySeo({
+        title: hotel.value.name,
+        description: hotel.value._description || hotel.value.description,
+        image: hotel.value.heroImage,
+        url: route.fullPath,
+        type: "article",
+      });
       return;
     }
 
@@ -311,6 +326,13 @@ const loadHotel = async () => {
       };
       translatedCache.set(cacheKey, value);
       hotel.value = value;
+      applySeo({
+        title: value.name,
+        description: value.description,
+        image: value.heroImage,
+        url: route.fullPath,
+        type: "article",
+      });
       return;
     }
 
@@ -327,6 +349,13 @@ const loadHotel = async () => {
 
     translatedCache.set(cacheKey, value);
     hotel.value = value;
+    applySeo({
+      title: value.name,
+      description: value._description || value.description,
+      image: value.heroImage,
+      url: route.fullPath,
+      type: "article",
+    });
   } finally {
     isLoading.value = false;
     window.scrollTo(0, 0);

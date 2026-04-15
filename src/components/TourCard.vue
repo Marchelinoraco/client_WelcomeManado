@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 overflow-hidden flex flex-col h-full relative"
+    class="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 overflow-hidden flex flex-col h-full relative"
   >
     <!-- Image Header -->
     <div class="relative h-72 overflow-hidden">
@@ -31,9 +31,9 @@
 
       <div class="absolute top-6 right-6">
         <div
-          class="flex items-center space-x-1 px-4 py-1.5 bg-white/90 backdrop-blur-md text-slate-900 text-[10px] font-black rounded-xl shadow-lg uppercase tracking-wider"
+          class="flex items-center space-x-1 px-4 py-1.5 bg-white/95 dark:bg-slate-950/90 border border-white/70 dark:border-slate-700/80 backdrop-blur-md text-slate-900 dark:text-white text-[10px] font-black rounded-xl shadow-lg shadow-slate-900/10 uppercase tracking-wider"
         >
-          <Clock class="w-3 h-3 text-red-600" />
+          <Clock class="w-3 h-3 text-red-600 dark:text-red-400" />
           <span>{{ durationLabel }}</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
       >
         <router-link
           :to="detailHref"
-          class="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center group/btn"
+          class="bg-white dark:bg-slate-950 text-slate-900 dark:text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl dark:shadow-slate-950/50 hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center group/btn"
         >
           {{ t("tour.viewDetails") }}
           <ArrowRight
@@ -61,39 +61,39 @@
           <MapPin class="w-3.5 h-3.5" />
         </div>
         <span
-          class="text-[10px] font-black text-slate-400 uppercase tracking-widest"
+          class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest"
           >{{ tour.location || "North Sulawesi" }}</span
         >
       </div>
 
       <h3
-        class="text-xl font-black text-slate-900 mb-3 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors"
+        class="text-xl font-black text-slate-900 dark:text-white mb-3 line-clamp-2 leading-tight group-hover:text-red-600 transition-colors"
       >
         {{ tour.title }}
       </h3>
 
       <p
-        class="text-slate-500 text-xs mb-8 line-clamp-2 leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity"
+        class="text-slate-500 dark:text-slate-400 text-xs mb-8 line-clamp-2 leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity"
       >
         {{ tour.description }}
       </p>
 
       <div
-        class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between"
+        class="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between"
       >
         <div class="flex flex-col">
           <span
-            class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1"
+            class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-1"
             >{{ ctaLabel }}</span
           >
           <span
-            class="text-base font-black text-slate-900 group-hover:text-red-600 transition-colors"
+            class="text-base font-black text-slate-900 dark:text-white group-hover:text-red-600 transition-colors"
             >{{ subtitleLabel }}</span
           >
         </div>
 
         <div
-          class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
+          class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
         >
           <ArrowUpRight class="w-6 h-6" />
         </div>
