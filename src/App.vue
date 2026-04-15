@@ -3,10 +3,10 @@
     <Navbar />
     <router-view :key="$route.fullPath"></router-view>
 
-   
-
     <!-- Footer -->
-    <footer class="bg-gray-950 text-white py-24 border-t border-gray-900 dark:bg-[#020617]">
+    <footer
+      class="bg-gray-950 text-white py-24 border-t border-gray-900 dark:bg-[#020617]"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
           <div class="col-span-1 md:col-span-2">
@@ -113,32 +113,63 @@
             </div>
           </div>
         </div>
-          <div class="mt-12">
-           <!-- Member Of Section -->
-             <div class="py-12 w-full">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 class="text-center text-gray-400 text-sm md:text-base font-medium tracking-[0.2em] mb-10">~ Member Of ~</h3>
-        <div class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32 opacity-90 transition-opacity duration-300">
-          <a href="https://www.iintoa.org/" target="_blank" rel="noopener noreferrer" class="hover:scale-105 hover:opacity-100 transition-all duration-300">
-            <img src="https://placehold.co/300x100/FFF/333?text=IINTOA+Logo" alt="IINTOA" class="h-14 md:h-16 object-contain mix-blend-multiply" />
-          </a>
-          <a href="https://asita.id/" target="_blank" rel="noopener noreferrer" class="hover:scale-105 hover:opacity-100 transition-all duration-300">
-            <img src="https://asita.id/wp-content/uploads/2019/07/Logo-ASITA-Background-Putih_HAKI_2.png" alt="ASITA" class="h-16 md:h-20 object-contain mix-blend-multiply" />
-          </a>
-          <a href="https://astindo.org/" target="_blank" rel="noopener noreferrer" class="hover:scale-105 hover:opacity-100 transition-all duration-300">
-            <img src="https://astindo.org/wp-content/uploads/2024/09/LOGO-ASTINDO-500.png" alt="ASTINDO" class="h-14 md:h-16 object-contain mix-blend-multiply" />
-          </a>
-        </div>
-      </div>
-             </div>
+        <div class="mt-12">
+          <!-- Member Of Section -->
+          <div class="py-12 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h3
+                class="text-center text-gray-400 text-sm md:text-base font-medium tracking-[0.2em] mb-10"
+              >
+                ~ Member Of ~
+              </h3>
+              <div
+                class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32 opacity-90 transition-opacity duration-300"
+              >
+                <a
+                  href="https://www.iintoa.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:scale-105 hover:opacity-100 transition-all duration-300"
+                >
+                  <img
+                    src="./assets/intoa.jpeg"
+                    alt="IINTOA"
+                    class="h-14 md:h-16 object-contain mix-blend-multiply"
+                  />
+                </a>
+                <a
+                  href="https://asita.id/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:scale-105 hover:opacity-100 transition-all duration-300"
+                >
+                  <img
+                    src="https://asita.id/wp-content/uploads/2019/07/Logo-ASITA-Background-Putih_HAKI_2.png"
+                    alt="ASITA"
+                    class="h-16 md:h-20 object-contain mix-blend-multiply"
+                  />
+                </a>
+                <a
+                  href="https://astindo.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:scale-105 hover:opacity-100 transition-all duration-300"
+                >
+                  <img
+                    src="https://astindo.org/wp-content/uploads/2024/09/LOGO-ASTINDO-500.png"
+                    alt="ASTINDO"
+                    class="h-14 md:h-16 object-contain mix-blend-multiply"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <div
-          class="mt-12
-           pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs font-bold tracking-widest uppercase"
+          class="mt-12 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs font-bold tracking-widest uppercase"
         >
           <p>&copy; 2026 WelcomeManado. {{ $t("footer.rights") }}</p>
         </div>
-      
       </div>
     </footer>
   </div>
