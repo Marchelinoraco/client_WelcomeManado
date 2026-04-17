@@ -106,14 +106,17 @@
       </div>
 
       <!-- Grid -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div
+        v-else
+        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-10 items-stretch"
+      >
         <!-- Hotel Card -->
         <article
           v-for="hotel in filteredHotels"
           :key="hotel.id"
-          class="group bg-white rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col"
+          class="group bg-white rounded-[2.25rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex h-full flex-col hover:-translate-y-1"
         >
-          <div class="relative h-72 overflow-hidden">
+          <div class="relative aspect-[4/3] overflow-hidden">
             <img
               :src="hotel.image"
               :alt="hotel.name"
@@ -123,6 +126,17 @@
             <div
               class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"
             ></div>
+
+            <div class="absolute inset-x-0 bottom-0 p-6">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/55 px-4 py-2 text-white backdrop-blur-md"
+              >
+                <MapPin class="w-4 h-4 text-red-400" />
+                <span class="text-[11px] font-black uppercase tracking-[0.24em]">
+                  {{ hotel._location || hotel.location }}
+                </span>
+              </div>
+            </div>
 
             <div
               class="absolute top-6 right-6 px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl flex items-center space-x-1 shadow-lg"
@@ -134,37 +148,46 @@
             </div>
           </div>
 
-          <div class="p-8 flex-1 flex flex-col relative text-left">
-            <div class="flex items-center text-red-600 mb-4 space-x-2">
-              <MapPin class="w-4 h-4" />
-              <span class="text-xs font-black uppercase tracking-widest">{{
-                hotel._location || hotel.location
-              }}</span>
+          <div class="p-7 lg:p-8 flex-1 flex flex-col text-left">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <span
+                class="inline-flex items-center rounded-full bg-red-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.25em] text-red-600"
+              >
+                {{ hotel.category }}
+              </span>
+              <span class="text-xs font-bold uppercase tracking-[0.24em] text-slate-400">
+                {{ hotel.stars }} {{ hotel.stars > 1 ? "Stars" : "Star" }}
+              </span>
             </div>
 
             <h3
-              class="text-2xl font-black text-slate-900 mb-4 leading-tight group-hover:text-red-600 transition-colors"
+              class="text-2xl font-black text-slate-900 mb-3 leading-tight group-hover:text-red-600 transition-colors"
             >
               {{ hotel.name }}
             </h3>
 
             <p
-              class="text-slate-500 text-sm leading-relaxed mb-8 flex-1 font-medium"
+              class="hotel-description text-slate-500 text-sm leading-7 mb-8 flex-1 font-medium"
             >
               {{ hotel._description || hotel.description }}
             </p>
 
             <div
-              class="pt-6 border-t border-slate-100 mt-auto flex items-center justify-between"
+              class="pt-6 border-t border-slate-100 mt-auto flex items-center justify-between gap-4"
             >
-              <span
-                class="text-xs font-bold text-slate-400 uppercase tracking-widest"
-              >
-                {{ $t("hotelsPage.card.featured") }}
-              </span>
+              <div>
+                <div
+                  class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em]"
+                >
+                  {{ $t("hotelsPage.card.featured") }}
+                </div>
+                <div class="text-sm font-bold text-slate-700 mt-2">
+                  {{ hotel._location || hotel.location }}
+                </div>
+              </div>
               <router-link
                 :to="'/hotel/' + hotel.slug"
-                class="flex items-center justify-center w-14 h-14 bg-slate-50 rounded-2xl group-hover:bg-red-600 text-slate-400 group-hover:text-white transition-colors duration-300"
+                class="flex items-center justify-center w-14 h-14 bg-slate-50 rounded-2xl group-hover:bg-red-600 text-slate-400 group-hover:text-white transition-colors duration-300 shrink-0"
               >
                 <ArrowRight
                   class="w-6 h-6 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
@@ -333,5 +356,10 @@ const filteredHotels = computed(() => {
 </script>
 
 <style scoped>
-/* Optional custom CSS here, most effects are tailwind */
+.hotel-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
 </style>
