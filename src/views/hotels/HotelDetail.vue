@@ -88,6 +88,28 @@
               </p>
             </section>
 
+            <section v-if="hotel.galleryImages?.length" class="space-y-6">
+              <h2
+                class="text-2xl font-black text-slate-900 uppercase tracking-widest relative inline-block"
+              >
+                Galeri Hotel
+                <div
+                  class="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"
+                ></div>
+              </h2>
+
+              <ImageCarousel
+                v-model="galleryIndex"
+                :images="hotel.galleryImages"
+                :alt="hotel.name"
+                main-class="aspect-[4/3] md:aspect-[16/10] rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm"
+                thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
+                :show-thumbnails="hotel.galleryImages.length > 1"
+                :show-controls="hotel.galleryImages.length > 1"
+                :show-counter="hotel.galleryImages.length > 1"
+              />
+            </section>
+
             <section
               class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-slate-200"
             >
@@ -206,6 +228,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import ImageCarousel from "@/components/ImageCarousel.vue";
 import { getHotelDetail, getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
@@ -224,6 +247,7 @@ const route = useRoute();
 const { locale } = useI18n();
 const hotel = ref(null);
 const isLoading = ref(true);
+const galleryIndex = ref(0);
 const translatedCache = new Map();
 
 const FALLBACK_IMAGE =
@@ -238,13 +262,27 @@ const unwrapHotelPayload = (payload) => {
 const normalizeHotel = (rawHotel) => {
   if (!rawHotel) return null;
 
-  const heroImage =
-    rawHotel.primary_image ||
-    rawHotel.thumbnail ||
-    rawHotel.image ||
-    rawHotel.images?.find((img) => img?.is_primary)?.image_path ||
-    rawHotel.images?.[0]?.image_path ||
-    FALLBACK_IMAGE;
+  const galleryImages = Array.from(
+    new Set(
+      [
+        rawHotel.primary_image,
+        rawHotel.thumbnail,
+        rawHotel.image,
+        ...(Array.isArray(rawHotel.images)
+          ? rawHotel.images
+              .sort((a, b) => {
+                if (a?.is_primary === b?.is_primary) return 0;
+                return a?.is_primary ? -1 : 1;
+              })
+              .map((img) => img?.image_path)
+          : []),
+      ]
+        .map((image) => String(image || "").trim())
+        .filter(Boolean),
+    ),
+  ).slice(0, 5);
+
+  const heroImage = galleryImages[0] || FALLBACK_IMAGE;
 
   return {
     id: rawHotel.id,
@@ -255,6 +293,7 @@ const normalizeHotel = (rawHotel) => {
     stars: Number(rawHotel.stars || 0),
     image: heroImage,
     heroImage,
+    galleryImages: galleryImages.length ? galleryImages : [FALLBACK_IMAGE],
   };
 };
 
@@ -275,6 +314,7 @@ const findHotelFromCollection = async (slugOrId) => {
 
 const loadHotel = async () => {
   isLoading.value = true;
+  galleryIndex.value = 0;
 
   try {
     const slugId = route.params.id;
