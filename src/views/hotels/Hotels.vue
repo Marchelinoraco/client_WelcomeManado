@@ -139,10 +139,17 @@
             </div>
 
             <div
-              class="absolute top-6 right-6 px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl flex items-center space-x-1 shadow-lg"
+              class="absolute top-6 right-6 flex items-center gap-2 rounded-full border border-white/70 bg-white/95 px-4 py-2.5 text-slate-950 shadow-xl shadow-slate-950/15 ring-1 ring-slate-900/5 backdrop-blur-md"
             >
-              <Star class="w-4 h-4 text-amber-500 fill-amber-500" />
-              <span class="font-black text-slate-900 text-sm">{{
+              <div
+                class="flex h-7 w-7 items-center justify-center rounded-full bg-amber-100"
+              >
+                <Star class="w-4 h-4 text-amber-500 fill-amber-500" />
+              </div>
+              <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                Stars
+              </span>
+              <span class="font-black text-slate-950 text-base leading-none">{{
                 hotel.stars
               }}</span>
             </div>
