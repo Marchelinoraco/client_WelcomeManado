@@ -66,16 +66,9 @@
               </div>
 
               <div
-                class="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm"
-              >
-                <p
-                  v-for="(para, idx) in tour.description.split('\n')"
-                  :key="idx"
-                  class="mb-4"
-                >
-                  {{ para }}
-                </p>
-              </div>
+                class="tour-rich-content prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm"
+                v-html="tour.descriptionHtml"
+              ></div>
 
               <div class="pt-8 border-t border-slate-100">
                 <p class="text-xl font-bold text-slate-800 mb-6">
@@ -294,9 +287,10 @@
                     {{ $t("tour.experienceDetails") }}
                   </h2>
                 </div>
-                <p class="text-slate-500 leading-[1.8] text-lg font-medium">
-                  {{ tour.description }}
-                </p>
+                <div
+                  class="tour-rich-content text-slate-500 leading-[1.8] text-lg font-medium"
+                  v-html="tour.descriptionHtml"
+                ></div>
               </section>
 
               <!-- Price Breakdown Table -->
@@ -448,11 +442,10 @@
                           </span>
                         </div>
                       </div>
-                      <p
-                        class="text-slate-500 text-sm leading-relaxed font-medium mb-8"
-                      >
-                        {{ item.description }}
-                      </p>
+                      <div
+                        class="tour-rich-content text-slate-500 text-sm leading-relaxed font-medium mb-8"
+                        v-html="item.descriptionHtml || normalizeDescriptionHtml(item.description)"
+                      ></div>
 
                       <div
                         v-if="item.hotel_info"
@@ -698,6 +691,7 @@ import {
 import { getLocalTourDetail, getLocalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
+import { stripHtml } from "@/utils/htmlText";
 import { dummyLocalTours } from "./dummyLocalTours";
 import ImageCarousel from "@/components/ImageCarousel.vue";
 import TourCard from "@/components/TourCard.vue";
@@ -710,6 +704,42 @@ const galleryIndex = ref(0);
 const recommendedTours = ref([]);
 const isImageModalOpen = ref(false);
 const imageModalSrc = ref("");
+
+const localeKey = (value) => {
+  const loc = String(value || "").toLowerCase();
+  if (loc.startsWith("ko")) return "ko";
+  if (loc.startsWith("zh")) return "zh";
+  if (loc.startsWith("en")) return "en";
+  return "id";
+};
+
+const getLocalizedDescriptionFromRaw = (item, loc) => {
+  const key = localeKey(loc);
+  if (key === "en") return item?.description_en || item?.description || "";
+  if (key === "ko") return item?.description_ko || item?.description || "";
+  if (key === "zh") return item?.description_zh || item?.description || "";
+  return item?.description || "";
+};
+
+const hasHtmlContent = (value) => /<[^>]+>/.test(String(value || ""));
+
+const plainTextToHtml = (value) => {
+  const text = String(value || "").trim();
+  if (!text) return "";
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  return escaped
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+};
+
+const normalizeDescriptionHtml = (value) =>
+  hasHtmlContent(value) ? String(value || "") : plainTextToHtml(value);
 
 const galleryImages = computed(() => {
   const urls = (tour.value?.galleries || [])
@@ -768,11 +798,19 @@ const fetchTour = async () => {
         : rawTour.category?.slug;
 
     if (locale.value !== "id" && rawTour) {
+      const localizedDescription = getLocalizedDescriptionFromRaw(rawTour, locale.value);
+      const hasAdminLocalizedDescription =
+        localizedDescription && localizedDescription !== (rawTour.description || "");
+
       // Translate main tour info
       const [translatedTitle, translatedDesc, translatedLocation] =
         await Promise.all([
           autoTranslate(rawTour.title, locale.value),
-          autoTranslate(rawTour.description, locale.value),
+          hasAdminLocalizedDescription
+            ? Promise.resolve(undefined)
+            : hasHtmlContent(rawTour.description)
+            ? Promise.resolve(undefined)
+            : autoTranslate(stripHtml(rawTour.description), locale.value),
           autoTranslate(
             rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
@@ -784,14 +822,19 @@ const fetchTour = async () => {
         (rawTour.itineraries || []).map(async (it) => {
           const [itTitle, itDesc, itHotel, itMeals] = await Promise.all([
             autoTranslate(it.title, locale.value),
-            autoTranslate(it.description, locale.value),
+            hasHtmlContent(it.description)
+              ? Promise.resolve(undefined)
+              : autoTranslate(stripHtml(it.description), locale.value),
             autoTranslate(it.hotel_info, locale.value),
             autoTranslate(it.meals_info, locale.value),
           ]);
           return {
             ...it,
             title: itTitle,
-            description: itDesc,
+            description: itDesc ?? it.description,
+            descriptionHtml: itDesc
+              ? plainTextToHtml(itDesc)
+              : normalizeDescriptionHtml(it.description),
             hotel_info: itHotel,
             meals_info: itMeals,
           };
@@ -801,7 +844,10 @@ const fetchTour = async () => {
       tour.value = {
         ...rawTour,
         title: translatedTitle,
-        description: translatedDesc,
+        description: translatedDesc ?? localizedDescription,
+        descriptionHtml: translatedDesc
+          ? plainTextToHtml(translatedDesc)
+          : normalizeDescriptionHtml(localizedDescription),
         location: translatedLocation,
         itineraries: translatedItineraries,
         price_details: normalizePriceDetails(rawTour.price_details),
@@ -809,13 +855,17 @@ const fetchTour = async () => {
     } else {
       tour.value = {
         ...rawTour,
+        description: getLocalizedDescriptionFromRaw(rawTour, locale.value),
+        descriptionHtml: normalizeDescriptionHtml(
+          getLocalizedDescriptionFromRaw(rawTour, locale.value),
+        ),
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     }
 
     applySeo({
       title: tour.value.title,
-      description: tour.value.description,
+      description: stripHtml(tour.value.description),
       image: galleryImages.value[0],
       url: route.fullPath,
       type: "article",
@@ -846,7 +896,7 @@ const fetchTour = async () => {
           const [title, description, location, categoryName] =
             await Promise.all([
               autoTranslate(it.title || "", locale.value),
-              autoTranslate(it.description || "", locale.value),
+              autoTranslate(stripHtml(it.description || ""), locale.value),
               autoTranslate(it.location || "", locale.value),
               autoTranslate(it.category?.name || "", locale.value),
             ]);
@@ -1026,5 +1076,33 @@ const closeImageModal = () => {
 }
 .animate-bounce-slow {
   animation: bounce-slow 3s infinite ease-in-out;
+}
+
+.tour-rich-content :deep(p) {
+  margin: 0 0 1rem;
+}
+
+.tour-rich-content :deep(ul),
+.tour-rich-content :deep(ol) {
+  margin: 0 0 1rem 1.5rem;
+}
+
+.tour-rich-content :deep(li) {
+  margin-bottom: 0.5rem;
+}
+
+.tour-rich-content :deep(h1),
+.tour-rich-content :deep(h2),
+.tour-rich-content :deep(h3),
+.tour-rich-content :deep(h4) {
+  color: rgb(15 23 42);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.tour-rich-content :deep(a) {
+  color: rgb(220 38 38);
+  text-decoration: underline;
 }
 </style>

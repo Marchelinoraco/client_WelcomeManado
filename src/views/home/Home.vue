@@ -405,6 +405,7 @@ import { useI18n } from "vue-i18n";
 import TourCard from "@/components/TourCard.vue";
 import { getTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { stripHtml } from "@/utils/htmlText";
 import {
   ArrowRight,
   ChevronRight,
@@ -487,7 +488,7 @@ const fetchTours = async () => {
           rawData[category].map(async (tour) => {
             const [translatedTitle, translatedDescription] = await Promise.all([
               autoTranslate(tour.title, locale.value),
-              autoTranslate(tour.description, locale.value),
+              autoTranslate(stripHtml(tour.description), locale.value),
             ]);
             return {
               ...tour,

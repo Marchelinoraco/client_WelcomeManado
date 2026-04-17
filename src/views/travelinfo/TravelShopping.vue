@@ -172,6 +172,7 @@ import { Compass, Map, ArrowRight } from "lucide-vue-next";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { getTravelInfoItems } from "@/services/api";
+import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
 
@@ -207,10 +208,14 @@ const titleByLocale = (it) => {
 
 const descriptionByLocale = (it) => {
   const loc = String(locale.value || "id").toLowerCase();
-  if (loc.startsWith("en")) return it?.description_en || it?.description || "";
-  if (loc.startsWith("ko")) return it?.description_ko || it?.description || "";
-  if (loc.startsWith("zh")) return it?.description_zh || it?.description || "";
-  return it?.description || "";
+  const description = loc.startsWith("en")
+    ? it?.description_en || it?.description || ""
+    : loc.startsWith("ko")
+      ? it?.description_ko || it?.description || ""
+      : loc.startsWith("zh")
+        ? it?.description_zh || it?.description || ""
+        : it?.description || "";
+  return stripHtml(description);
 };
 
 const fetchItems = async () => {

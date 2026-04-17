@@ -229,6 +229,7 @@ import { useI18n } from "vue-i18n";
 import TourCard from "@/components/TourCard.vue";
 import { getNationalCategories, getNationalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { stripHtml } from "@/utils/htmlText";
 import {
   dummyNasionalCategories,
   dummyNasionalTours,
@@ -393,7 +394,7 @@ const fetchData = async () => {
     if (locale.value !== "id" && rawCategory) {
       const [translatedName, translatedDesc] = await Promise.all([
         autoTranslate(rawCategory.name, locale.value),
-        autoTranslate(rawCategory.description, locale.value),
+        autoTranslate(stripHtml(rawCategory.description), locale.value),
       ]);
       category.value = {
         ...rawCategory,
@@ -401,7 +402,13 @@ const fetchData = async () => {
         description: translatedDesc,
       };
     } else {
-      category.value = rawCategory;
+      category.value = rawCategory
+        ? {
+            ...rawCategory,
+            description: stripHtml(rawCategory.description),
+            overview: stripHtml(rawCategory.overview),
+          }
+        : rawCategory;
     }
 
     // Auto translate tour titles and descriptions
@@ -410,7 +417,7 @@ const fetchData = async () => {
         rawTours.map(async (tour) => {
           const [translatedTitle, translatedDescription] = await Promise.all([
             autoTranslate(tour.title, locale.value),
-            autoTranslate(tour.description, locale.value),
+            autoTranslate(stripHtml(tour.description), locale.value),
           ]);
           return {
             ...tour,

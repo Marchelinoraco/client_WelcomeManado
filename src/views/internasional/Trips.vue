@@ -413,6 +413,7 @@ import { Heart } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import { getInternationalRegions, getInternationalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
+import { stripHtml } from "@/utils/htmlText";
 import {
   dummyInternationalRegions,
   dummyInternationalTrips,
@@ -508,7 +509,7 @@ const regionHeroImage = computed(() => {
 
 const regionHeroDescription = computed(() => {
   const desc = activeRegion.value?.description;
-  if (typeof desc === "string" && desc.trim()) return desc;
+  if (typeof desc === "string" && desc.trim()) return stripHtml(desc);
 
   if (regionSlug.value === "asia")
     return t("internationalTrips.regionHero.asia");
@@ -741,7 +742,7 @@ const fetchData = async () => {
             ...r,
             name: r.name ? await autoTranslate(r.name, locale.value) : r.name,
             description: r.description
-              ? await autoTranslate(r.description, locale.value)
+              ? await autoTranslate(stripHtml(r.description), locale.value)
               : r.description,
           })),
         );

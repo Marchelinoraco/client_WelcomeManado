@@ -176,7 +176,7 @@
             <p
               class="hotel-description text-slate-500 text-sm leading-7 mb-8 flex-1 font-medium"
             >
-              {{ hotel._description || hotel.description }}
+              {{ hotel._descriptionText || hotel.descriptionText }}
             </p>
 
             <div
@@ -214,6 +214,7 @@ import { useI18n } from "vue-i18n";
 import { Star, MapPin, Building, ArrowRight, Search } from "lucide-vue-next";
 import { getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
+import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
 
@@ -237,6 +238,22 @@ const categoryToKey = {
 
 const translatedCache = new Map();
 const displayedHotels = ref([]);
+
+const localeKey = (value) => {
+  const loc = String(value || "").toLowerCase();
+  if (loc.startsWith("ko")) return "ko";
+  if (loc.startsWith("zh")) return "zh";
+  if (loc.startsWith("en")) return "en";
+  return "id";
+};
+
+const getLocalizedDescriptionFromRaw = (hotel, loc) => {
+  const key = localeKey(loc);
+  if (key === "en") return hotel?.description_en || hotel?.description || "";
+  if (key === "ko") return hotel?.description_ko || hotel?.description || "";
+  if (key === "zh") return hotel?.description_zh || hotel?.description || "";
+  return hotel?.description || "";
+};
 
 const runWithConcurrency = async (items, limit, worker) => {
   const results = new Array(items.length);
@@ -273,13 +290,25 @@ const fetchHotels = async () => {
     const categoryKey =
       categoryToKey[categoryLabel] ||
       (h.category || "all").replace(/ /g, "").replace(/-/g, "").toLowerCase();
+    const localizedDescription = getLocalizedDescriptionFromRaw(h, locale.value);
     return {
       id: h.id,
       name: h.name,
       slug: h.slug,
-      description: h.description || "",
+      description: localizedDescription,
+      descriptionBase: h.description || "",
+      descriptionText: stripHtml(localizedDescription),
+      hasLocalizedDescription:
+        localeKey(locale.value) === "en"
+          ? Boolean(h.description_en)
+          : localeKey(locale.value) === "ko"
+            ? Boolean(h.description_ko)
+            : localeKey(locale.value) === "zh"
+              ? Boolean(h.description_zh)
+              : true,
       location: h.location || "",
       _description: undefined,
+      _descriptionText: undefined,
       _location: undefined,
       stars: Number(h.stars || 0),
       image,
@@ -307,13 +336,16 @@ const ensureTranslatedHotels = async () => {
 
   const translated = await runWithConcurrency(base, 4, async (hotel) => {
     const [desc, loc] = await Promise.all([
-      translateText(hotel.description, lang, "auto"),
+      hotel.hasLocalizedDescription
+        ? Promise.resolve(undefined)
+        : translateText(stripHtml(hotel.descriptionBase), lang, "auto"),
       translateText(hotel.location, lang, "auto"),
     ]);
 
     return {
       ...hotel,
       _description: desc,
+      _descriptionText: desc || hotel._descriptionText,
       _location: loc,
     };
   });
@@ -351,7 +383,7 @@ const filteredHotels = computed(() => {
         String(hotel._location || "")
           .toLowerCase()
           .includes(query) ||
-        String(hotel.description).toLowerCase().includes(query) ||
+        String(hotel.descriptionText).toLowerCase().includes(query) ||
         String(hotel._description || "")
           .toLowerCase()
           .includes(query),

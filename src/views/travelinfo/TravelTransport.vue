@@ -588,6 +588,7 @@ import {
   createTransportationBooking,
   getTransportations,
 } from "@/services/api";
+import { stripHtml } from "@/utils/htmlText";
 
 const { t, locale } = useI18n();
 
@@ -706,10 +707,14 @@ const transportationImage = (v) => {
 
 const transportationDescription = (v) => {
   const loc = String(locale.value || "id").toLowerCase();
-  if (loc.startsWith("en")) return v?.description_en || v?.description || "";
-  if (loc.startsWith("ko")) return v?.description_ko || v?.description || "";
-  if (loc.startsWith("zh")) return v?.description_zh || v?.description || "";
-  return v?.description || "";
+  const description = loc.startsWith("en")
+    ? v?.description_en || v?.description || ""
+    : loc.startsWith("ko")
+      ? v?.description_ko || v?.description || ""
+      : loc.startsWith("zh")
+        ? v?.description_zh || v?.description || ""
+        : v?.description || "";
+  return stripHtml(description);
 };
 
 const normalizeWhatsappNumber = (raw) => {

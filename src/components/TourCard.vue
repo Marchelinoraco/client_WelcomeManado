@@ -75,7 +75,7 @@
       <p
         class="text-slate-500 dark:text-slate-400 text-xs mb-8 line-clamp-2 leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity"
       >
-        {{ tour.description }}
+        {{ cleanDescription }}
       </p>
 
       <div
@@ -106,6 +106,7 @@
 import { MapPin, Clock, ArrowRight } from "lucide-vue-next";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { stripHtml } from "@/utils/htmlText";
 
 const props = defineProps({
   tour: {
@@ -130,6 +131,7 @@ const isId = computed(() => locale.value === "id");
 
 const ctaLabel = computed(() => (isId.value ? "Info" : "Info"));
 const subtitleLabel = computed(() => t("tour.viewDetails"));
+const cleanDescription = computed(() => stripHtml(props.tour?.description || ""));
 
 const durationLabel = computed(() => {
   const t = props.tour || {};

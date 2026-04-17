@@ -83,9 +83,10 @@
                   class="absolute -bottom-2 left-0 w-1/2 h-1 bg-red-600 rounded-full"
                 ></div>
               </h2>
-              <p class="text-slate-600 text-lg leading-relaxed font-medium">
-                {{ hotel._description || hotel.description }}
-              </p>
+              <div
+                class="hotel-rich-content text-slate-600 text-lg leading-relaxed font-medium"
+                v-html="hotel._descriptionHtml || hotel.descriptionHtml"
+              ></div>
             </section>
 
             <section v-if="hotel.galleryImages?.length" class="space-y-6">
@@ -232,6 +233,7 @@ import ImageCarousel from "@/components/ImageCarousel.vue";
 import { getHotelDetail, getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
+import { stripHtml } from "@/utils/htmlText";
 import {
   Star,
   MapPin,
@@ -253,6 +255,39 @@ const translatedCache = new Map();
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1551882547-ff40c0d588fa?auto=format&fit=crop&w=2400&q=80";
 
+const localeKey = (value) => {
+  const loc = String(value || "").toLowerCase();
+  if (loc.startsWith("ko")) return "ko";
+  if (loc.startsWith("zh")) return "zh";
+  if (loc.startsWith("en")) return "en";
+  return "id";
+};
+
+const getLocalizedDescriptionFromRaw = (rawHotel, loc) => {
+  const key = localeKey(loc);
+  if (key === "en") return rawHotel.description_en || rawHotel.description || "";
+  if (key === "ko") return rawHotel.description_ko || rawHotel.description || "";
+  if (key === "zh") return rawHotel.description_zh || rawHotel.description || "";
+  return rawHotel.description || "";
+};
+
+const hasHtmlContent = (value) => /<[^>]+>/.test(String(value || ""));
+
+const plainTextToHtml = (value) => {
+  const text = String(value || "").trim();
+  if (!text) return "";
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  return escaped
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+};
+
 const unwrapHotelPayload = (payload) => {
   if (!payload) return null;
   if (payload.data && !Array.isArray(payload.data)) return unwrapHotelPayload(payload.data);
@@ -261,6 +296,8 @@ const unwrapHotelPayload = (payload) => {
 
 const normalizeHotel = (rawHotel) => {
   if (!rawHotel) return null;
+  const localizedDescription = getLocalizedDescriptionFromRaw(rawHotel, locale.value);
+  const activeLocaleKey = localeKey(locale.value);
 
   const galleryImages = Array.from(
     new Set(
@@ -288,7 +325,20 @@ const normalizeHotel = (rawHotel) => {
     id: rawHotel.id,
     slug: rawHotel.slug,
     name: rawHotel.name || "Hotel",
-    description: rawHotel.description || "",
+    description: localizedDescription,
+    descriptionBase: rawHotel.description || "",
+    descriptionText: stripHtml(localizedDescription),
+    descriptionHtml: hasHtmlContent(localizedDescription)
+      ? localizedDescription || ""
+      : plainTextToHtml(localizedDescription),
+    hasLocalizedDescription:
+      activeLocaleKey === "en"
+        ? Boolean(rawHotel.description_en)
+        : activeLocaleKey === "ko"
+          ? Boolean(rawHotel.description_ko)
+          : activeLocaleKey === "zh"
+            ? Boolean(rawHotel.description_zh)
+            : true,
     location: rawHotel.location || "",
     stars: Number(rawHotel.stars || 0),
     image: heroImage,
@@ -350,7 +400,7 @@ const loadHotel = async () => {
       hotel.value = translatedCache.get(cacheKey);
       applySeo({
         title: hotel.value.name,
-        description: hotel.value._description || hotel.value.description,
+        description: hotel.value._description || hotel.value.descriptionText,
         image: hotel.value.heroImage,
         url: route.fullPath,
         type: "article",
@@ -362,13 +412,14 @@ const loadHotel = async () => {
       const value = {
         ...baseHotel,
         _description: undefined,
+        _descriptionHtml: undefined,
         _location: undefined,
       };
       translatedCache.set(cacheKey, value);
       hotel.value = value;
       applySeo({
         title: value.name,
-        description: value.description,
+        description: value.descriptionText,
         image: value.heroImage,
         url: route.fullPath,
         type: "article",
@@ -376,14 +427,24 @@ const loadHotel = async () => {
       return;
     }
 
+    const canTranslateDescription =
+      localeKey(lang) !== "id" &&
+      !baseHotel.hasLocalizedDescription &&
+      !hasHtmlContent(baseHotel.descriptionBase);
+
     const [desc, loc] = await Promise.all([
-      translateText(baseHotel.description, lang, "auto"),
+      canTranslateDescription
+        ? translateText(stripHtml(baseHotel.descriptionBase), lang, "auto")
+        : Promise.resolve(undefined),
       translateText(baseHotel.location, lang, "auto"),
     ]);
 
     const value = {
       ...baseHotel,
       _description: desc,
+      _descriptionHtml: canTranslateDescription
+        ? plainTextToHtml(desc)
+        : undefined,
       _location: loc,
     };
 
@@ -391,7 +452,7 @@ const loadHotel = async () => {
     hotel.value = value;
     applySeo({
       title: value.name,
-      description: value._description || value.description,
+      description: value._description || value.descriptionText,
       image: value.heroImage,
       url: route.fullPath,
       type: "article",
@@ -413,3 +474,33 @@ watch(
   },
 );
 </script>
+
+<style scoped>
+.hotel-rich-content :deep(p) {
+  margin: 0 0 1rem;
+}
+
+.hotel-rich-content :deep(ul),
+.hotel-rich-content :deep(ol) {
+  margin: 0 0 1rem 1.5rem;
+}
+
+.hotel-rich-content :deep(li) {
+  margin-bottom: 0.5rem;
+}
+
+.hotel-rich-content :deep(h1),
+.hotel-rich-content :deep(h2),
+.hotel-rich-content :deep(h3),
+.hotel-rich-content :deep(h4) {
+  color: rgb(15 23 42);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.hotel-rich-content :deep(a) {
+  color: rgb(220 38 38);
+  text-decoration: underline;
+}
+</style>

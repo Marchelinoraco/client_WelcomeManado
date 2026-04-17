@@ -104,9 +104,10 @@
                   {{ $t("internationalTourDetail.description") }}
                 </h2>
               </div>
-              <p class="text-slate-600 leading-relaxed font-medium">
-                {{ trip.description }}
-              </p>
+              <div
+                class="tour-rich-content text-slate-600 leading-relaxed font-medium"
+                v-html="trip.descriptionHtml"
+              ></div>
             </section>
 
             <section
@@ -270,7 +271,10 @@
                         <span
                           class="mt-2 w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0"
                         ></span>
-                        <span>{{ n }}</span>
+                        <div
+                          class="tour-rich-content flex-1"
+                          v-html="normalizeDescriptionHtml(n)"
+                        ></div>
                       </li>
                     </ul>
                   </div>
@@ -563,6 +567,7 @@ import {
 } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
+import { stripHtml } from "@/utils/htmlText";
 import {
   dummyInternationalTrips,
   dummyInternationalRegions,
@@ -579,6 +584,42 @@ const galleryIndex = ref(0);
 const recommendedTrips = ref([]);
 const isImageModalOpen = ref(false);
 const imageModalSrc = ref("");
+
+const localeKey = (value) => {
+  const loc = String(value || "").toLowerCase();
+  if (loc.startsWith("ko")) return "ko";
+  if (loc.startsWith("zh")) return "zh";
+  if (loc.startsWith("en")) return "en";
+  return "id";
+};
+
+const getLocalizedDescriptionFromRaw = (item, loc) => {
+  const key = localeKey(loc);
+  if (key === "en") return item?.description_en || item?.description || "";
+  if (key === "ko") return item?.description_ko || item?.description || "";
+  if (key === "zh") return item?.description_zh || item?.description || "";
+  return item?.description || "";
+};
+
+const hasHtmlContent = (value) => /<[^>]+>/.test(String(value || ""));
+
+const plainTextToHtml = (value) => {
+  const text = String(value || "").trim();
+  if (!text) return "";
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  return escaped
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+};
+
+const normalizeDescriptionHtml = (value) =>
+  hasHtmlContent(value) ? String(value || "") : plainTextToHtml(value);
 
 const tripImages = computed(() => {
   const list = trip.value?.images;
@@ -649,7 +690,19 @@ const normalizeTrip = (raw) => {
     id: raw.id,
     slug: raw.slug,
     title: raw.title,
-    description: raw.description,
+    description: getLocalizedDescriptionFromRaw(raw, locale.value),
+    descriptionBase: raw.description || "",
+    hasLocalizedDescription:
+      localeKey(locale.value) === "en"
+        ? Boolean(raw.description_en)
+        : localeKey(locale.value) === "ko"
+          ? Boolean(raw.description_ko)
+          : localeKey(locale.value) === "zh"
+            ? Boolean(raw.description_zh)
+            : true,
+    descriptionHtml: normalizeDescriptionHtml(
+      getLocalizedDescriptionFromRaw(raw, locale.value),
+    ),
     route: raw.route || raw.category?.name || "",
     region: raw.category?.slug || raw.region || "-",
     duration_days: Number(raw.duration_days || 0),
@@ -680,7 +733,14 @@ const translateTrip = async (tripData, targetLocale) => {
       ? autoTranslate(tripData.title, targetLocale)
       : tripData.title,
     tripData.description
-      ? autoTranslate(tripData.description, targetLocale)
+      ? tripData.hasLocalizedDescription
+        ? Promise.resolve(undefined)
+        : hasHtmlContent(tripData.descriptionBase || tripData.description)
+        ? Promise.resolve(undefined)
+        : autoTranslate(
+            stripHtml(tripData.descriptionBase || tripData.description),
+            targetLocale,
+          )
       : tripData.description,
     tripData.route
       ? autoTranslate(tripData.route, targetLocale)
@@ -693,7 +753,11 @@ const translateTrip = async (tripData, targetLocale) => {
         day.title ? autoTranslate(day.title, targetLocale) : day.title,
         Promise.all(
           (day.notes || []).map((n) =>
-            n ? autoTranslate(n, targetLocale) : n,
+            n
+              ? hasHtmlContent(n)
+                ? Promise.resolve(n)
+                : autoTranslate(n, targetLocale)
+              : n,
           ),
         ),
       ]);
@@ -757,7 +821,10 @@ const translateTrip = async (tripData, targetLocale) => {
   return {
     ...tripData,
     title,
-    description,
+    description: description ?? tripData.description,
+    descriptionHtml: description
+      ? plainTextToHtml(description)
+      : normalizeDescriptionHtml(tripData.description),
     route: routeText,
     itinerary,
     inclusions,
@@ -812,7 +879,7 @@ const fetchTrip = async () => {
               ...r,
               name: r.name ? await autoTranslate(r.name, locale.value) : r.name,
               description: r.description
-                ? await autoTranslate(r.description, locale.value)
+                ? await autoTranslate(stripHtml(r.description), locale.value)
                 : r.description,
             })),
           );
@@ -855,7 +922,7 @@ const fetchTrip = async () => {
               const [title, description] = await Promise.all([
                 it.title ? autoTranslate(it.title, locale.value) : it.title,
                 it.description
-                  ? autoTranslate(it.description, locale.value)
+                  ? autoTranslate(stripHtml(it.description), locale.value)
                   : it.description,
               ]);
               return { ...it, title, description };
@@ -874,7 +941,7 @@ const fetchTrip = async () => {
       applySeo({
         title: trip.value.title || "Detail Tour Internasional",
         description:
-          trip.value.description ||
+          stripHtml(trip.value.description) ||
           "Lihat detail tour internasional lengkap dengan itinerary, durasi, harga, dan informasi perjalanan.",
         image: tripImages.value[0],
         url: route.fullPath,
@@ -961,5 +1028,33 @@ const formatCurrency = (price) => {
 }
 .animate-subtle-zoom {
   animation: subtle-zoom 30s infinite alternate ease-in-out;
+}
+
+.tour-rich-content :deep(p) {
+  margin: 0 0 1rem;
+}
+
+.tour-rich-content :deep(ul),
+.tour-rich-content :deep(ol) {
+  margin: 0 0 1rem 1.5rem;
+}
+
+.tour-rich-content :deep(li) {
+  margin-bottom: 0.5rem;
+}
+
+.tour-rich-content :deep(h1),
+.tour-rich-content :deep(h2),
+.tour-rich-content :deep(h3),
+.tour-rich-content :deep(h4) {
+  color: rgb(15 23 42);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.tour-rich-content :deep(a) {
+  color: rgb(220 38 38);
+  text-decoration: underline;
 }
 </style>
