@@ -112,39 +112,21 @@
             </section>
 
             <section
+              v-if="hotel.amenities?.length"
               class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-slate-200"
             >
               <div
+                v-for="amenity in hotel.amenities"
+                :key="amenity.id || amenity.label"
                 class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
               >
-                <Coffee class="w-8 h-8 text-red-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">{{
-                  $t("hotelDetail.amenities.breakfast")
-                }}</span>
-              </div>
-              <div
-                class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
-              >
-                <Wifi class="w-8 h-8 text-red-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">{{
-                  $t("hotelDetail.amenities.wifi")
-                }}</span>
-              </div>
-              <div
-                class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
-              >
-                <Car class="w-8 h-8 text-red-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">{{
-                  $t("hotelDetail.amenities.parking")
-                }}</span>
-              </div>
-              <div
-                class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center"
-              >
-                <Wind class="w-8 h-8 text-red-600 mb-3" />
-                <span class="font-bold text-slate-700 text-sm">{{
-                  $t("hotelDetail.amenities.ac")
-                }}</span>
+                <component
+                  :is="amenity.iconComponent"
+                  class="w-8 h-8 text-red-600 mb-3"
+                />
+                <span class="font-bold text-slate-700 text-sm">
+                  {{ amenity._label || amenity.label }}
+                </span>
               </div>
             </section>
           </div>
@@ -243,10 +225,19 @@ import {
   Wifi,
   Car,
   Wind,
+  CircleCheck,
+  Waves,
+  Dumbbell,
+  Utensils,
+  Tv,
+  Bath,
+  Plane,
+  Users,
+  ShieldCheck,
 } from "lucide-vue-next";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const hotel = ref(null);
 const isLoading = ref(true);
 const galleryIndex = ref(0);
@@ -254,6 +245,44 @@ const translatedCache = new Map();
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1551882547-ff40c0d588fa?auto=format&fit=crop&w=2400&q=80";
+
+const FALLBACK_AMENITIES = [
+  {
+    id: "breakfast",
+    labelKey: "hotelDetail.amenities.breakfast",
+    icon: "breakfast",
+  },
+  { id: "wifi", labelKey: "hotelDetail.amenities.wifi", icon: "wifi" },
+  { id: "parking", labelKey: "hotelDetail.amenities.parking", icon: "parking" },
+  { id: "ac", labelKey: "hotelDetail.amenities.ac", icon: "ac" },
+];
+
+const AMENITY_ICON_MAP = {
+  ac: Wind,
+  air_conditioner: Wind,
+  air_conditioning: Wind,
+  airport: Plane,
+  airport_transfer: Plane,
+  bath: Bath,
+  bathroom: Bath,
+  breakfast: Coffee,
+  car: Car,
+  check: CircleCheck,
+  default: CircleCheck,
+  dining: Utensils,
+  food: Utensils,
+  gym: Dumbbell,
+  meeting: Users,
+  parking: Car,
+  pool: Waves,
+  restaurant: Utensils,
+  security: ShieldCheck,
+  shuttle: Plane,
+  spa: Waves,
+  swimming_pool: Waves,
+  tv: Tv,
+  wifi: Wifi,
+};
 
 const localeKey = (value) => {
   const loc = String(value || "").toLowerCase();
@@ -286,6 +315,140 @@ const plainTextToHtml = (value) => {
     .split(/\n{2,}/)
     .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
     .join("");
+};
+
+const slugifyAmenity = (value) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+
+const getLocalizedAmenityLabel = (item, loc) => {
+  if (typeof item === "string") return item;
+  if (item?.labelKey) return t(item.labelKey);
+
+  const key = localeKey(loc);
+  if (key === "en") {
+    return item?.name_en || item?.label_en || item?.name || item?.label || "";
+  }
+  if (key === "ko") {
+    return item?.name_ko || item?.label_ko || item?.name || item?.label || "";
+  }
+  if (key === "zh") {
+    return item?.name_zh || item?.label_zh || item?.name || item?.label || "";
+  }
+  return item?.name_id || item?.label_id || item?.name || item?.label || "";
+};
+
+const resolveAmenityIcon = (amenity) => {
+  const explicitIcon = slugifyAmenity(amenity.icon);
+  const labelKey = slugifyAmenity(amenity.label);
+  return (
+    AMENITY_ICON_MAP[explicitIcon] ||
+    AMENITY_ICON_MAP[labelKey] ||
+    AMENITY_ICON_MAP.default
+  );
+};
+
+const getAmenitySource = (rawHotel) => {
+  if (Array.isArray(rawHotel?.facilities)) return rawHotel.facilities;
+  if (Array.isArray(rawHotel?.amenities)) return rawHotel.amenities;
+  if (Array.isArray(rawHotel?.hotel_facilities)) return rawHotel.hotel_facilities;
+  if (Array.isArray(rawHotel?.facility)) return rawHotel.facility;
+  if (Array.isArray(rawHotel?.amenity)) return rawHotel.amenity;
+  if (Array.isArray(rawHotel?.fasilitas)) return rawHotel.fasilitas;
+
+  const stringSource =
+    rawHotel?.facilities ||
+    rawHotel?.amenities ||
+    rawHotel?.hotel_facilities ||
+    rawHotel?.facility ||
+    rawHotel?.amenity ||
+    rawHotel?.fasilitas;
+
+  if (typeof stringSource === "string") {
+    return stringSource
+      .split(/[\n,;|]+/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  const objectSource =
+    rawHotel?.facilities ||
+    rawHotel?.amenities ||
+    rawHotel?.hotel_facilities ||
+    rawHotel?.facility ||
+    rawHotel?.amenity ||
+    rawHotel?.fasilitas;
+
+  if (objectSource && typeof objectSource === "object") {
+    return Object.entries(objectSource)
+      .filter(([, value]) => Boolean(value))
+      .map(([key, value]) => {
+        if (typeof value === "string") return value;
+        if (value && typeof value === "object") return value;
+        return key;
+      });
+  }
+
+  return FALLBACK_AMENITIES;
+};
+
+const normalizeAmenity = (item, index, loc) => {
+  const source = item?.facility || item?.amenity || item;
+  const label = getLocalizedAmenityLabel(source, loc);
+  const cleanLabel = String(label || "").trim();
+
+  if (!cleanLabel) return null;
+
+  const normalized = {
+    id:
+      source?.id ||
+      source?.slug ||
+      source?.key ||
+      slugifyAmenity(cleanLabel) ||
+      index,
+    label: cleanLabel,
+    labelBase: source?.name || source?.label || cleanLabel,
+    hasLocalizedLabel:
+      localeKey(loc) === "en"
+        ? Boolean(source?.name_en || source?.label_en)
+        : localeKey(loc) === "ko"
+          ? Boolean(source?.name_ko || source?.label_ko)
+          : localeKey(loc) === "zh"
+            ? Boolean(source?.name_zh || source?.label_zh)
+            : true,
+    icon:
+      source?.icon ||
+      source?.icon_name ||
+      source?.type ||
+      source?.slug ||
+      source?.key ||
+      cleanLabel,
+  };
+
+  return {
+    ...normalized,
+    iconComponent: resolveAmenityIcon(normalized),
+  };
+};
+
+const normalizeAmenities = (rawHotel) => {
+  const uniqueAmenities = new Map();
+
+  getAmenitySource(rawHotel)
+    .map((item, index) => normalizeAmenity(item, index, locale.value))
+    .filter(Boolean)
+    .forEach((amenity, index) => {
+      const key = amenity.id || slugifyAmenity(amenity.label) || index;
+      if (!uniqueAmenities.has(key)) {
+        uniqueAmenities.set(key, amenity);
+      }
+    });
+
+  return Array.from(uniqueAmenities.values());
 };
 
 const unwrapHotelPayload = (payload) => {
@@ -344,6 +507,7 @@ const normalizeHotel = (rawHotel) => {
     image: heroImage,
     heroImage,
     galleryImages: galleryImages.length ? galleryImages : [FALLBACK_IMAGE],
+    amenities: normalizeAmenities(rawHotel),
   };
 };
 
@@ -432,11 +596,29 @@ const loadHotel = async () => {
       !baseHotel.hasLocalizedDescription &&
       !hasHtmlContent(baseHotel.descriptionBase);
 
-    const [desc, loc] = await Promise.all([
+    const [desc, loc, translatedAmenities] = await Promise.all([
       canTranslateDescription
         ? translateText(stripHtml(baseHotel.descriptionBase), lang, "auto")
         : Promise.resolve(undefined),
       translateText(baseHotel.location, lang, "auto"),
+      Promise.all(
+        baseHotel.amenities.map(async (amenity) => {
+          if (localeKey(lang) === "id" || amenity.hasLocalizedLabel) {
+            return amenity;
+          }
+
+          const translatedLabel = await translateText(
+            amenity.labelBase || amenity.label,
+            lang,
+            "auto",
+          );
+
+          return {
+            ...amenity,
+            _label: translatedLabel || amenity.label,
+          };
+        }),
+      ),
     ]);
 
     const value = {
@@ -446,6 +628,7 @@ const loadHotel = async () => {
         ? plainTextToHtml(desc)
         : undefined,
       _location: loc,
+      amenities: translatedAmenities,
     };
 
     translatedCache.set(cacheKey, value);

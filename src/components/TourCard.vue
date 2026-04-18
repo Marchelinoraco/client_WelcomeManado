@@ -1,5 +1,6 @@
 <template>
-  <div
+  <router-link
+    :to="detailHref"
     class="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 overflow-hidden flex flex-col h-full relative"
   >
     <!-- Image Header -->
@@ -42,15 +43,14 @@
       <div
         class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0"
       >
-        <router-link
-          :to="detailHref"
+        <div
           class="bg-white dark:bg-slate-950 text-slate-900 dark:text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl dark:shadow-slate-950/50 hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center group/btn"
         >
           {{ t("tour.viewDetails") }}
           <ArrowRight
             class="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
           />
-        </router-link>
+        </div>
       </div>
     </div>
 
@@ -99,7 +99,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script setup>

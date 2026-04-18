@@ -111,9 +111,10 @@
         class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-10 items-stretch"
       >
         <!-- Hotel Card -->
-        <article
+        <router-link
           v-for="hotel in filteredHotels"
           :key="hotel.id"
+          :to="'/hotel/' + hotel.slug"
           class="group bg-white rounded-[2.25rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex h-full flex-col hover:-translate-y-1"
         >
           <div class="relative aspect-[4/3] overflow-hidden">
@@ -192,17 +193,16 @@
                   {{ hotel._location || hotel.location }}
                 </div>
               </div>
-              <router-link
-                :to="'/hotel/' + hotel.slug"
+              <div
                 class="flex items-center justify-center w-14 h-14 bg-slate-50 rounded-2xl group-hover:bg-red-600 text-slate-400 group-hover:text-white transition-colors duration-300 shrink-0"
               >
                 <ArrowRight
                   class="w-6 h-6 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
                 />
-              </router-link>
+              </div>
             </div>
           </div>
-        </article>
+        </router-link>
       </div>
     </main>
   </div>
