@@ -125,6 +125,46 @@ export default {
       fastResponse: "Respon cepat dalam 5 menit.",
     },
   },
+  galleryPage: {
+    hero: {
+      badge: "Galeri",
+      titlePrefix: "Momen di",
+      titleHighlight: "WelcomeManado",
+      description:
+        "Jelajahi koleksi foto pilihan dan video YouTube. Klik kartu untuk melihat lebih besar.",
+      carouselAlt: "Galeri WelcomeManado",
+      cardBadge: "Galeri",
+      cardTitle: "Momen Terbaik di WelcomeManado",
+      cardDescription:
+        "Foto pilihan dan video YouTube. Jelajahi galeri, lalu klik kartu untuk melihat lebih besar.",
+    },
+    sections: {
+      collection: "Koleksi",
+      photosTitle: "Foto",
+      photosDescription: "Galeri yang hanya berisi foto (tanpa link).",
+      videosTitle: "Video YouTube",
+      videosDescription: "Galeri dengan link YouTube (bisa dengan/ tanpa foto).",
+      total: "Total",
+    },
+    empty: {
+      photosTitle: "Foto masih kosong",
+      photosDescription:
+        "Tambahkan item galeri yang hanya berisi gambar dari panel admin.",
+      videosTitle: "Video masih kosong",
+      videosDescription:
+        "Tambahkan item galeri dengan link YouTube dari panel admin.",
+    },
+    pagination: {
+      prev: "Prev",
+      next: "Next",
+      pageOf: "Halaman {page} dari {total}",
+    },
+    modal: {
+      youtubeFallback: "Video YouTube",
+      watchYoutube: "Tonton di YouTube",
+      clickOutsideClose: "Klik area gelap untuk menutup",
+    },
+  },
   contactPage: {
     hero: {
       badge: "Kami siap membantu",

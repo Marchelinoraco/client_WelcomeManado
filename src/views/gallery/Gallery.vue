@@ -23,25 +23,24 @@
           <span
             class="text-xs font-black text-white uppercase tracking-[0.3em]"
           >
-            Galeri
+            {{ $t("galleryPage.hero.badge") }}
           </span>
         </div>
 
         <h2
           class="mt-8 text-5xl md:text-7xl font-black text-white tracking-tighter leading-[0.95]"
         >
-          Momen di
+          {{ $t("galleryPage.hero.titlePrefix") }}
           <span
             class="text-transparent bg-clip-text bg-gradient-to-r from-red-300 to-red-600"
-            >WelcomeManado</span
+            >{{ $t("galleryPage.hero.titleHighlight") }}</span
           >
         </h2>
 
         <p
           class="mt-6 text-white/75 max-w-2xl mx-auto leading-relaxed font-medium"
         >
-          Jelajahi koleksi foto pilihan dan video YouTube. Klik kartu untuk
-          melihat lebih besar.
+          {{ $t("galleryPage.hero.description") }}
         </p>
 
         <div class="mt-10 flex items-center justify-center gap-3">
@@ -61,7 +60,7 @@
             <ImageCarousel
               v-model="heroIndex"
               :images="heroImages"
-              alt="WelcomeManado Gallery"
+              :alt="$t('galleryPage.hero.carouselAlt')"
               :overlay="true"
               :showThumbnails="false"
               :showCounter="true"
@@ -75,17 +74,16 @@
                   >
                     <span
                       class="text-[10px] font-black uppercase tracking-widest text-white/90"
-                      >Galeri</span
+                      >{{ $t("galleryPage.hero.cardBadge") }}</span
                     >
                   </div>
                   <h1
                     class="mt-5 text-4xl lg:text-5xl font-black text-white leading-tight"
                   >
-                    Momen Terbaik di WelcomeManado
+                    {{ $t("galleryPage.hero.cardTitle") }}
                   </h1>
                   <p class="mt-4 text-white/80 font-medium leading-relaxed">
-                    Foto pilihan dan video YouTube. Jelajahi galeri, lalu klik
-                    kartu untuk melihat lebih besar.
+                    {{ $t("galleryPage.hero.cardDescription") }}
                   </p>
                 </div>
               </div>
@@ -103,19 +101,20 @@
               <div
                 class="text-[10px] font-black text-slate-400 uppercase tracking-widest"
               >
-                Koleksi
+                {{ $t("galleryPage.sections.collection") }}
               </div>
               <div class="text-2xl lg:text-3xl font-black text-slate-900">
-                Foto
+                {{ $t("galleryPage.sections.photosTitle") }}
               </div>
               <div class="mt-2 text-slate-600 font-medium">
-                Galeri yang hanya berisi foto (tanpa link).
+                {{ $t("galleryPage.sections.photosDescription") }}
               </div>
             </div>
             <div
               class="hidden sm:flex items-center px-4 py-2 rounded-full bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-500"
             >
-              Total: {{ loadingPhotos ? "..." : photoMeta.total }}
+              {{ $t("galleryPage.sections.total") }}:
+              {{ loadingPhotos ? "..." : photoMeta.total }}
             </div>
           </div>
 
@@ -141,10 +140,10 @@
                 <ImageIcon class="w-6 h-6 text-slate-400" />
               </div>
               <div class="mt-4 text-xl font-black text-slate-900">
-                Foto masih kosong
+                {{ $t("galleryPage.empty.photosTitle") }}
               </div>
               <div class="mt-2 text-slate-500 font-medium">
-                Tambahkan item galeri yang hanya berisi gambar dari panel admin.
+                {{ $t("galleryPage.empty.photosDescription") }}
               </div>
             </div>
 
@@ -170,12 +169,17 @@
                 :disabled="photoPage <= 1"
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-slate-700 font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Prev
+                {{ $t("galleryPage.pagination.prev") }}
               </button>
               <div
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-xs font-black text-slate-500 uppercase tracking-widest"
               >
-                Halaman {{ photoPage }} dari {{ photoMeta.last_page }}
+                {{
+                  $t("galleryPage.pagination.pageOf", {
+                    page: photoPage,
+                    total: photoMeta.last_page,
+                  })
+                }}
               </div>
               <button
                 type="button"
@@ -183,7 +187,7 @@
                 :disabled="photoPage >= photoMeta.last_page"
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-slate-700 font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Next
+                {{ $t("galleryPage.pagination.next") }}
               </button>
             </div>
           </div>
@@ -195,19 +199,20 @@
               <div
                 class="text-[10px] font-black text-slate-400 uppercase tracking-widest"
               >
-                Koleksi
+                {{ $t("galleryPage.sections.collection") }}
               </div>
               <div class="text-2xl lg:text-3xl font-black text-slate-900">
-                Video YouTube
+                {{ $t("galleryPage.sections.videosTitle") }}
               </div>
               <div class="mt-2 text-slate-600 font-medium">
-                Galeri dengan link YouTube (bisa dengan/ tanpa foto).
+                {{ $t("galleryPage.sections.videosDescription") }}
               </div>
             </div>
             <div
               class="hidden sm:flex items-center px-4 py-2 rounded-full bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-500"
             >
-              Total: {{ loadingVideos ? "..." : videoMeta.total }}
+              {{ $t("galleryPage.sections.total") }}:
+              {{ loadingVideos ? "..." : videoMeta.total }}
             </div>
           </div>
 
@@ -233,10 +238,10 @@
                 <Play class="w-6 h-6 text-slate-400" />
               </div>
               <div class="mt-4 text-xl font-black text-slate-900">
-                Video masih kosong
+                {{ $t("galleryPage.empty.videosTitle") }}
               </div>
               <div class="mt-2 text-slate-500 font-medium">
-                Tambahkan item galeri dengan link YouTube dari panel admin.
+                {{ $t("galleryPage.empty.videosDescription") }}
               </div>
             </div>
 
@@ -262,12 +267,17 @@
                 :disabled="videoPage <= 1"
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-slate-700 font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Prev
+                {{ $t("galleryPage.pagination.prev") }}
               </button>
               <div
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-xs font-black text-slate-500 uppercase tracking-widest"
               >
-                Halaman {{ videoPage }} dari {{ videoMeta.last_page }}
+                {{
+                  $t("galleryPage.pagination.pageOf", {
+                    page: videoPage,
+                    total: videoMeta.last_page,
+                  })
+                }}
               </div>
               <button
                 type="button"
@@ -275,7 +285,7 @@
                 :disabled="videoPage >= videoMeta.last_page"
                 class="px-5 py-3 rounded-2xl bg-white border border-slate-100 text-slate-700 font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Next
+                {{ $t("galleryPage.pagination.next") }}
               </button>
             </div>
           </div>
@@ -302,7 +312,10 @@
                   v-if="activeItem.video_name || activeItem.youtube_url"
                   class="text-sm font-bold text-slate-500 mt-1 truncate"
                 >
-                  {{ activeItem.video_name || "Video YouTube" }}
+                  {{
+                    activeItem.video_name ||
+                    $t("galleryPage.modal.youtubeFallback")
+                  }}
                 </div>
               </div>
               <button
@@ -321,7 +334,7 @@
                 <iframe
                   class="absolute inset-0 w-full h-full"
                   :src="`https://www.youtube.com/embed/${activeYoutubeId}`"
-                  title="YouTube video player"
+                  :title="$t('galleryPage.modal.youtubeFallback')"
                   frameborder="0"
                   allow="
                     accelerometer;
@@ -354,10 +367,10 @@
                   class="inline-flex items-center px-5 py-3 rounded-2xl bg-red-600 text-white font-black text-xs uppercase tracking-widest hover:bg-red-700 transition-all active:scale-95"
                 >
                   <Play class="w-4 h-4 mr-2" />
-                  Tonton di YouTube
+                  {{ $t("galleryPage.modal.watchYoutube") }}
                 </a>
                 <div class="text-xs font-bold text-slate-400">
-                  Klik area gelap untuk menutup
+                  {{ $t("galleryPage.modal.clickOutsideClose") }}
                 </div>
               </div>
             </div>
@@ -369,12 +382,15 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { Image as ImageIcon, X, Play } from "lucide-vue-next";
 import { getGalleryItems } from "../../services/api";
+import { autoTranslate } from "../../services/translate";
 import GalleryItemCard from "../../components/GalleryItemCard.vue";
 import ImageCarousel from "../../components/ImageCarousel.vue";
 
+const { locale } = useI18n();
 const heroIndex = ref(0);
 const photoItems = ref([]);
 const videoItems = ref([]);
@@ -386,6 +402,59 @@ const videoPage = ref(1);
 const perPage = 9;
 const photoMeta = ref({ current_page: 1, last_page: 1, total: 0 });
 const videoMeta = ref({ current_page: 1, last_page: 1, total: 0 });
+const translatedCache = new Map();
+
+const normalizeGalleryPayload = (payload) => {
+  if (Array.isArray(payload)) {
+    return {
+      items: payload,
+      meta: {
+        current_page: 1,
+        last_page: 1,
+        total: payload.length,
+      },
+    };
+  }
+
+  return {
+    items: payload?.data || [],
+    meta: {
+      current_page: payload?.current_page || 1,
+      last_page: payload?.last_page || 1,
+      total: payload?.total || 0,
+    },
+  };
+};
+
+const translateGalleryItems = async (items) => {
+  const lang = locale.value;
+  if (lang === "id") return items;
+
+  return Promise.all(
+    items.map(async (item) => {
+      const cacheKey = `${lang}:${item.id}:${item.title || ""}:${
+        item.video_name || ""
+      }`;
+
+      if (translatedCache.has(cacheKey)) {
+        return translatedCache.get(cacheKey);
+      }
+
+      const [title, videoName] = await Promise.all([
+        autoTranslate(item.title, lang),
+        autoTranslate(item.video_name, lang),
+      ]);
+      const translated = {
+        ...item,
+        title,
+        video_name: videoName,
+      };
+
+      translatedCache.set(cacheKey, translated);
+      return translated;
+    }),
+  );
+};
 
 const fetchPhotos = async () => {
   loadingPhotos.value = true;
@@ -396,24 +465,10 @@ const fetchPhotos = async () => {
       page: photoPage.value,
       per_page: perPage,
     });
-    const payload = res?.data?.data;
-    if (Array.isArray(payload)) {
-      photoItems.value = payload;
-      photoMeta.value = {
-        current_page: 1,
-        last_page: 1,
-        total: payload.length,
-      };
-      photoPage.value = 1;
-    } else {
-      photoItems.value = payload?.data || [];
-      photoMeta.value = {
-        current_page: payload?.current_page || 1,
-        last_page: payload?.last_page || 1,
-        total: payload?.total || 0,
-      };
-      photoPage.value = photoMeta.value.current_page;
-    }
+    const { items, meta } = normalizeGalleryPayload(res?.data?.data);
+    photoItems.value = await translateGalleryItems(items);
+    photoMeta.value = meta;
+    photoPage.value = meta.current_page;
   } catch (e) {
     photoItems.value = [];
     photoMeta.value = { current_page: 1, last_page: 1, total: 0 };
@@ -431,24 +486,10 @@ const fetchVideos = async () => {
       page: videoPage.value,
       per_page: perPage,
     });
-    const payload = res?.data?.data;
-    if (Array.isArray(payload)) {
-      videoItems.value = payload;
-      videoMeta.value = {
-        current_page: 1,
-        last_page: 1,
-        total: payload.length,
-      };
-      videoPage.value = 1;
-    } else {
-      videoItems.value = payload?.data || [];
-      videoMeta.value = {
-        current_page: payload?.current_page || 1,
-        last_page: payload?.last_page || 1,
-        total: payload?.total || 0,
-      };
-      videoPage.value = videoMeta.value.current_page;
-    }
+    const { items, meta } = normalizeGalleryPayload(res?.data?.data);
+    videoItems.value = await translateGalleryItems(items);
+    videoMeta.value = meta;
+    videoPage.value = meta.current_page;
   } catch (e) {
     videoItems.value = [];
     videoMeta.value = { current_page: 1, last_page: 1, total: 0 };
@@ -458,6 +499,11 @@ const fetchVideos = async () => {
 };
 
 onMounted(async () => {
+  await Promise.all([fetchPhotos(), fetchVideos()]);
+});
+
+watch(locale, async () => {
+  activeItem.value = null;
   await Promise.all([fetchPhotos(), fetchVideos()]);
 });
 

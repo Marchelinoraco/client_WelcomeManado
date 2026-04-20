@@ -121,6 +121,44 @@ export default {
       fastResponse: "5 分钟内快速响应。",
     },
   },
+  galleryPage: {
+    hero: {
+      badge: "画廊",
+      titlePrefix: "WelcomeManado 的",
+      titleHighlight: "精彩瞬间",
+      description:
+        "浏览精选照片和 YouTube 视频。点击卡片可查看更大画面。",
+      carouselAlt: "WelcomeManado 画廊",
+      cardBadge: "画廊",
+      cardTitle: "WelcomeManado 最精彩的瞬间",
+      cardDescription:
+        "精选照片与 YouTube 视频。浏览画廊后，点击卡片可放大查看。",
+    },
+    sections: {
+      collection: "收藏",
+      photosTitle: "照片",
+      photosDescription: "仅包含照片的画廊（不含链接）。",
+      videosTitle: "YouTube 视频",
+      videosDescription: "包含 YouTube 链接的画廊，可有或没有封面图。",
+      total: "总数",
+    },
+    empty: {
+      photosTitle: "暂无照片",
+      photosDescription: "请从管理后台添加仅包含图片的画廊项目。",
+      videosTitle: "暂无视频",
+      videosDescription: "请从管理后台添加带 YouTube 链接的画廊项目。",
+    },
+    pagination: {
+      prev: "上一页",
+      next: "下一页",
+      pageOf: "第 {page} 页 / 共 {total} 页",
+    },
+    modal: {
+      youtubeFallback: "YouTube 视频",
+      watchYoutube: "在 YouTube 上观看",
+      clickOutsideClose: "点击暗色区域即可关闭",
+    },
+  },
   contactPage: {
     hero: {
       badge: "我们随时为您提供帮助",

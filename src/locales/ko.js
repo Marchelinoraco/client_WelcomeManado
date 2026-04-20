@@ -124,6 +124,44 @@ export default {
       fastResponse: "5분 이내 빠른 응답.",
     },
   },
+  galleryPage: {
+    hero: {
+      badge: "갤러리",
+      titlePrefix: "WelcomeManado의",
+      titleHighlight: "순간들",
+      description:
+        "엄선된 사진과 YouTube 영상을 둘러보세요. 카드를 클릭하면 더 크게 볼 수 있습니다.",
+      carouselAlt: "WelcomeManado 갤러리",
+      cardBadge: "갤러리",
+      cardTitle: "WelcomeManado의 베스트 순간",
+      cardDescription:
+        "엄선된 사진과 YouTube 영상을 둘러보고, 카드를 클릭해 더 크게 확인하세요.",
+    },
+    sections: {
+      collection: "컬렉션",
+      photosTitle: "사진",
+      photosDescription: "사진만 포함된 갤러리입니다. (링크 없음)",
+      videosTitle: "YouTube 영상",
+      videosDescription: "YouTube 링크가 포함된 갤러리입니다. 사진 유무와 무관합니다.",
+      total: "총계",
+    },
+    empty: {
+      photosTitle: "사진이 아직 없습니다",
+      photosDescription: "관리자 패널에서 이미지 전용 갤러리 아이템을 추가하세요.",
+      videosTitle: "영상이 아직 없습니다",
+      videosDescription: "관리자 패널에서 YouTube 링크가 있는 갤러리 아이템을 추가하세요.",
+    },
+    pagination: {
+      prev: "이전",
+      next: "다음",
+      pageOf: "{page} / {total} 페이지",
+    },
+    modal: {
+      youtubeFallback: "YouTube 영상",
+      watchYoutube: "YouTube에서 보기",
+      clickOutsideClose: "어두운 영역을 클릭하면 닫힙니다",
+    },
+  },
   contactPage: {
     hero: {
       badge: "언제든 도와드릴게요",

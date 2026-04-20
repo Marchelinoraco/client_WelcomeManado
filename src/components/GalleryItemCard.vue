@@ -7,7 +7,7 @@
         <img
           v-if="coverSrc"
           :src="coverSrc"
-          :alt="item?.title || 'Gallery image'"
+          :alt="item?.title || t('galleryPage.hero.carouselAlt')"
           class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
           loading="lazy"
         />
@@ -25,7 +25,7 @@
                 v-if="item?.video_name || item?.youtube_url"
                 class="text-white/80 text-xs font-bold mt-1 truncate"
               >
-                {{ item?.video_name || "Video YouTube" }}
+                {{ item?.video_name || t("galleryPage.modal.youtubeFallback") }}
               </div>
             </div>
 
@@ -44,6 +44,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { Play } from "lucide-vue-next";
 
 const props = defineProps({
@@ -51,6 +52,8 @@ const props = defineProps({
 });
 
 defineEmits(["open"]);
+
+const { t } = useI18n();
 
 const extractYoutubeId = (url) => {
   if (!url) return null;

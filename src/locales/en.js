@@ -124,6 +124,47 @@ export default {
       fastResponse: "Fast response within 5 minutes.",
     },
   },
+  galleryPage: {
+    hero: {
+      badge: "Gallery",
+      titlePrefix: "Moments at",
+      titleHighlight: "WelcomeManado",
+      description:
+        "Explore a curated collection of photos and YouTube videos. Click any card to view it larger.",
+      carouselAlt: "WelcomeManado Gallery",
+      cardBadge: "Gallery",
+      cardTitle: "Best Moments at WelcomeManado",
+      cardDescription:
+        "Curated photos and YouTube videos. Explore the gallery, then click a card to view it larger.",
+    },
+    sections: {
+      collection: "Collection",
+      photosTitle: "Photos",
+      photosDescription: "A gallery that contains photos only (no links).",
+      videosTitle: "YouTube Videos",
+      videosDescription:
+        "A gallery with YouTube links, with or without cover images.",
+      total: "Total",
+    },
+    empty: {
+      photosTitle: "No photos yet",
+      photosDescription:
+        "Add gallery items that contain images only from the admin panel.",
+      videosTitle: "No videos yet",
+      videosDescription:
+        "Add gallery items with YouTube links from the admin panel.",
+    },
+    pagination: {
+      prev: "Prev",
+      next: "Next",
+      pageOf: "Page {page} of {total}",
+    },
+    modal: {
+      youtubeFallback: "YouTube Video",
+      watchYoutube: "Watch on YouTube",
+      clickOutsideClose: "Click the dark area to close",
+    },
+  },
   contactPage: {
     hero: {
       badge: "We're here to help",
