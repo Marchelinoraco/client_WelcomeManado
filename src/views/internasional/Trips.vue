@@ -639,9 +639,15 @@ const sortedTrips = computed(() => {
 
 const formatPriceShort = (price) => {
   if (!price) return "-";
-  const jt = price / 1000000;
-  const s = jt.toFixed(jt % 1 === 0 ? 0 : 1).replace(".", ",");
-  return `${s} jt`;
+  const localeMap = {
+    id: "id-ID",
+    en: "en-US",
+    zh: "zh-CN",
+    ko: "ko-KR",
+  };
+  return new Intl.NumberFormat(localeMap[locale.value] || "en-US").format(
+    price,
+  );
 };
 
 const formatDateRange = (start, end) => {
