@@ -76,6 +76,21 @@ export default {
       bookNow: "Book Now",
       chatWA: "Chat WhatsApp",
     },
+    gallery: {
+      badge: "Our Best Moments",
+      title1: "Travel",
+      title2: "Gallery",
+      description: "Explore beautifully captured memories from our previous trips across Manado and beyond.",
+      viewAll: "View Full Gallery",
+      empty: "No gallery items available right now.",
+    },
+    reviews: {
+      title: "Reviews",
+      ratings: "Ratings",
+      reviewUs: "Review Us",
+      tripadvisorBadge: "Recognized Excellence",
+
+    },
   },
   hotelsPage: {
     hero: {
@@ -564,6 +579,21 @@ export default {
     instantBooking: "Instant Booking",
     reserveSpot: "Reserve Your Spot",
     chatWA: "Chat on WhatsApp",
+    },
+    gallery: {
+      badge: "Our Best Moments",
+      title1: "Travel",
+      title2: "Gallery",
+      description: "Explore beautifully captured memories from our previous trips across Manado and beyond.",
+      viewAll: "View Full Gallery",
+      empty: "No gallery items available right now.",
+    },
+    reviews: {
+      title: "Reviews",
+      ratings: "Ratings",
+      reviewUs: "Review Us",
+      tripadvisorBadge: "Recognized Excellence",
+
     securePayment: "Secure Payment & Instant Confirmation",
     tailoredJourney: "Tailored Journey?",
     customizeTour: "Let us customize this tour exactly to your preferences.",

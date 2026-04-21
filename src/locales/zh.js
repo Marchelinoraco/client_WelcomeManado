@@ -74,6 +74,20 @@ export default {
       bookNow: "现在预订",
       chatWA: "WhatsApp 聊天",
     },
+    gallery: {
+      badge: "我们最美好的时刻",
+      title1: "旅行",
+      title2: "画廊",
+      description: "探索我们之前在美娜多及其他地区旅行中捕捉到的美丽回忆。",
+      viewAll: "查看完整画廊",
+      empty: "目前没有可用的画廊项目。",
+    },
+    reviews: {
+      title: "评论",
+      ratings: "评分",
+      reviewUs: "评价我们",
+      tripadvisorBadge: "公认的卓越",
+    },
   },
   hotelsPage: {
     hero: {

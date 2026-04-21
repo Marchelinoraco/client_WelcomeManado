@@ -76,6 +76,20 @@ export default {
       bookNow: "지금 예약",
       chatWA: "WhatsApp 채팅",
     },
+    gallery: {
+      badge: "우리의 최고의 순간",
+      title1: "여행",
+      title2: "갤러리",
+      description: "마나도와 그 너머에서의 이전 여행에서 포착된 아름다운 추억을 탐험하세요.",
+      viewAll: "모든 갤러리 보기",
+      empty: "현재 이용 가능한 갤러리 항목이 없습니다.",
+    },
+    reviews: {
+      title: "리뷰",
+      ratings: "평점",
+      reviewUs: "리뷰 작성하기",
+      tripadvisorBadge: "탁월함 인정",
+    },
   },
   hotelsPage: {
     hero: {

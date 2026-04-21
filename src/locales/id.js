@@ -76,6 +76,20 @@ export default {
       bookNow: "Pesan Sekarang",
       chatWA: "Chat WhatsApp",
     },
+    gallery: {
+      badge: "Momen Terbaik Kami",
+      title1: "Galeri",
+      title2: "Perjalanan",
+      description: "Jelajahi kenangan indah yang tertangkap dari perjalanan kami sebelumnya di Manado dan sekitarnya.",
+      viewAll: "Lihat Semua Galeri",
+      empty: "Belum ada item galeri saat ini.",
+    },
+    reviews: {
+      title: "Ulasan",
+      ratings: "Ulasan",
+      reviewUs: "Beri Ulasan",
+      tripadvisorBadge: "Keunggulan yang Diakui",
+    },
   },
   hotelsPage: {
     hero: {
