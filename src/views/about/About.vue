@@ -14,27 +14,27 @@
     <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <div>
-          <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter uppercase italic">{{ $t('about.story.title1') }} <span class="text-red-600">{{ $t('about.story.title2') }}</span></h2>
-          <div class="space-y-6 text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-            <p>{{ $t('about.story.p1') }}</p>
-            <p>{{ $t('about.story.p2') }}</p>
+          <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter uppercase italic">{{ storyTitleLead }} <span class="text-red-600">{{ storyTitleAccent }}</span></h2>
+          <div class="space-y-6 text-gray-600 dark:text-gray-300 leading-relaxed text-lg about-story-richtext">
+            <div v-html="storyParagraphOne"></div>
+            <div v-html="storyParagraphTwo"></div>
           </div>
           <div class="mt-10 grid grid-cols-2 gap-8">
             <div class="border-l-4 border-red-600 pl-4">
-              <h4 class="text-3xl font-black text-gray-900 dark:text-white italic uppercase tracking-tighter">{{ $t('about.story.exp_years').split(' ')[0] }}</h4>
-              <p class="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">{{ $t('about.story.exp_years').split(' ').slice(1).join(' ') }}</p>
+              <h4 class="text-3xl font-black text-gray-900 dark:text-white italic uppercase tracking-tighter">{{ experienceValue }}</h4>
+              <p class="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">{{ experienceLabel }}</p>
             </div>
             <div class="border-l-4 border-red-600 pl-4">
-              <h4 class="text-3xl font-black text-gray-900 dark:text-white italic uppercase tracking-tighter">{{ $t('about.story.happy_travelers').split(' ')[0] }}</h4>
-              <p class="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">{{ $t('about.story.happy_travelers').split(' ').slice(1).join(' ') }}</p>
+              <h4 class="text-3xl font-black text-gray-900 dark:text-white italic uppercase tracking-tighter">{{ travelersValue }}</h4>
+              <p class="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">{{ travelersLabel }}</p>
             </div>
           </div>
         </div>
         <div class="relative">
-          <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=1000" class="rounded-[2rem] shadow-2xl" alt="Travelers" />
+          <img :src="storyImage" class="rounded-[2rem] shadow-2xl" alt="Travelers" />
           <div class="absolute -bottom-10 -left-10 bg-red-600 p-8 rounded-[2rem] text-white hidden md:block">
-            <p class="text-2xl font-black italic uppercase tracking-tighter">{{ $t('about.story.since') }}</p>
-            <p class="text-red-100 text-sm font-bold tracking-widest uppercase mt-1">{{ $t('about.story.pioneering') }}</p>
+            <p class="text-2xl font-black italic uppercase tracking-tighter">{{ storySince }}</p>
+            <p class="text-red-100 text-sm font-bold tracking-widest uppercase mt-1">{{ storyPioneering }}</p>
           </div>
         </div>
       </div>
@@ -258,14 +258,41 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { computed, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { Compass, ShieldCheck, Users, Star, Quote, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { getAboutStorySection } from '@/services/api';
 
 const whyChooseUs = [
   { key: 'expert', icon: Compass },
   { key: 'professional', icon: ShieldCheck },
   { key: 'personalized', icon: Users },
 ];
+
+const storySection = ref(null);
+const defaultStoryImage = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=1000";
+
+const splitLabel = (value = "") => {
+  const parts = String(value || "").trim().split(" ");
+  return {
+    value: parts[0] || "",
+    label: parts.slice(1).join(" "),
+  };
+};
+
+const defaultExperience = computed(() => splitLabel($t('about.story.exp_years')));
+const defaultTravelers = computed(() => splitLabel($t('about.story.happy_travelers')));
+
+const storyTitleLead = computed(() => storySection.value?.title_lead || $t('about.story.title1'));
+const storyTitleAccent = computed(() => storySection.value?.title_accent || $t('about.story.title2'));
+const storyParagraphOne = computed(() => storySection.value?.paragraph_one || `<p>${$t('about.story.p1')}</p>`);
+const storyParagraphTwo = computed(() => storySection.value?.paragraph_two || `<p>${$t('about.story.p2')}</p>`);
+const experienceValue = computed(() => storySection.value?.experience_value || defaultExperience.value.value);
+const experienceLabel = computed(() => storySection.value?.experience_label || defaultExperience.value.label);
+const travelersValue = computed(() => storySection.value?.travelers_value || defaultTravelers.value.value);
+const travelersLabel = computed(() => storySection.value?.travelers_label || defaultTravelers.value.label);
+const storySince = computed(() => storySection.value?.since_text || $t('about.story.since'));
+const storyPioneering = computed(() => storySection.value?.pioneering_text || $t('about.story.pioneering'));
+const storyImage = computed(() => storySection.value?.image_url || defaultStoryImage);
 
 // ---- Testimonial Quotes Carousel ----
 const activeQuote = ref(0);
@@ -391,7 +418,17 @@ const scrollReviews = (direction) => {
   }
 };
 
+const fetchStorySection = async () => {
+  try {
+    const res = await getAboutStorySection();
+    storySection.value = res.data?.data || null;
+  } catch {
+    storySection.value = null;
+  }
+};
+
 onMounted(() => {
+  fetchStorySection();
   startAutoplay();
 });
 
@@ -434,5 +471,25 @@ onUnmounted(() => {
 .slide-right-leave-to {
   opacity: 0;
   transform: translateX(60px);
+}
+
+.about-story-richtext :deep(p) {
+  margin: 0;
+}
+
+.about-story-richtext :deep(a) {
+  color: rgb(220 38 38);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.about-story-richtext :deep(ul),
+.about-story-richtext :deep(ol) {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.about-story-richtext :deep(li) {
+  margin: 0.35rem 0;
 }
 </style>
