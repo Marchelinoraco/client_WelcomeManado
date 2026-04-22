@@ -289,6 +289,35 @@
                   class="tour-rich-content text-slate-500 leading-[1.8] text-lg font-medium"
                   v-html="tour.descriptionHtml"
                 ></div>
+
+                <div v-if="tour.inclusions || tour.exclusions" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div v-if="tour.inclusions" class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
+                    <h3 class="text-xl font-black text-emerald-900 mb-6 flex items-center">
+                      <CheckIcon class="w-6 h-6 mr-3 text-emerald-600" />
+                      {{ $t("tour.inclusions") }}
+                    </h3>
+                    <div class="tour-rich-content text-emerald-800 text-sm prose prose-emerald prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
+                  </div>
+                  <div v-if="tour.exclusions" class="bg-red-50 rounded-3xl p-8 border border-red-100">
+                    <h3 class="text-xl font-black text-red-900 mb-6 flex items-center">
+                      <X class="w-6 h-6 mr-3 text-red-600" />
+                      {{ $t("tour.exclusions") }}
+                    </h3>
+                    <div class="tour-rich-content text-red-800 text-sm prose prose-red prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
+                  </div>
+                </div>
+
+                <div v-if="tour.itinerary_pdf_path" class="mt-10">
+                  <a
+                    :href="tour.itinerary_pdf_path"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center px-8 py-4 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all hover:scale-105 shadow-xl shadow-slate-900/20"
+                  >
+                    <Download class="w-4 h-4 mr-3" />
+                    {{ $t("tour.downloadItineraryPdf") }}
+                  </a>
+                </div>
               </section>
 
               <!-- Price Breakdown Table -->
@@ -686,6 +715,8 @@ import {
   Facebook,
   Instagram,
   Mail,
+  Download,
+  X,
 } from "lucide-vue-next";
 import { getNationalTourDetail, getNationalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
@@ -804,7 +835,7 @@ const fetchTour = async () => {
         localizedDescription && localizedDescription !== (rawTour.description || "");
 
       // Translate main tour info
-      const [translatedTitle, translatedDesc, translatedLocation] =
+      const [translatedTitle, translatedDesc, translatedLocation, translatedInclusions, translatedExclusions] =
         await Promise.all([
           autoTranslate(rawTour.title, locale.value),
           hasAdminLocalizedDescription
@@ -816,6 +847,8 @@ const fetchTour = async () => {
             rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
           ),
+          rawTour.inclusions && !hasHtmlContent(rawTour.inclusions) ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
+          rawTour.exclusions && !hasHtmlContent(rawTour.exclusions) ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
         ]);
 
       // Translate itineraries
@@ -850,6 +883,8 @@ const fetchTour = async () => {
           ? plainTextToHtml(translatedDesc)
           : normalizeDescriptionHtml(localizedDescription),
         location: translatedLocation,
+        inclusions: translatedInclusions ?? rawTour.inclusions,
+        exclusions: translatedExclusions ?? rawTour.exclusions,
         itineraries: translatedItineraries,
         price_details: normalizePriceDetails(rawTour.price_details),
       };
@@ -958,11 +993,6 @@ const summaryItems = computed(() => {
       label: t("tour.language"),
       value: t("tour.languageValue"),
       icon: Compass,
-    },
-    {
-      label: t("tour.insurance"),
-      value: t("tour.included"),
-      icon: ShieldCheck,
     },
   ];
 });

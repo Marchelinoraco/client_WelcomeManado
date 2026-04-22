@@ -80,10 +80,14 @@
             >
               <Calendar class="w-5 h-5 text-red-300" />
             </div>
-            <span class="uppercase tracking-widest text-xs">
-              {{ $t("internationalTourDetail.period") }}:
-              {{ formatDateRange(trip.start_date, trip.end_date) }}
-            </span>
+            <div class="uppercase tracking-widest text-xs">
+              <span class="font-black mr-2">{{ $t("internationalTourDetail.period") }}:</span>
+              <span v-if="!trip.departure_periods || trip.departure_periods.length === 0">-</span>
+              <span v-else-if="trip.departure_periods.length === 1">{{ trip.departure_periods[0] }}</span>
+              <ul v-else class="mt-2 space-y-1 ml-4 list-disc list-inside text-white/90">
+                <li v-for="(p, idx) in trip.departure_periods" :key="idx">{{ p }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </header>
@@ -417,12 +421,16 @@
                       >
                     </div>
                     <div
-                      class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
+                      class="flex items-start justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span>{{ $t("internationalTourDetail.period") }}</span>
-                      <span class="text-white">{{
-                        formatDateRange(trip.start_date, trip.end_date)
-                      }}</span>
+                      <span class="mt-0.5">{{ $t("internationalTourDetail.period") }}</span>
+                      <div class="text-white text-right">
+                        <span v-if="!trip.departure_periods || trip.departure_periods.length === 0">-</span>
+                        <span v-else-if="trip.departure_periods.length === 1">{{ trip.departure_periods[0] }}</span>
+                        <ul v-else class="space-y-1 text-right text-white/90">
+                          <li v-for="(p, idx) in trip.departure_periods" :key="idx">{{ p }}</li>
+                        </ul>
+                      </div>
                     </div>
                     <div
                       class="flex items-center justify-between text-xs font-black uppercase tracking-widest text-white/60"
@@ -707,8 +715,7 @@ const normalizeTrip = (raw) => {
     region: raw.category?.slug || raw.region || "-",
     duration_days: Number(raw.duration_days || 0),
     duration_nights: Number(raw.duration_nights || 0),
-    start_date: raw.start_date || null,
-    end_date: raw.end_date || null,
+    departure_periods: Array.isArray(raw.departure_periods) ? raw.departure_periods : [],
     airline: raw.airline_info || raw.airline || "",
     seats_available: raw.seats_available ?? true,
     price_idr: Number(raw.base_price || raw.price_idr || 0),

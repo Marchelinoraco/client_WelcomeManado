@@ -7,178 +7,6 @@
     </div>
 
     <div v-else-if="tour" class="pb-32 animate-fade-in">
-      <!-- Layout 1: Daily Tour (Sesuai Gambar) -->
-      <div v-if="isDaily">
-        <!-- Simple Blue Header -->
-        <div class="bg-[#1e293b] pt-32 pb-20">
-          <div class="max-w-7xl mx-auto px-6 lg:px-10">
-            <h1 class="text-4xl md:text-5xl font-serif text-white text-right">
-              {{ tour.title }}
-            </h1>
-          </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <!-- Left: Image Carousel -->
-            <ImageCarousel
-              v-model="galleryIndex"
-              :images="displayImages"
-              :alt="tour.title"
-              main-class="aspect-square rounded-2xl shadow-lg"
-              :show-thumbnails="displayImages.length > 1"
-              :show-controls="displayImages.length > 1"
-              :show-counter="displayImages.length > 1"
-            >
-              <div class="absolute top-4 right-4">
-                <button
-                  type="button"
-                  class="h-11 w-11 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-white font-black hover:bg-white/25 transition-colors"
-                  @click.stop="openImageModal(displayImages[galleryIndex])"
-                  aria-label="Open image"
-                >
-                  ⤢
-                </button>
-              </div>
-            </ImageCarousel>
-
-            <!-- Right: Content -->
-            <div class="space-y-6">
-              <h2 class="text-3xl font-bold text-slate-800 leading-tight">
-                {{ tour.title }}
-                <span v-if="!tour.title.toLowerCase().includes('lunch')"
-                  >& {{ $t("localTourDetail.lunch") }}</span
-                >
-              </h2>
-              <div class="text-slate-600 font-medium">
-                {{ $t("tour.duration") }}
-                <template
-                  v-if="tour.duration_hours_min && tour.duration_hours_max"
-                  >{{ tour.duration_hours_min }}-{{ tour.duration_hours_max }}
-                  {{ $t("tour.hours") }}</template
-                >
-                <template v-else-if="tour.duration_hours"
-                  >{{ tour.duration_hours }} {{ $t("tour.hours") }}</template
-                >
-                <template v-else
-                  >{{ tour.duration_days }} {{ $t("tour.days") }}</template
-                >
-              </div>
-
-              <div
-                class="tour-rich-content prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm"
-                v-html="tour.descriptionHtml"
-              ></div>
-
-              <div class="pt-8 border-t border-slate-100">
-                <p class="text-xl font-bold text-slate-800 mb-6">
-                  {{ $t("tour.contactMore") }}
-                </p>
-
-                <!-- Simple CTA Button -->
-                <a
-                  :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
-                  target="_blank"
-                  class="inline-flex items-center px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-200"
-                >
-                  <MessageCircle class="mr-3 w-5 h-5" />
-                  {{ $t("tour.chatWA") }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Contact Info -->
-          <div
-            class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-12 pt-16 border-t border-slate-100"
-          >
-            <!-- Alamat -->
-            <div class="flex items-start space-x-4">
-              <div
-                class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center shrink-0"
-              >
-                <MapPinIcon class="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-slate-800 mb-4">
-                  {{ $t("common.address") }}
-                </h3>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                  {{ $t("common.officeAddress") }}
-                </p>
-              </div>
-            </div>
-
-            <!-- No Telepon -->
-            <div class="flex items-start space-x-4">
-              <div
-                class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center shrink-0"
-              >
-                <Phone class="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-slate-800 mb-4">
-                  {{ $t("common.phone") }}
-                </h3>
-                <a
-                  href="tel:+6282173738822"
-                  class="text-slate-500 text-sm font-bold hover:text-red-600 transition-colors"
-                  >+62 821-7373-8822</a
-                >
-              </div>
-            </div>
-
-            <!-- Sosial Media -->
-            <div class="flex items-start space-x-4">
-              <div
-                class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center shrink-0"
-              >
-                <Share2 class="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-slate-800 mb-4">
-                  {{ $t("common.socialMedia") }}
-                </h3>
-                <div class="flex items-center space-x-3">
-                  <a
-                    href="https://www.facebook.com/welcomemanadotours"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
-                  >
-                    <Facebook class="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://instagram.com/welcomemanadotours"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition-all"
-                  >
-                    <Instagram class="w-5 h-5" />
-                  </a>
-                  <a
-                    :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all"
-                  >
-                    <MessageCircle class="w-5 h-5" />
-                  </a>
-                  <a
-                    :href="`mailto:info@welcomemanado.com?subject=${encodeURIComponent('Info Tour: ' + (tour?.title || ''))}`"
-                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-600 hover:text-white transition-all"
-                  >
-                    <Mail class="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Layout 2: Premium Package (Default) -->
-      <div v-else>
         <!-- Premium Hero Header -->
         <header>
           <ImageCarousel
@@ -291,6 +119,35 @@
                   class="tour-rich-content text-slate-500 leading-[1.8] text-lg font-medium"
                   v-html="tour.descriptionHtml"
                 ></div>
+
+                <div v-if="tour.inclusions || tour.exclusions" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div v-if="tour.inclusions" class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
+                    <h3 class="text-xl font-black text-emerald-900 mb-6 flex items-center">
+                      <CheckIcon class="w-6 h-6 mr-3 text-emerald-600" />
+                      {{ $t("tour.inclusions") }}
+                    </h3>
+                    <div class="tour-rich-content text-emerald-800 text-sm prose prose-emerald prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
+                  </div>
+                  <div v-if="tour.exclusions" class="bg-red-50 rounded-3xl p-8 border border-red-100">
+                    <h3 class="text-xl font-black text-red-900 mb-6 flex items-center">
+                      <X class="w-6 h-6 mr-3 text-red-600" />
+                      {{ $t("tour.exclusions") }}
+                    </h3>
+                    <div class="tour-rich-content text-red-800 text-sm prose prose-red prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
+                  </div>
+                </div>
+
+                <div v-if="tour.itinerary_pdf_path" class="mt-10">
+                  <a
+                    :href="tour.itinerary_pdf_path"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center px-8 py-4 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all hover:scale-105 shadow-xl shadow-slate-900/20"
+                  >
+                    <Download class="w-4 h-4 mr-3" />
+                    {{ $t("tour.downloadItineraryPdf") }}
+                  </a>
+                </div>
               </section>
 
               <!-- Price Breakdown Table -->
@@ -591,7 +448,6 @@
             </div>
           </div>
         </main>
-      </div>
 
       <section
         v-if="recommendedTours.length"
@@ -687,6 +543,8 @@ import {
   Facebook,
   Instagram,
   Mail,
+  Download,
+  X,
 } from "lucide-vue-next";
 import { getLocalTourDetail, getLocalTours } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
@@ -803,7 +661,7 @@ const fetchTour = async () => {
         localizedDescription && localizedDescription !== (rawTour.description || "");
 
       // Translate main tour info
-      const [translatedTitle, translatedDesc, translatedLocation] =
+      const [translatedTitle, translatedDesc, translatedLocation, translatedInclusions, translatedExclusions] =
         await Promise.all([
           autoTranslate(rawTour.title, locale.value),
           hasAdminLocalizedDescription
@@ -815,6 +673,8 @@ const fetchTour = async () => {
             rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
           ),
+          rawTour.inclusions && !hasHtmlContent(rawTour.inclusions) ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
+          rawTour.exclusions && !hasHtmlContent(rawTour.exclusions) ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
         ]);
 
       // Translate itineraries
@@ -849,6 +709,8 @@ const fetchTour = async () => {
           ? plainTextToHtml(translatedDesc)
           : normalizeDescriptionHtml(localizedDescription),
         location: translatedLocation,
+        inclusions: translatedInclusions ?? rawTour.inclusions,
+        exclusions: translatedExclusions ?? rawTour.exclusions,
         itineraries: translatedItineraries,
         price_details: normalizePriceDetails(rawTour.price_details),
       };
@@ -927,14 +789,6 @@ const fetchTour = async () => {
 onMounted(fetchTour);
 watch(locale, fetchTour);
 
-const isDaily = computed(() => {
-  if (!tour.value) return false;
-  // Daily tours are typically 1 day or less and have no nights
-  return (
-    (tour.value.duration_days || 0) <= 1 &&
-    (tour.value.duration_nights || 0) === 0
-  );
-});
 
 const displayImages = computed(() => {
   return galleryImages.value;
@@ -959,16 +813,16 @@ const summaryItems = computed(() => {
       icon: ClockIcon,
     },
     { label: t("tour.groupSize"), value: t("tour.pax"), icon: Users },
-    {
-      label: t("tour.language"),
-      value: t("tour.languageValue"),
-      icon: Compass,
-    },
-    {
-      label: t("tour.insurance"),
-      value: t("tour.included"),
-      icon: ShieldCheck,
-    },
+    // {
+    //   label: t("tour.language"),
+    //   value: t("tour.languageValue"),
+    //   icon: Compass,
+    // },
+    // {
+    //   label: t("tour.insurance"),
+    //   value: t("tour.included"),
+    //   icon: ShieldCheck,
+    // },
   ];
 });
 
