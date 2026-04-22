@@ -572,25 +572,6 @@ const loadHotel = async () => {
       return;
     }
 
-    if (lang === "en") {
-      const value = {
-        ...baseHotel,
-        _description: undefined,
-        _descriptionHtml: undefined,
-        _location: undefined,
-      };
-      translatedCache.set(cacheKey, value);
-      hotel.value = value;
-      applySeo({
-        title: value.name,
-        description: value.descriptionText,
-        image: value.heroImage,
-        url: route.fullPath,
-        type: "article",
-      });
-      return;
-    }
-
     const canTranslateDescription =
       localeKey(lang) !== "id" &&
       !baseHotel.hasLocalizedDescription &&

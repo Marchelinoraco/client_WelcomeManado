@@ -328,12 +328,6 @@ const ensureTranslatedHotels = async () => {
 
   const base = await fetchHotels();
 
-  if (lang === "en") {
-    translatedCache.set(lang, base);
-    displayedHotels.value = base;
-    return;
-  }
-
   const translated = await runWithConcurrency(base, 4, async (hotel) => {
     const [desc, loc] = await Promise.all([
       hotel.hasLocalizedDescription
