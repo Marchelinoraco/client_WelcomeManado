@@ -273,7 +273,7 @@ const runWithConcurrency = async (items, limit, worker) => {
 };
 
 const fetchHotels = async () => {
-  const res = await getHotels();
+  const res = await getHotels({ per_page: 100 });
   const arr = Array.isArray(res.data?.data?.data)
     ? res.data.data.data
     : Array.isArray(res.data?.data)

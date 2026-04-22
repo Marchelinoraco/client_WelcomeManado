@@ -762,14 +762,20 @@ const fetchTours = async () => {
   loading.value = true;
   try {
     const response = await getTours();
-    const rawData = response.data.data;
+    const rawData = response.data.data || {};
+    
+    // Hanya ambil 3 tour pertama dari setiap kategori untuk diterjemahkan
+    const slicedData = {
+      local: rawData.local?.slice(0, 3) || [],
+      national: rawData.national?.slice(0, 3) || [],
+      international: rawData.international?.slice(0, 3) || [],
+    };
 
     if (locale.value !== "id") {
-      // Translate all categories
       const translatedData = {};
-      for (const category in rawData) {
+      for (const category in slicedData) {
         translatedData[category] = await Promise.all(
-          rawData[category].map(async (tour) => {
+          slicedData[category].map(async (tour) => {
             const [translatedTitle, translatedDescription] = await Promise.all([
               autoTranslate(tour.title, locale.value),
               autoTranslate(stripHtml(tour.description), locale.value),
@@ -784,7 +790,7 @@ const fetchTours = async () => {
       }
       tours.value = translatedData;
     } else {
-      tours.value = rawData;
+      tours.value = slicedData;
     }
   } catch (error) {
     console.error("Error fetching tours:", error);
