@@ -1,10 +1,10 @@
 <template>
   <div
-    class="selection:bg-red-100 selection:text-red-700 font-sans min-h-screen bg-slate-50"
+    class="selection:bg-red-100 selection:text-red-700 dark:selection:bg-red-900/40 dark:selection:text-red-200 font-sans min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300"
   >
     <!-- Hero Header -->
     <header
-      class="relative pt-40 pb-20 lg:pt-52 lg:pb-32 px-6 lg:px-10 overflow-hidden bg-slate-900"
+      class="relative pt-40 pb-20 lg:pt-52 lg:pb-32 px-6 lg:px-10 overflow-hidden bg-slate-900 dark:bg-slate-950"
     >
       <div
         class="absolute inset-0 z-0 scale-105 animate-pulse"
@@ -16,13 +16,22 @@
           alt="Manado Guide"
         />
         <div
-          class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"
+          class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent dark:from-slate-950 dark:via-slate-950/85"
+        ></div>
+      </div>
+
+      <div class="absolute inset-0 z-0 opacity-50">
+        <div
+          class="absolute left-[8%] top-28 h-44 w-44 rounded-full bg-red-500/20 blur-3xl"
+        ></div>
+        <div
+          class="absolute right-[10%] top-16 h-56 w-56 rounded-full bg-sky-400/10 blur-3xl"
         ></div>
       </div>
 
       <div class="relative z-10 max-w-7xl mx-auto text-center">
         <div
-          class="inline-flex items-center space-x-3 mb-6 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20"
+          class="inline-flex items-center space-x-3 mb-6 bg-white/10 dark:bg-white/5 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 dark:border-white/10 shadow-lg shadow-black/10"
         >
           <Compass class="w-4 h-4 text-red-400" />
           <span
@@ -44,6 +53,41 @@
         >
           {{ $t("transport.hero.description") }}
         </p>
+
+        <div
+          class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 max-w-4xl mx-auto"
+        >
+          <div
+            class="rounded-[1.75rem] border border-white/10 bg-white/10 dark:bg-white/5 px-5 py-4 backdrop-blur-xl"
+          >
+            <div class="text-[11px] font-black uppercase tracking-[0.25em] text-white/50">
+              Fleet
+            </div>
+            <div class="mt-2 text-3xl font-black text-white">
+              {{ availabilityCount("all") }}
+            </div>
+          </div>
+          <div
+            class="rounded-[1.75rem] border border-emerald-300/15 bg-emerald-400/10 px-5 py-4 backdrop-blur-xl"
+          >
+            <div class="text-[11px] font-black uppercase tracking-[0.25em] text-emerald-100/70">
+              {{ $t("transport.rentalSection.filters.available") }}
+            </div>
+            <div class="mt-2 text-3xl font-black text-white">
+              {{ availabilityCount("available") }}
+            </div>
+          </div>
+          <div
+            class="rounded-[1.75rem] border border-red-300/15 bg-red-400/10 px-5 py-4 backdrop-blur-xl"
+          >
+            <div class="text-[11px] font-black uppercase tracking-[0.25em] text-red-100/70">
+              {{ $t("transport.rentalSection.filters.unavailable") }}
+            </div>
+            <div class="mt-2 text-3xl font-black text-white">
+              {{ availabilityCount("unavailable") }}
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -51,45 +95,45 @@
     <main class="py-20 lg:py-32 px-6 lg:px-10 max-w-7xl mx-auto">
       <div class="mb-12 text-center max-w-3xl mx-auto">
         <div
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur border border-slate-200 shadow-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40"
         >
           <Car class="w-4 h-4 text-red-600" />
           <span
-            class="text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]"
+            class="text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-[0.3em]"
           >
             {{ $t("transport.rentalBadge") }}
           </span>
         </div>
         <h2
-          class="mt-6 text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
+          class="mt-6 text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
         >
           {{ $t("transport.rentalSection.title") }}
         </h2>
-        <p class="mt-4 text-slate-600 font-medium leading-relaxed">
+        <p class="mt-4 text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
           {{ $t("transport.rentalSection.description") }}
         </p>
         <div class="mt-8 flex items-center justify-center gap-3">
-          <div class="h-px w-10 bg-slate-200"></div>
+          <div class="h-px w-10 bg-slate-200 dark:bg-slate-800"></div>
           <div
             class="h-1 w-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full"
           ></div>
-          <div class="h-px w-10 bg-slate-200"></div>
+          <div class="h-px w-10 bg-slate-200 dark:bg-slate-800"></div>
         </div>
       </div>
 
       <div
-        class="relative rounded-[2.5rem] border border-slate-200/60 bg-white/80 backdrop-blur-xl shadow-[0_30px_80px_-45px_rgba(15,23,42,0.35)] overflow-hidden"
+        class="relative rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/85 backdrop-blur-xl shadow-[0_30px_80px_-45px_rgba(15,23,42,0.35)] dark:shadow-[0_35px_100px_-55px_rgba(0,0,0,0.9)] overflow-hidden"
       >
         <div class="absolute inset-0 -z-10">
           <div
             class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-red-500/10 blur-3xl"
           ></div>
           <div
-            class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-slate-900/5 blur-3xl"
+            class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-slate-900/5 dark:bg-sky-400/10 blur-3xl"
           ></div>
         </div>
 
-        <div class="p-6 lg:p-8 border-b border-slate-200/60 bg-white/40">
+        <div class="p-6 lg:p-8 border-b border-slate-200/60 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/60">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             <div class="lg:col-span-6">
               <div class="relative group">
@@ -104,7 +148,7 @@
                   v-model="searchQuery"
                   type="text"
                   :placeholder="$t('transport.rentalSection.searchPlaceholder')"
-                  class="w-full pl-12 pr-5 py-4 bg-white/70 border border-slate-200/70 rounded-2xl focus:ring-2 focus:ring-red-500/20 focus:border-red-200 outline-none transition-all font-semibold text-slate-700 placeholder:text-slate-400"
+                  class="w-full pl-12 pr-5 py-4 bg-white/80 dark:bg-slate-950/70 border border-slate-200/70 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-red-500/20 focus:border-red-200 dark:focus:border-red-700 outline-none transition-all font-semibold text-slate-700 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
             </div>
@@ -117,7 +161,7 @@
                 :class="
                   selectedAvailability === opt.key
                     ? 'bg-gradient-to-r from-red-500 to-red-700 text-white border-transparent shadow-lg shadow-red-600/20'
-                    : 'bg-white/70 text-slate-700 border-slate-200/70 hover:bg-white'
+                    : 'bg-white/80 dark:bg-slate-950/70 text-slate-700 dark:text-slate-200 border-slate-200/70 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-900'
                 "
                 @click="selectedAvailability = opt.key"
               >
@@ -128,7 +172,7 @@
                     :class="
                       selectedAvailability === opt.key
                         ? 'bg-white/20 text-white'
-                        : 'bg-slate-100 text-slate-600'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                     "
                   >
                     {{ availabilityCount(opt.key) }}
@@ -139,12 +183,18 @@
           </div>
 
           <div class="mt-5 flex items-center justify-between gap-4">
-            <div class="text-xs font-bold text-slate-500">
+            <div class="text-xs font-bold text-slate-500 dark:text-slate-400">
               {{
                 $t("transport.rentalSection.showing", {
                   count: filteredTransportations.length,
                 })
               }}
+            </div>
+            <div class="hidden md:flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-bold text-slate-500 dark:text-slate-400">
+                {{ availabilityCount("available") }} ready
+              </span>
             </div>
           </div>
         </div>
@@ -156,25 +206,25 @@
               :key="i"
               class="animate-pulse flex items-center gap-4"
             >
-              <div class="w-16 h-16 rounded-2xl bg-slate-100"></div>
+              <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800"></div>
               <div class="flex-1 space-y-2">
-                <div class="h-4 w-60 bg-slate-100 rounded-xl"></div>
-                <div class="h-3 w-40 bg-slate-100 rounded-xl"></div>
+                <div class="h-4 w-60 bg-slate-100 dark:bg-slate-800 rounded-xl"></div>
+                <div class="h-3 w-40 bg-slate-100 dark:bg-slate-800 rounded-xl"></div>
               </div>
-              <div class="h-10 w-28 bg-slate-100 rounded-2xl"></div>
+              <div class="h-10 w-28 bg-slate-100 dark:bg-slate-800 rounded-2xl"></div>
             </div>
           </div>
         </div>
 
         <div v-else-if="errorMessage" class="p-10 text-center">
-          <h2 class="text-xl font-black text-slate-900">
+          <h2 class="text-xl font-black text-slate-900 dark:text-white">
             {{ $t("transport.rentalSection.loadErrorTitle") }}
           </h2>
-          <p class="text-slate-500 font-bold mt-3">{{ errorMessage }}</p>
+          <p class="text-slate-500 dark:text-slate-400 font-bold mt-3">{{ errorMessage }}</p>
           <div class="mt-8 flex items-center justify-center gap-3">
             <button
               type="button"
-              class="h-11 px-6 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors"
+              class="h-11 px-6 rounded-2xl bg-slate-900 dark:bg-red-600 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 dark:hover:bg-red-500 transition-colors"
               @click="fetchTransportations"
             >
               {{ $t("transport.rentalSection.retry") }}
@@ -186,10 +236,10 @@
           v-else-if="filteredTransportations.length === 0"
           class="p-12 text-center"
         >
-          <h3 class="text-2xl font-black text-slate-900">
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white">
             {{ $t("transport.rentalSection.emptyTitle") }}
           </h3>
-          <p class="text-slate-500 font-bold mt-2">
+          <p class="text-slate-500 dark:text-slate-400 font-bold mt-2">
             {{ $t("transport.rentalSection.emptyDescription") }}
           </p>
         </div>
@@ -201,7 +251,7 @@
             <article
               v-for="v in filteredTransportations"
               :key="v.id"
-              class="group bg-white/90 rounded-[2rem] border border-slate-200/70 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col"
+              class="group bg-white/90 dark:bg-slate-950/80 rounded-[2rem] border border-slate-200/70 dark:border-slate-800 shadow-sm dark:shadow-slate-950/30 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/40 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col"
             >
               <div class="relative aspect-[16/10] bg-slate-100 overflow-hidden">
                 <img
@@ -237,6 +287,9 @@
                   class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4"
                 >
                   <div class="min-w-0">
+                    <div class="mb-2 inline-flex rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-white/80 backdrop-blur">
+                      Transport
+                    </div>
                     <div class="text-white text-lg font-black truncate">
                       {{ v.name }}
                     </div>
@@ -248,8 +301,27 @@
               </div>
 
               <div class="p-6 flex-1 flex flex-col">
+                <div class="mb-4 flex items-center gap-2">
+                  <span class="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-slate-500 dark:text-slate-300">
+                    {{ v.type || "Vehicle" }}
+                  </span>
+                  <span
+                    class="rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.24em]"
+                    :class="
+                      v.available
+                        ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-300'
+                        : 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-300'
+                    "
+                  >
+                    {{
+                      v.available
+                        ? $t('transport.rentalSection.availability.available')
+                        : $t('transport.rentalSection.availability.unavailable')
+                    }}
+                  </span>
+                </div>
                 <p
-                  class="text-slate-600 font-semibold leading-relaxed line-clamp-3"
+                  class="text-slate-600 dark:text-slate-300 font-semibold leading-relaxed line-clamp-3"
                 >
                   {{ transportationDescription(v) || "-" }}
                 </p>
@@ -261,7 +333,7 @@
                     :class="
                       v.available
                         ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 active:scale-[0.99]'
-                        : 'bg-slate-200 text-slate-500'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     "
                     :disabled="!v.available"
                     @click="openBooking(v)"
@@ -285,10 +357,10 @@
         ></div>
 
         <div
-          class="relative w-full max-w-4xl bg-white rounded-[2.5rem] shadow-2xl border border-slate-200/70 overflow-hidden"
+          class="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden"
         >
           <div class="grid grid-cols-1 lg:grid-cols-5">
-            <div class="lg:col-span-2 bg-slate-900">
+            <div class="lg:col-span-2 bg-slate-900 dark:bg-slate-950">
               <div class="relative h-full">
                 <img
                   v-if="selectedTransportation"
@@ -342,24 +414,24 @@
             </div>
 
             <div class="lg:col-span-3">
-              <div class="p-8 border-b border-slate-200/70">
+              <div class="p-8 border-b border-slate-200/70 dark:border-slate-800">
                 <div class="flex items-start justify-between gap-6">
                   <div class="min-w-0">
                     <div
-                      class="text-xs font-black text-slate-400 uppercase tracking-[0.25em]"
+                      class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em]"
                     >
                       {{ $t("transport.booking.subtitle") }}
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 mt-2">
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-2">
                       {{ $t("transport.booking.formTitle") }}
                     </h3>
-                    <p class="text-slate-500 font-semibold mt-2">
+                    <p class="text-slate-500 dark:text-slate-400 font-semibold mt-2">
                       {{ $t("transport.booking.helpText") }}
                     </p>
                   </div>
                   <button
                     type="button"
-                    class="h-10 w-10 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-500 font-black"
+                    class="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 font-black"
                     @click="closeBooking"
                   >
                     ✕
@@ -385,7 +457,7 @@
                       <input
                         v-model="bookingForm.customer_name"
                         type="text"
-                        class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white focus:border-emerald-200 outline-none font-semibold text-slate-700"
+                        class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white dark:focus:bg-slate-900 focus:border-emerald-200 dark:focus:border-emerald-700 outline-none font-semibold text-slate-700 dark:text-slate-100"
                       />
                     </div>
                   </div>
@@ -405,7 +477,7 @@
                       <input
                         v-model="bookingForm.customer_phone"
                         type="tel"
-                        class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white focus:border-emerald-200 outline-none font-semibold text-slate-700"
+                        class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white dark:focus:bg-slate-900 focus:border-emerald-200 dark:focus:border-emerald-700 outline-none font-semibold text-slate-700 dark:text-slate-100"
                       />
                     </div>
                   </div>
@@ -428,7 +500,7 @@
                       <input
                         v-model="bookingForm.booking_date"
                         type="date"
-                        class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white focus:border-emerald-200 outline-none font-semibold text-slate-700"
+                        class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white dark:focus:bg-slate-900 focus:border-emerald-200 dark:focus:border-emerald-700 outline-none font-semibold text-slate-700 dark:text-slate-100"
                       />
                     </div>
                   </div>
@@ -438,21 +510,21 @@
                       >{{ $t("transport.booking.summary") }}</label
                     >
                     <div
-                      class="w-full px-5 py-4 bg-slate-50 rounded-2xl border border-slate-100 font-semibold text-slate-700 space-y-1"
+                      class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-100 space-y-1"
                     >
                       <div class="flex items-center justify-between gap-3">
-                        <span class="text-slate-500 font-bold text-xs">{{
+                        <span class="text-slate-500 dark:text-slate-400 font-bold text-xs">{{
                           $t("transport.booking.vehicle")
                         }}</span>
-                        <span class="font-black text-slate-900 truncate">
+                        <span class="font-black text-slate-900 dark:text-white truncate">
                           {{ selectedTransportation?.name }}
                         </span>
                       </div>
                       <div class="flex items-center justify-between gap-3">
-                        <span class="text-slate-500 font-bold text-xs">{{
+                        <span class="text-slate-500 dark:text-slate-400 font-bold text-xs">{{
                           $t("transport.booking.type")
                         }}</span>
-                        <span class="font-black text-slate-900 truncate">
+                        <span class="font-black text-slate-900 dark:text-white truncate">
                           {{ selectedTransportation?.type || "-" }}
                         </span>
                       </div>
@@ -468,17 +540,17 @@
                   <textarea
                     v-model="bookingForm.notes"
                     rows="4"
-                    class="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white focus:border-emerald-200 outline-none font-semibold text-slate-700"
+                    class="w-full px-5 py-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white dark:focus:bg-slate-900 focus:border-emerald-200 dark:focus:border-emerald-700 outline-none font-semibold text-slate-700 dark:text-slate-100"
                   ></textarea>
                 </div>
               </div>
 
               <div
-                class="p-8 border-t border-slate-200/70 flex flex-col lg:flex-row gap-3 lg:justify-end"
+                class="p-8 border-t border-slate-200/70 dark:border-slate-800 flex flex-col lg:flex-row gap-3 lg:justify-end"
               >
                 <button
                   type="button"
-                  class="h-12 px-6 rounded-2xl bg-white border border-slate-200 text-slate-700 text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-colors"
+                  class="h-12 px-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                   @click="closeBooking"
                 >
                   {{ $t("transport.booking.cancel") }}
@@ -499,26 +571,26 @@
 
       <div class="mt-20 lg:mt-24 mb-12 text-center max-w-3xl mx-auto">
         <div
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur border border-slate-200 shadow-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40"
         >
           <Map class="w-4 h-4 text-red-600" />
           <span
-            class="text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]"
+            class="text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-[0.3em]"
           >
             {{ $t("transport.section.badge") }}
           </span>
         </div>
         <h2
-          class="mt-6 text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
+          class="mt-6 text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
         >
           {{ $t("transport.section.title") }}
         </h2>
         <div class="mt-8 flex items-center justify-center gap-3">
-          <div class="h-px w-10 bg-slate-200"></div>
+          <div class="h-px w-10 bg-slate-200 dark:bg-slate-800"></div>
           <div
             class="h-1 w-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full"
           ></div>
-          <div class="h-px w-10 bg-slate-200"></div>
+          <div class="h-px w-10 bg-slate-200 dark:bg-slate-800"></div>
         </div>
       </div>
 
@@ -529,38 +601,38 @@
         <article
           v-for="(dest, index) in transportDestinations"
           :key="index"
-          class="group bg-white/90 rounded-[2rem] p-6 shadow-sm hover:shadow-xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-200/70 flex flex-col items-start text-left"
+          class="group bg-white/90 dark:bg-slate-900/80 rounded-[2rem] p-6 shadow-sm dark:shadow-slate-950/30 hover:shadow-xl hover:shadow-red-900/10 dark:hover:shadow-black/40 transition-all duration-500 border border-slate-200/70 dark:border-slate-800 flex flex-col items-start text-left"
         >
           <div
-            class="w-12 h-12 bg-gradient-to-br from-red-50 to-white rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 border border-red-100"
+            class="w-12 h-12 bg-gradient-to-br from-red-50 to-white dark:from-red-500/10 dark:to-slate-900 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 border border-red-100 dark:border-red-900/30"
           >
             <Map class="w-6 h-6 text-red-600" />
           </div>
 
           <h3
-            class="text-xl font-black text-slate-900 leading-tight mb-3 group-hover:text-red-600 transition-colors"
+            class="text-xl font-black text-slate-900 dark:text-white leading-tight mb-3 group-hover:text-red-600 transition-colors"
           >
             {{ $t("transport.items." + dest.key) }}
           </h3>
 
           <p
-            class="text-slate-500 text-sm font-medium leading-relaxed mb-6 line-clamp-4"
+            class="text-slate-500 dark:text-slate-300 text-sm font-medium leading-relaxed mb-6 line-clamp-4"
           >
             {{ $t("transport.items." + dest.key + "_desc") }}
           </p>
 
           <div
-            class="mt-auto w-full flex items-center justify-between pt-4 border-t border-slate-100 group-hover:border-red-100 transition-colors"
+            class="mt-auto w-full flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 group-hover:border-red-100 dark:group-hover:border-red-900/30 transition-colors"
           >
             <span
-              class="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-red-600 transition-colors"
+              class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest group-hover:text-red-600 transition-colors"
               >{{ $t("transport.items.explore") }}</span
             >
             <div
-              class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-red-600 flex items-center justify-center transition-colors"
+              class="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-red-600 flex items-center justify-center transition-colors"
             >
               <ArrowRight
-                class="w-4 h-4 text-slate-400 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-300"
+                class="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-300"
               />
             </div>
           </div>

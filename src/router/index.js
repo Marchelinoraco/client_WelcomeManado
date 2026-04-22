@@ -177,6 +177,17 @@ const routes = [
     },
   },
   {
+    path: "/travel-info/item/:id",
+    name: "TravelInfoDetail",
+    component: () => import("../views/travelinfo/TravelInfoDetail.vue"),
+    meta: {
+      title: "Detail Informasi Perjalanan",
+      description:
+        "Lihat detail informasi perjalanan, budaya, belanja, dan kuliner di Manado bersama WelcomeManado.",
+      type: "article",
+    },
+  },
+  {
     path: "/gallery",
     name: "Gallery",
     component: () => import("../views/gallery/Gallery.vue"),

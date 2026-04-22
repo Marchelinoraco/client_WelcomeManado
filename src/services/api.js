@@ -186,6 +186,13 @@ export const getTravelInfoItems = async (params = {}) => {
   return api.get("/travel-info-items", { params });
 };
 
+export const getTravelInfoItem = async (id) => {
+  if (USE_DUMMY) {
+    return { data: { data: null } };
+  }
+  return api.get(`/travel-info-items/${id}`);
+};
+
 // Hero Carousel Images
 export const getHeroImages = async (params = {}) => {
   if (USE_DUMMY) {

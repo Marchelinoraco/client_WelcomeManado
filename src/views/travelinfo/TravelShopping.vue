@@ -122,7 +122,12 @@
             <article
               v-for="it in category.items"
               :key="it.id"
-              class="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left"
+              role="button"
+              tabindex="0"
+              class="group cursor-pointer bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col items-start text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200 focus-visible:ring-offset-2"
+              @click="goToDetail(it)"
+              @keydown.enter="goToDetail(it)"
+              @keydown.space.prevent="goToDetail(it)"
             >
               <div
                 class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-red-600 transition-all duration-500"
@@ -171,10 +176,12 @@
 import { Compass, Map, ArrowRight } from "lucide-vue-next";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { getTravelInfoItems } from "@/services/api";
 import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
+const router = useRouter();
 
 const items = ref([]);
 const loading = ref(false);
@@ -216,6 +223,11 @@ const descriptionByLocale = (it) => {
         ? it?.description_zh || it?.description || ""
         : it?.description || "";
   return stripHtml(description);
+};
+
+const goToDetail = (it) => {
+  if (!it?.id) return;
+  router.push({ name: "TravelInfoDetail", params: { id: it.id } });
 };
 
 const fetchItems = async () => {
