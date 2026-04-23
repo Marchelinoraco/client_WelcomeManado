@@ -544,6 +544,36 @@ export default {
     officeAddress:
       "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
+  navbar: {
+    explore: "메뉴",
+    appearance: "화면 설정",
+    lightMode: "라이트 모드",
+    darkMode: "다크 모드",
+    toggleLightMode: "라이트 모드로 전환",
+    toggleDarkMode: "다크 모드로 전환",
+    selectLanguage: "언어 선택",
+    bookAdventure: "여행 예약하기",
+  },
+  categoryLanding: {
+    emptyTitle: "카테고리가 아직 없습니다",
+    exploreCategory: "카테고리 보기",
+    local: {
+      titlePrefix: "전체",
+      titleHighlight: "마나도 투어 카테고리",
+      description:
+        "마나도, 부나켄, 토모혼과 인근 지역을 가장 잘 즐길 수 있는 로컬 여행 카테고리를 선택해 보세요.",
+      emptyDescription: "현재 로컬 카테고리가 없습니다.",
+      badge: "로컬 카테고리",
+    },
+    national: {
+      titlePrefix: "전체",
+      titleHighlight: "국내 여행지",
+      description:
+        "인도네시아 최고의 여행지를 둘러볼 수 있도록 모든 국내 여행 카테고리를 확인해 보세요.",
+      emptyDescription: "현재 국내 카테고리가 없습니다.",
+      badge: "국내 카테고리",
+    },
+  },
   localTourDetail: {
     lunch: "마나도 로컬 런치",
   },

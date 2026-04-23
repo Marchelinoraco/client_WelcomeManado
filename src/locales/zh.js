@@ -516,6 +516,36 @@ export default {
     officeAddress:
       "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
+  navbar: {
+    explore: "菜单",
+    appearance: "外观",
+    lightMode: "浅色模式",
+    darkMode: "深色模式",
+    toggleLightMode: "切换到浅色模式",
+    toggleDarkMode: "切换到深色模式",
+    selectLanguage: "选择语言",
+    bookAdventure: "预订您的旅程",
+  },
+  categoryLanding: {
+    emptyTitle: "暂无分类",
+    exploreCategory: "查看分类",
+    local: {
+      titlePrefix: "全部",
+      titleHighlight: "万鸦老行程分类",
+      description:
+        "选择最适合探索万鸦老、布纳肯、托莫洪及周边地区的本地行程分类。",
+      emptyDescription: "当前暂无本地分类。",
+      badge: "本地分类",
+    },
+    national: {
+      titlePrefix: "全部",
+      titleHighlight: "国内目的地",
+      description:
+        "查看所有国内旅行分类，探索印尼各地最值得前往的目的地。",
+      emptyDescription: "当前暂无国内分类。",
+      badge: "国内分类",
+    },
+  },
   localTourDetail: {
     lunch: "万鸦老特色午餐",
   },

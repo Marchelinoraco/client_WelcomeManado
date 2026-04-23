@@ -13,6 +13,16 @@ const routes = [
     },
   },
   {
+    path: "/manado-tours",
+    name: "LocalCategories",
+    component: () => import("../views/wisatalokal/Categories.vue"),
+    meta: {
+      title: "Kategori Tour Lokal Manado",
+      description:
+        "Lihat semua kategori tour lokal Manado dari city tour, Bunaken, Tomohon, hingga destinasi unggulan lainnya.",
+    },
+  },
+  {
     path: "/category/:slug",
     name: "Category",
     component: () => import("../views/wisatalokal/Category.vue"),
@@ -31,6 +41,16 @@ const routes = [
       description:
         "Lihat detail paket tour lokal Manado lengkap dengan itinerary, durasi, dan informasi penting lainnya.",
       type: "article",
+    },
+  },
+  {
+    path: "/nasional",
+    name: "NationalCategories",
+    component: () => import("../views/nasional/Categories.vue"),
+    meta: {
+      title: "Kategori Destinasi Nasional",
+      description:
+        "Jelajahi seluruh kategori destinasi nasional untuk menemukan paket wisata terbaik di Indonesia bersama WelcomeManado.",
     },
   },
   {

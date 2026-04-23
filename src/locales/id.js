@@ -549,6 +549,36 @@ export default {
     officeAddress:
       "Grha Merdeka – Jl. AA. Maramis No. 17, Kairagi Dua, Manado – Indonesia",
   },
+  navbar: {
+    explore: "Menu",
+    appearance: "Tampilan",
+    lightMode: "Mode Terang",
+    darkMode: "Mode Gelap",
+    toggleLightMode: "Ubah ke mode terang",
+    toggleDarkMode: "Ubah ke mode gelap",
+    selectLanguage: "Pilih Bahasa",
+    bookAdventure: "Pesan Petualangan Anda",
+  },
+  categoryLanding: {
+    emptyTitle: "Belum ada kategori",
+    exploreCategory: "Jelajahi Kategori",
+    local: {
+      titlePrefix: "Semua Kategori",
+      titleHighlight: "Manado Tours",
+      description:
+        "Pilih kategori perjalanan lokal yang paling cocok untuk eksplorasi Manado, Bunaken, Tomohon, dan sekitarnya.",
+      emptyDescription: "Kategori lokal belum tersedia saat ini.",
+      badge: "Kategori Lokal",
+    },
+    national: {
+      titlePrefix: "Semua Kategori",
+      titleHighlight: "Destinasi Nasional",
+      description:
+        "Temukan seluruh kategori perjalanan nasional untuk menjelajah berbagai destinasi terbaik di Indonesia.",
+      emptyDescription: "Kategori nasional belum tersedia saat ini.",
+      badge: "Kategori Nasional",
+    },
+  },
   localTourDetail: {
     lunch: "Lunch Makanan Khas Manado",
   },
