@@ -85,6 +85,14 @@ export default {
       viewAll: "모든 갤러리 보기",
       empty: "현재 이용 가능한 갤러리 항목이 없습니다.",
     },
+    blogs: {
+      badge: "최신 이야기",
+      title1: "우리의",
+      title2: "블로그",
+      description: "인도네시아와 전 세계의 여행 팁, 여행지 가이드, 영감을 주는 이야기들을 만나보세요.",
+      viewAll: "모든 기사 보기",
+      empty: "현재 이용 가능한 블로그 게시물이 없습니다.",
+    },
     reviews: {
       title: "리뷰",
       ratings: "평점",

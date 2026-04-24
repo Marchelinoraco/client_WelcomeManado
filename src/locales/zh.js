@@ -83,6 +83,14 @@ export default {
       viewAll: "查看完整画廊",
       empty: "目前没有可用的画廊项目。",
     },
+    blogs: {
+      badge: "最新故事",
+      title1: "来自我们的",
+      title2: "博客",
+      description: "探索来自印尼及世界各地的旅行技巧、目的地指南和励志故事。",
+      viewAll: "查看所有文章",
+      empty: "目前没有可用的博客文章。",
+    },
     reviews: {
       title: "评论",
       ratings: "评分",

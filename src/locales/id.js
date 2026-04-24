@@ -85,6 +85,14 @@ export default {
       viewAll: "Lihat Semua Galeri",
       empty: "Belum ada item galeri saat ini.",
     },
+    blogs: {
+      badge: "Cerita Terbaru",
+      title1: "Dari",
+      title2: "Blog Kami",
+      description: "Tips perjalanan, panduan destinasi, dan cerita inspiratif dari seluruh Indonesia dan dunia.",
+      viewAll: "Lihat Semua Artikel",
+      empty: "Belum ada artikel blog saat ini.",
+    },
     reviews: {
       title: "Ulasan",
       ratings: "Ulasan",

@@ -540,6 +540,101 @@
         </div>
       </section>
 
+      <!-- Blogs Section -->
+      <section class="py-32 bg-slate-50 px-6 lg:px-10 reveal-element">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-10">
+            <div class="max-w-2xl">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-1 bg-red-600 rounded-full"></div>
+                <span class="text-xs font-black text-red-600 uppercase tracking-[0.4em]">{{ $t('home.blogs.badge') }}</span>
+              </div>
+              <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-6">
+                {{ $t('home.blogs.title1') }} <br />
+                <span class="text-red-600 italic">{{ $t('home.blogs.title2') }}</span>
+              </h2>
+              <p class="text-slate-500 text-lg font-medium leading-relaxed">
+                {{ $t('home.blogs.description') }}
+              </p>
+            </div>
+            <router-link
+              to="/blog"
+              class="group inline-flex items-center px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-red-600 transition-all shadow-xl active:scale-95"
+            >
+              {{ $t('home.blogs.viewAll') }}
+              <ChevronRight class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </router-link>
+          </div>
+
+          <!-- Loading -->
+          <div v-if="loadingBlogs" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div v-for="i in 3" :key="i" class="h-[28rem] bg-slate-100 rounded-[2.5rem] animate-pulse"></div>
+          </div>
+
+          <!-- Empty -->
+          <div v-else-if="homeBlogPosts.length === 0" class="text-center py-20 bg-white rounded-[3rem] border border-slate-100">
+            <BookOpen class="w-10 h-10 text-slate-300 mx-auto mb-4" />
+            <p class="text-slate-500 font-medium">{{ $t('home.blogs.empty') }}</p>
+          </div>
+
+          <!-- Blog Cards -->
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <article
+              v-for="post in homeBlogPosts"
+              :key="post.id"
+              class="group bg-white rounded-[2.25rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex flex-col hover:-translate-y-1"
+            >
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <img
+                  :src="post.featured_image || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80'"
+                  :alt="post.title"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                <div v-if="post.category" class="absolute inset-x-0 bottom-0 p-5">
+                  <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/55 px-4 py-2 text-white backdrop-blur-md">
+                    <Tag class="w-3.5 h-3.5 text-red-400" />
+                    <span class="text-[10px] font-black uppercase tracking-[0.24em]">{{ post.category.name }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-7 flex-1 flex flex-col">
+                <div class="flex items-center justify-between gap-4 mb-4">
+                  <span class="inline-flex items-center rounded-full bg-red-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.25em] text-red-600">
+                    {{ post.author || 'Admin' }}
+                  </span>
+                  <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                    {{ formatBlogDate(post.published_at || post.created_at) }}
+                  </span>
+                </div>
+                <h3 class="text-xl font-black text-slate-900 mb-3 leading-tight group-hover:text-red-600 transition-colors line-clamp-2">
+                  {{ post.title }}
+                </h3>
+                <p class="text-slate-500 text-sm leading-7 mb-6 flex-1 font-medium line-clamp-3">
+                  {{ post.excerpt || '' }}
+                </p>
+                <div class="pt-5 border-t border-slate-100 mt-auto flex items-center justify-between gap-4">
+                  <router-link
+                    :to="'/blog/' + post.slug"
+                    class="text-sm font-bold text-red-600 hover:text-red-700 uppercase tracking-[0.2em] transition-colors"
+                  >
+                    {{ $t('blogPage.card.readMore') }}
+                  </router-link>
+                  <router-link
+                    :to="'/blog/' + post.slug"
+                    class="flex items-center justify-center w-12 h-12 bg-slate-50 rounded-2xl group-hover:bg-red-600 text-slate-400 group-hover:text-white transition-colors duration-300 shrink-0"
+                  >
+                    <ArrowRight class="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                  </router-link>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <!-- CTA Section -->
       <section class="pb-32 pt-10 px-6 lg:px-10 reveal-element">
         <div
@@ -684,7 +779,7 @@ import { ref, reactive, onMounted, onUnmounted, computed, watch, nextTick } from
 import { useI18n } from "vue-i18n";
 import TourCard from "@/components/TourCard.vue";
 import GalleryItemCard from "@/components/GalleryItemCard.vue";
-import { getTours, getHeroImages, getGalleryItems } from "@/services/api";
+import { getTours, getHeroImages, getGalleryItems, getBlogPosts } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { stripHtml } from "@/utils/htmlText";
 import {
@@ -704,7 +799,9 @@ import {
   Image as ImageIcon,
   X,
   Play,
-  Camera
+  Camera,
+  BookOpen,
+  Tag
 } from "lucide-vue-next";
 
 const stats = [
@@ -924,10 +1021,35 @@ const activeCoverSrc = computed(() => {
   return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
 });
 
+// === Blog Posts Logic ===
+const homeBlogPosts = ref([]);
+const loadingBlogs = ref(true);
+
+const formatBlogDate = (dateString) => {
+  if (!dateString) return '';
+  return new Date(dateString).toLocaleDateString(
+    locale.value === 'id' ? 'id-ID' : locale.value === 'ko' ? 'ko-KR' : locale.value === 'zh' ? 'zh-CN' : 'en-US',
+    { year: 'numeric', month: 'long', day: 'numeric' }
+  );
+};
+
+const fetchHomeBlogPosts = async () => {
+  loadingBlogs.value = true;
+  try {
+    const res = await getBlogPosts({ per_page: 3, published_only: true });
+    homeBlogPosts.value = res.data?.data?.data || [];
+  } catch (e) {
+    console.error('Blog fetch failed', e);
+  } finally {
+    loadingBlogs.value = false;
+  }
+};
+
 onMounted(() => {
   fetchTours();
   fetchHeroImages();
   fetchMiniGallery();
+  fetchHomeBlogPosts();
 
   // Scroll Animations intersection observer
   const observer = new IntersectionObserver((entries) => {

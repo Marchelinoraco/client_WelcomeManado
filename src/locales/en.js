@@ -85,6 +85,14 @@ export default {
       viewAll: "View Full Gallery",
       empty: "No gallery items available right now.",
     },
+    blogs: {
+      badge: "Latest Stories",
+      title1: "From Our",
+      title2: "Blog",
+      description: "Travel tips, destination guides, and inspiring stories from around Indonesia and beyond.",
+      viewAll: "View All Articles",
+      empty: "No blog posts available right now.",
+    },
     reviews: {
       title: "Reviews",
       ratings: "Ratings",
