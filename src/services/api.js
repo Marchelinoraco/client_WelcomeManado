@@ -215,4 +215,17 @@ export const getNasionalHeroImages = async () => {
   return api.get("/nasional-hero-images");
 };
 
+// Blog
+export const getBlogCategories = async () => {
+  return api.get("/blog/categories");
+};
+
+export const getBlogPosts = async (params = {}) => {
+  return api.get("/blog/posts", { params });
+};
+
+export const getBlogPostDetail = async (slug) => {
+  return api.get(`/blog/posts/${slug}`);
+};
+
 export default api;

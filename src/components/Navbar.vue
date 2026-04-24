@@ -115,6 +115,18 @@
             >{{ $t("nav.gallery") }}</router-link
           >
 
+          <!-- Blog -->
+          <router-link
+            to="/blog"
+            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+            :class="
+              isScrolled
+                ? 'text-slate-600 hover:text-red-600'
+                : 'text-white/90 hover:text-white hover:bg-white/10'
+            "
+            >{{ $t("nav.blog") }}</router-link
+          >
+
           <!-- Travel Info Dropdown -->
           <div class="relative group/travelinfo">
             <button
@@ -344,6 +356,7 @@
                       { to: '/nasional', label: $t('nav.national') },
                       { to: '/internasional', label: $t('nav.international') },
                       { to: '/gallery', label: $t('nav.gallery') },
+                      { to: '/blog', label: $t('nav.blog') },
                       { to: '/hotels', label: $t('nav.hotels') },
                       { to: '/about', label: $t('nav.about') },
                     ]"

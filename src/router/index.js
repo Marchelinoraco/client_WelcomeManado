@@ -217,6 +217,26 @@ const routes = [
         "Lihat galeri foto dan video perjalanan bersama WelcomeManado untuk mendapatkan inspirasi wisata.",
     },
   },
+  {
+    path: "/blog",
+    name: "Blog",
+    component: () => import("../views/blog/Blog.vue"),
+    meta: {
+      title: "Blog WelcomeManado",
+      description:
+        "Baca artikel, tips, dan panduan perjalanan dari WelcomeManado untuk pengalaman wisata yang lebih baik.",
+    },
+  },
+  {
+    path: "/blog/:slug",
+    name: "BlogDetail",
+    component: () => import("../views/blog/BlogDetail.vue"),
+    meta: {
+      title: "Blog Post",
+      description: "Baca artikel lengkap dari WelcomeManado.",
+      type: "article",
+    },
+  },
 ];
 
 const router = createRouter({

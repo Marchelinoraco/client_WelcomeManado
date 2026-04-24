@@ -6,8 +6,9 @@ export default {
     international: "International",
     hotels: "Hotels",
     gallery: "Gallery",
+    blog: "Blogs",
     travelInfo: "Travel Info",
-    about: "About",
+    about: "About Us",
     contact: "Contact",
     shopping: "Shopping in Manado",
     food: "Food & Cuisine in Manado",
@@ -703,5 +704,46 @@ export default {
     totalPrice: "Total Tour Price",
     totalPriceNote: "(excluding components in the \"Excluded Costs\" section)",
     paymentWarning: "The initial payment amount may vary depending on the time between the booking date and the departure date.",
+  },
+  blogPage: {
+    hero: {
+      badge: "Travel Stories",
+      title1: "Explore Our",
+      title2: "Blog",
+      description: "Discover travel tips, destination guides, and inspiring stories from around Indonesia and beyond.",
+    },
+    search: {
+      placeholder: "Search articles...",
+    },
+    categories: {
+      all: "All Posts",
+    },
+    empty: {
+      title: "No Articles Found",
+      description: "Try adjusting your search or filter to find what you're looking for.",
+    },
+    card: {
+      readMore: "Read More",
+    },
+    pagination: {
+      prev: "Previous",
+      next: "Next",
+    },
+  },
+  blogDetail: {
+    share: {
+      title: "Share This Article",
+      copy: "Copy Link",
+      copied: "Copied!",
+    },
+    related: {
+      title: "Related Articles",
+      readMore: "Read More",
+    },
+    backToBlog: "Back to Blog",
+    notFound: {
+      title: "Article Not Found",
+      description: "The article you're looking for doesn't exist or has been removed.",
+    },
   },
 };

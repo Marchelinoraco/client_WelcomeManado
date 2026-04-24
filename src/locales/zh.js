@@ -6,6 +6,7 @@ export default {
     international: "出境游",
     hotels: "酒店",
     gallery: "画廊",
+    blog: "博客",
     travelInfo: "旅游资讯",
     about: "关于我们",
     contact: "联系我们",
@@ -666,5 +667,46 @@ export default {
     totalPrice: "旅游总价",
     totalPriceNote: "（不含「不含费用」部分的项目）",
     paymentWarning: "首付金额可能因预订日期与出发日期之间的时间而有所不同。",
+  },
+  blogPage: {
+    hero: {
+      badge: "旅行故事",
+      title1: "探索我们的",
+      title2: "博客",
+      description: "发现旅行贴士、目的地指南以及来自印度尼西亚和世界各地的励志故事。",
+    },
+    search: {
+      placeholder: "搜索文章...",
+    },
+    categories: {
+      all: "所有文章",
+    },
+    empty: {
+      title: "未找到文章",
+      description: "尝试调整您的搜索或筛选条件以找到您要查找的内容。",
+    },
+    card: {
+      readMore: "阅读更多",
+    },
+    pagination: {
+      prev: "上一页",
+      next: "下一页",
+    },
+  },
+  blogDetail: {
+    share: {
+      title: "分享此文章",
+      copy: "复制链接",
+      copied: "已复制！",
+    },
+    related: {
+      title: "相关文章",
+      readMore: "阅读更多",
+    },
+    backToBlog: "返回博客",
+    notFound: {
+      title: "未找到文章",
+      description: "您要查找的文章不存在或已被删除。",
+    },
   },
 };

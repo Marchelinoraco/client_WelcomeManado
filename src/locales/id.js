@@ -6,6 +6,7 @@ export default {
     international: "Internasional",
     hotels: "Hotel",
     gallery: "Galeri",
+    blog: "Blog",
     travelInfo: "Informasi Perjalanan",
     about: "Tentang",
     contact: "Kontak",
@@ -707,6 +708,47 @@ export default {
       title2: "PERJALANAN",
       description:
         "Dapatkan informasi lengkap untuk persiapan perjalanan Anda ke Manado. Dari kebutuhan visa hingga tips lokal yang berguna.",
+    },
+  },
+  blogPage: {
+    hero: {
+      badge: "Cerita Perjalanan",
+      title1: "Jelajahi",
+      title2: "Blog Kami",
+      description: "Temukan tips perjalanan, panduan destinasi, dan cerita inspiratif dari seluruh Indonesia dan dunia.",
+    },
+    search: {
+      placeholder: "Cari artikel...",
+    },
+    categories: {
+      all: "Semua Artikel",
+    },
+    empty: {
+      title: "Artikel Tidak Ditemukan",
+      description: "Coba sesuaikan pencarian atau filter Anda untuk menemukan yang Anda cari.",
+    },
+    card: {
+      readMore: "Baca Selengkapnya",
+    },
+    pagination: {
+      prev: "Sebelumnya",
+      next: "Selanjutnya",
+    },
+  },
+  blogDetail: {
+    share: {
+      title: "Bagikan Artikel Ini",
+      copy: "Salin Link",
+      copied: "Tersalin!",
+    },
+    related: {
+      title: "Artikel Terkait",
+      readMore: "Baca Selengkapnya",
+    },
+    backToBlog: "Kembali ke Blog",
+    notFound: {
+      title: "Artikel Tidak Ditemukan",
+      description: "Artikel yang Anda cari tidak ada atau telah dihapus.",
     },
   },
 };

@@ -6,6 +6,7 @@ export default {
     international: "해외 투어",
     hotels: "호텔",
     gallery: "갤러리",
+    blog: "블로그",
     travelInfo: "여행 정보",
     about: "소개",
     contact: "연락처",
@@ -697,5 +698,46 @@ export default {
     totalPrice: "총 투어 가격",
     totalPriceNote: "(\"불포함 비용\" 항목의 구성 요소는 제외)",
     paymentWarning: "초기 결제 금액은 예약일과 출발일 사이의 기간에 따라 달라질 수 있습니다.",
+  },
+  blogPage: {
+    hero: {
+      badge: "여행 이야기",
+      title1: "블로그",
+      title2: "둘러보기",
+      description: "인도네시아와 전 세계의 여행 팁, 목적지 가이드, 영감을 주는 이야기를 발견하세요.",
+    },
+    search: {
+      placeholder: "기사 검색...",
+    },
+    categories: {
+      all: "모든 게시물",
+    },
+    empty: {
+      title: "기사를 찾을 수 없습니다",
+      description: "검색 또는 필터를 조정하여 원하는 내용을 찾아보세요.",
+    },
+    card: {
+      readMore: "더 읽기",
+    },
+    pagination: {
+      prev: "이전",
+      next: "다음",
+    },
+  },
+  blogDetail: {
+    share: {
+      title: "이 기사 공유하기",
+      copy: "링크 복사",
+      copied: "복사됨!",
+    },
+    related: {
+      title: "관련 기사",
+      readMore: "더 읽기",
+    },
+    backToBlog: "블로그로 돌아가기",
+    notFound: {
+      title: "기사를 찾을 수 없습니다",
+      description: "찾으시는 기사가 존재하지 않거나 삭제되었습니다.",
+    },
   },
 };
