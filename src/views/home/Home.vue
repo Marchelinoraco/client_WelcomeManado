@@ -524,49 +524,17 @@
           <!-- Gallery Grid -->
           <div v-if="loadingGallery" class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div v-for="i in 6" :key="`skel-${i}`" class="h-64 rounded-[2rem] bg-slate-100 animate-pulse"></div>
+              <div v-for="i in 3" :key="`skel-img-${i}`" class="aspect-[4/3] rounded-[2rem] bg-slate-100 animate-pulse"></div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="min-h-[280px] rounded-[2rem] bg-slate-100 animate-pulse"></div>
+              <div class="flex flex-col gap-6">
+                <div v-for="i in 2" :key="`skel-yt-${i}`" class="aspect-video rounded-[2rem] bg-slate-100 animate-pulse"></div>
+              </div>
             </div>
           </div>
           <div v-else-if="miniGalleryItems.length > 0" class="space-y-6">
-            <!-- Row 1: YouTube videos (3 items) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div
-                v-for="item in miniYoutubeItems"
-                :key="`home-yt-${item.id}`"
-                class="group relative overflow-hidden rounded-[2rem] bg-slate-900 shadow-xl shadow-slate-200/60 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 cursor-pointer hover:-translate-y-1"
-                @click="openGalleryItem(item)"
-              >
-                <div class="relative aspect-video overflow-hidden">
-                  <img
-                    :src="`https://img.youtube.com/vi/${extractYoutubeId(item.youtube_url)}/hqdefault.jpg`"
-                    :alt="item.title"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                  <!-- Play Button -->
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-16 h-16 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
-                      <Play class="w-7 h-7 text-white ml-1" />
-                    </div>
-                  </div>
-                  <!-- YouTube badge -->
-                  <div class="absolute top-4 left-4">
-                    <div class="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
-                      <Play class="w-3 h-3" />
-                      YouTube
-                    </div>
-                  </div>
-                  <!-- Title -->
-                  <div class="absolute inset-x-0 bottom-0 p-5">
-                    <p class="text-white font-black text-base leading-tight truncate">{{ item.title }}</p>
-                    <p v-if="item.video_name" class="text-white/70 text-xs font-medium mt-1 truncate">{{ item.video_name }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Row 2: Images only (3 items) -->
+            <!-- Row 1: Images only (3 items) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div
                 v-for="item in miniImageItems"
@@ -582,9 +550,84 @@
                     loading="lazy"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
-                  <!-- Title -->
                   <div class="absolute inset-x-0 bottom-0 p-5">
                     <p class="text-white font-black text-base leading-tight truncate">{{ item.title }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: YouTube bento — 1 large left + 2 stacked right -->
+            <div v-if="miniYoutubeItems.length > 0" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Large card (first YouTube item) -->
+              <div
+                v-if="miniYoutubeItems[0]"
+                class="group relative overflow-hidden rounded-[2rem] bg-slate-900 shadow-xl hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 cursor-pointer hover:-translate-y-1"
+                @click="openGalleryItem(miniYoutubeItems[0])"
+              >
+                <div class="relative aspect-video lg:aspect-auto lg:h-full min-h-[280px] overflow-hidden">
+                  <img
+                    :src="`https://img.youtube.com/vi/${extractYoutubeId(miniYoutubeItems[0].youtube_url)}/maxresdefault.jpg`"
+                    :alt="miniYoutubeItems[0].title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                  <!-- Play Button -->
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-20 h-20 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
+                      <Play class="w-9 h-9 text-white ml-1" />
+                    </div>
+                  </div>
+                  <!-- YouTube badge -->
+                  <div class="absolute top-5 left-5">
+                    <div class="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                      <Play class="w-3 h-3" />
+                      YouTube
+                    </div>
+                  </div>
+                  <!-- Title -->
+                  <div class="absolute inset-x-0 bottom-0 p-6">
+                    <p class="text-white font-black text-xl leading-tight">{{ miniYoutubeItems[0].title }}</p>
+                    <p v-if="miniYoutubeItems[0].video_name" class="text-white/70 text-sm font-medium mt-1">{{ miniYoutubeItems[0].video_name }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right column: 2 smaller YouTube cards stacked -->
+              <div class="flex flex-col gap-6">
+                <div
+                  v-for="item in miniYoutubeItems.slice(1, 3)"
+                  :key="`home-yt-${item.id}`"
+                  class="group relative overflow-hidden rounded-[2rem] bg-slate-900 shadow-xl hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 cursor-pointer hover:-translate-y-1 flex-1"
+                  @click="openGalleryItem(item)"
+                >
+                  <div class="relative aspect-video overflow-hidden">
+                    <img
+                      :src="`https://img.youtube.com/vi/${extractYoutubeId(item.youtube_url)}/hqdefault.jpg`"
+                      :alt="item.title"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent"></div>
+                    <!-- Play Button -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="w-14 h-14 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
+                        <Play class="w-6 h-6 text-white ml-0.5" />
+                      </div>
+                    </div>
+                    <!-- YouTube badge -->
+                    <div class="absolute top-4 left-4">
+                      <div class="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                        <Play class="w-3 h-3" />
+                        YouTube
+                      </div>
+                    </div>
+                    <!-- Title -->
+                    <div class="absolute inset-x-0 bottom-0 p-5">
+                      <p class="text-white font-black text-base leading-tight truncate">{{ item.title }}</p>
+                      <p v-if="item.video_name" class="text-white/70 text-xs font-medium mt-1 truncate">{{ item.video_name }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
