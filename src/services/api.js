@@ -208,4 +208,11 @@ export const getHeroImages = async (params = {}) => {
   return api.get("/hero-images", { params });
 };
 
+export const getNasionalHeroImages = async () => {
+  if (USE_DUMMY) {
+    return { data: { data: [] } };
+  }
+  return api.get("/nasional-hero-images");
+};
+
 export default api;

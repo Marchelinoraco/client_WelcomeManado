@@ -337,6 +337,11 @@ export default {
         },
       },
     },
+    team: {
+      badge: "认识我们的团队",
+      title1: "我们的",
+      title2: "团队",
+    },
   },
   transport: {
     rentalBadge: "租车与交通",

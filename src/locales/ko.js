@@ -349,6 +349,11 @@ export default {
         },
       },
     },
+    team: {
+      badge: "팀 소개",
+      title1: "우리",
+      title2: "팀",
+    },
   },
   transport: {
     rentalBadge: "렌탈 & 교통",

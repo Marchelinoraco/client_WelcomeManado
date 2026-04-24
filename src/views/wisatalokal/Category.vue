@@ -137,6 +137,7 @@ const filteredTours = computed(() => {
 });
 
 const heroImage = computed(() => {
+  if (category.value?.image_url) return category.value.image_url;
   const images = {
     "manado-city-tour":
       "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=2400&q=80",

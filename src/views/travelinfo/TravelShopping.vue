@@ -5,15 +5,21 @@
     <header
       class="relative pt-40 pb-20 lg:pt-52 lg:pb-32 px-6 lg:px-10 overflow-hidden bg-slate-900"
     >
-      <div
-        class="absolute inset-0 z-0 scale-105 animate-pulse"
-        style="animation-duration: 20s"
-      >
-        <img
-          src="https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=2400&q=80"
-          class="w-full h-full object-cover opacity-30"
-          alt="Manado Guide"
-        />
+      <div class="absolute inset-0">
+        <div class="w-full h-full relative bg-slate-950">
+          <template v-for="(img, index) in heroImages" :key="img">
+            <div
+              class="absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out"
+              :class="currentHeroIndex === index ? 'opacity-100' : 'opacity-0'"
+            >
+              <img
+                :src="img"
+                class="h-full w-full object-cover opacity-40"
+                alt="Hero"
+              />
+            </div>
+          </template>
+        </div>
         <div
           class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"
         ></div>
@@ -174,10 +180,10 @@
 
 <script setup>
 import { Compass, Map, ArrowRight } from "lucide-vue-next";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { getTravelInfoItems } from "@/services/api";
+import { getTravelInfoItems, getHeroImages } from "@/services/api";
 import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
@@ -187,6 +193,18 @@ const items = ref([]);
 const loading = ref(false);
 const errorMessage = ref("");
 const categoryOrder = ["center", "souvenir", "minahasa"];
+
+const heroImages = ref(['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80'])
+const currentHeroIndex = ref(0)
+let heroInterval = null
+
+const fetchHeroImages = async () => {
+  try {
+    const res = await getHeroImages()
+    const data = res.data?.data || []
+    if (data.length > 0) heroImages.value = data.map(item => item.image_url)
+  } catch { /* keep default */ }
+}
 
 const categories = computed(() => {
   const grouped = categoryOrder
@@ -247,5 +265,17 @@ const fetchItems = async () => {
   }
 };
 
-onMounted(fetchItems);
+onMounted(() => {
+  fetchItems()
+  fetchHeroImages()
+  heroInterval = setInterval(() => {
+    if (heroImages.value.length > 1) {
+      currentHeroIndex.value = (currentHeroIndex.value + 1) % heroImages.value.length
+    }
+  }, 5000)
+})
+
+onUnmounted(() => {
+  if (heroInterval) clearInterval(heroInterval)
+})
 </script>

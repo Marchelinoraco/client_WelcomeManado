@@ -353,6 +353,11 @@ export default {
         },
       },
     },
+    team: {
+      badge: "Kenali Kami",
+      title1: "Tim",
+      title2: "Kami",
+    },
   },
   transport: {
     rentalBadge: "Rental & Transport",

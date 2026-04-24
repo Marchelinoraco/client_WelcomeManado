@@ -354,6 +354,11 @@ export default {
         },
       },
     },
+    team: {
+      badge: "Meet The Team",
+      title1: "Our",
+      title2: "Team",
+    },
   },
   transport: {
     rentalBadge: "Rental & Transport",
@@ -572,7 +577,7 @@ export default {
       badge: "Local Category",
     },
     national: {
-      titlePrefix: "All",
+      titlePrefix: "Other",
       titleHighlight: "National Destinations",
       description:
         "Browse every national travel category to discover some of Indonesia's best destinations.",

@@ -85,10 +85,11 @@
               {{ $t("footer.getInTouch") }}
             </h4>
             <div class="space-y-6 text-gray-400 text-sm font-medium">
-              <p class="flex items-start">
+              <a href="https://maps.app.goo.gl/sSe6ReKHVfowT2xs9"
+              class="flex items-start">
                 <span class="text-red-500 mr-3 mt-1 text-xs">●</span>
                 {{ $t("common.officeAddress") }}
-              </p>
+              </a>
               <a
                 href="tel:+6282173738822"
                 class="flex items-start hover:text-red-500 transition-colors"
@@ -156,7 +157,7 @@
                   class="hover:scale-105 hover:opacity-100 transition-all duration-300"
                 >
                   <img
-                    src="https://astindo.org/wp-content/uploads/2024/09/LOGO-ASTINDO-500.png"
+                    src="./assets/astindo.jpeg"
                     alt="ASTINDO"
                     class="h-14 md:h-16 object-contain mix-blend-multiply"
                   />

@@ -310,6 +310,12 @@ const interestOptions = computed(() => {
 
 const collageImages = computed(() => {
   const images = [];
+
+  // Prioritize category image_url as first image
+  if (category.value?.image_url) {
+    images.push(category.value.image_url);
+  }
+
   const fromTours = tours.value.flatMap((t) =>
     (t.galleries || []).map((g) => g.image_path),
   );

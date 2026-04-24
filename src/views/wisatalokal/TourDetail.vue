@@ -120,23 +120,6 @@
                   v-html="tour.descriptionHtml"
                 ></div>
 
-                <div v-if="tour.inclusions || tour.exclusions" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div v-if="tour.inclusions" class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
-                    <h3 class="text-xl font-black text-emerald-900 mb-6 flex items-center">
-                      <CheckIcon class="w-6 h-6 mr-3 text-emerald-600" />
-                      {{ $t("tour.inclusions") }}
-                    </h3>
-                    <div class="tour-rich-content text-emerald-800 text-sm prose prose-emerald prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
-                  </div>
-                  <div v-if="tour.exclusions" class="bg-red-50 rounded-3xl p-8 border border-red-100">
-                    <h3 class="text-xl font-black text-red-900 mb-6 flex items-center">
-                      <X class="w-6 h-6 mr-3 text-red-600" />
-                      {{ $t("tour.exclusions") }}
-                    </h3>
-                    <div class="tour-rich-content text-red-800 text-sm prose prose-red prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
-                  </div>
-                </div>
-
                 <div v-if="tour.itinerary_pdf_path" class="mt-10">
                   <a
                     :href="tour.itinerary_pdf_path"
@@ -448,6 +431,29 @@
             </div>
           </div>
         </main>
+
+      <!-- Inclusions & Exclusions -->
+      <section
+        v-if="tour.inclusions || tour.exclusions"
+        class="max-w-7xl mx-auto px-6 lg:px-10 mt-16"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div v-if="tour.inclusions" class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
+            <h3 class="text-xl font-black text-emerald-900 mb-6 flex items-center">
+              <CheckIcon class="w-6 h-6 mr-3 text-emerald-600" />
+              {{ $t("tour.inclusions") }}
+            </h3>
+            <div class="tour-rich-content text-emerald-800 text-sm prose prose-emerald prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
+          </div>
+          <div v-if="tour.exclusions" class="bg-red-50 rounded-3xl p-8 border border-red-100">
+            <h3 class="text-xl font-black text-red-900 mb-6 flex items-center">
+              <X class="w-6 h-6 mr-3 text-red-600" />
+              {{ $t("tour.exclusions") }}
+            </h3>
+            <div class="tour-rich-content text-red-800 text-sm prose prose-red prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
+          </div>
+        </div>
+      </section>
 
       <section
         v-if="recommendedTours.length"

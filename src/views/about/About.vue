@@ -60,6 +60,52 @@
     </section>
 
     <!-- ============================================ -->
+    <!-- TEAM SECTION -->
+    <!-- ============================================ -->
+    <section v-if="teamMembers.length" class="py-24 bg-white dark:bg-slate-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <span class="text-xs font-black text-red-600 uppercase tracking-[0.3em]">{{ $t('about.team.badge') }}</span>
+          <h2 class="text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase italic mt-4">
+            {{ $t('about.team.title1') }} <span class="text-red-600">{{ $t('about.team.title2') }}</span>
+          </h2>
+          <div class="w-20 h-1.5 bg-red-600 mx-auto mt-4"></div>
+        </div>
+
+        <!-- Carousel -->
+        <div class="relative">
+          <div class="overflow-hidden">
+            <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${teamSlide * 100}%)` }">
+              <div
+                v-for="chunk in teamChunks"
+                :key="chunk[0]?.id"
+                class="min-w-full grid grid-cols-2 md:grid-cols-4 gap-8"
+              >
+                <div v-for="member in chunk" :key="member.id" class="flex flex-col items-center text-center group">
+                  <div class="w-full aspect-[3/4] rounded-[2rem] overflow-hidden bg-slate-100 shadow-lg mb-5">
+                    <img :src="member.image_url" :alt="memberName(member)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <h3 class="text-lg font-black text-red-600 tracking-tight">{{ memberName(member) }}</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1">{{ memberPosition(member) }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <button v-if="teamChunks.length > 1" @click="prevTeam"
+            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-11 h-11 bg-white dark:bg-slate-800 rounded-full shadow-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-500 hover:text-red-600 transition-all hover:scale-110 active:scale-95">
+            <ChevronLeft class="w-5 h-5" />
+          </button>
+          <button v-if="teamChunks.length > 1" @click="nextTeam"
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-11 h-11 bg-white dark:bg-slate-800 rounded-full shadow-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-500 hover:text-red-600 transition-all hover:scale-110 active:scale-95">
+            <ChevronRight class="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
     <!-- TESTIMONIALS SECTION -->
     <!-- ============================================ -->
 
@@ -141,12 +187,13 @@
     <!-- Google Reviews Section -->
     <section class="py-24 bg-gray-50 dark:bg-slate-800/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Google Header -->
-        <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-8 md:p-10 shadow-sm dark:shadow-slate-900/30 mb-10">
-          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div class="flex items-center gap-6">
-              <!-- Google Logo -->
-              <div class="flex items-baseline gap-0.5 text-2xl font-bold select-none">
+        <!-- Header block: Google & TA -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <!-- Google Review Card -->
+          <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/40 flex flex-col md:flex-row items-center justify-between gap-8 transform hover:-translate-y-2 transition-all duration-500 border border-slate-100 dark:border-slate-700/50 relative overflow-hidden group">
+            <div class="absolute -inset-20 bg-blue-50 dark:bg-blue-900/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+            <div class="flex flex-col items-center md:items-start gap-4 relative z-10 w-full">
+              <div class="flex items-baseline gap-0.5 text-4xl font-bold select-none mb-2">
                 <span class="text-[#4285F4]">G</span>
                 <span class="text-[#EA4335]">o</span>
                 <span class="text-[#FBBC05]">o</span>
@@ -154,25 +201,36 @@
                 <span class="text-[#34A853]">l</span>
                 <span class="text-[#EA4335]">e</span>
               </div>
-              <div>
-                <span class="text-xl font-bold text-gray-900 dark:text-white">Reviews</span>
-                <div class="flex items-center gap-3 mt-1">
-                  <span class="text-3xl font-black text-gray-900 dark:text-white">4.9</span>
-                  <div class="flex gap-0.5">
-                    <Star v-for="s in 5" :key="s" class="w-5 h-5 text-yellow-400 fill-yellow-400" />
+              <div class="flex flex-col items-center md:items-start">
+                <span class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Reviews</span>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-4xl font-black text-slate-900 dark:text-white">4.9</span>
+                  <div class="flex gap-1">
+                    <Star v-for="s in 5" :key="s" class="w-6 h-6 text-[#FBBC05] fill-[#FBBC05]" />
                   </div>
-                  <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">(37)</span>
                 </div>
+                <span class="text-slate-500 text-sm font-bold mt-1 tracking-widest uppercase">(37 Ratings)</span>
               </div>
             </div>
-            <a
-              href="https://g.page/r/welcomemanado/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-8 py-4 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-red-700 transition-all shadow-lg shadow-red-200 dark:shadow-red-900/30 hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
-            >
-              Review us on Google
+            <a href="https://g.page/r/welcomemanado/review" target="_blank" rel="noopener noreferrer"
+              class="px-8 py-4 bg-white dark:bg-slate-900 text-[#4285F4] border-2 border-[#4285F4]/20 hover:border-[#4285F4] font-black uppercase tracking-widest rounded-2xl hover:bg-[#4285F4] hover:text-white transition-all shadow-lg active:scale-95 whitespace-nowrap relative z-10">
+              Review Us
             </a>
+          </div>
+
+          <!-- TripAdvisor Widget Card -->
+          <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/40 flex flex-col items-center justify-center transform hover:-translate-y-2 transition-all duration-500 border border-slate-100 dark:border-slate-700/50 relative overflow-hidden group">
+            <div class="absolute -inset-20 bg-green-50 dark:bg-green-900/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+            <span class="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-6 relative z-10">Recognized Excellence</span>
+            <div class="relative z-10 transform transition-transform duration-500 group-hover:scale-105" id="TA_excellent588_about" style="min-height: 100px;">
+              <ul id="H6kFP8sS_about" class="TA_links T23CqtiXc7Qf text-center w-full flex justify-center">
+                <li id="fbQpxWJwrV_about" class="d23e9X">
+                  <a target="_blank" href="https://www.tripadvisor.co.id/Attraction_Review-g297721-d34101092-Reviews-Welcome_Manado-Manado_North_Sulawesi_Sulawesi.html">
+                    <img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" alt="TripAdvisor" class="widEXCIMG" id="CDSWIDEXCLOGO_about"/>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -212,10 +270,10 @@
 
               <!-- Review Text -->
               <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex-1">
-                {{ review.expanded ? review.text : review.text.slice(0, 150) + (review.text.length > 150 ? '...' : '') }}
+                {{ review.expanded ? reviewText(review) : reviewText(review).slice(0, 150) + (reviewText(review).length > 150 ? '...' : '') }}
               </p>
               <button
-                v-if="review.text.length > 150"
+                v-if="reviewText(review).length > 150"
                 @click="review.expanded = !review.expanded"
                 class="text-blue-500 text-sm font-medium mt-2 hover:underline self-start"
               >
@@ -262,8 +320,9 @@ import { computed, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Compass, ShieldCheck, Users, Star, Quote, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import { getAboutStorySection } from '@/services/api';
+import api from '@/services/api';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const whyChooseUs = [
   { key: 'expert', icon: Compass },
@@ -273,6 +332,45 @@ const whyChooseUs = [
 
 const storySection = ref(null);
 const defaultStoryImage = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=1000";
+
+// ---- Team Members ----
+const teamMembers = ref([]);
+const teamSlide = ref(0);
+const TEAM_PER_SLIDE = 4;
+
+const teamChunks = computed(() => {
+  const chunks = [];
+  for (let i = 0; i < teamMembers.value.length; i += TEAM_PER_SLIDE) {
+    chunks.push(teamMembers.value.slice(i, i + TEAM_PER_SLIDE));
+  }
+  return chunks;
+});
+
+const nextTeam = () => { teamSlide.value = (teamSlide.value + 1) % teamChunks.value.length; };
+const prevTeam = () => { teamSlide.value = (teamSlide.value - 1 + teamChunks.value.length) % teamChunks.value.length; };
+
+const memberName = (m) => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  if (loc.startsWith('en')) return m.name_en || m.name;
+  if (loc.startsWith('ko')) return m.name_ko || m.name;
+  if (loc.startsWith('zh')) return m.name_zh || m.name;
+  return m.name;
+};
+
+const memberPosition = (m) => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  if (loc.startsWith('en')) return m.position_en || m.position;
+  if (loc.startsWith('ko')) return m.position_ko || m.position;
+  if (loc.startsWith('zh')) return m.position_zh || m.position;
+  return m.position;
+};
+
+const fetchTeamMembers = async () => {
+  try {
+    const res = await api.get('/team-members');
+    teamMembers.value = res.data?.data || [];
+  } catch { /* silent */ }
+};
 
 const splitLabel = (value = "") => {
   const parts = String(value || "").trim().split(" ");
@@ -370,6 +468,9 @@ const googleReviews = reactive([
     stars: 5,
     color: "#E91E63",
     text: "Terbaik skali.... Makase kak ebi pertama kali urus visa korea langsung approved 🥰😍😍😍🥳🥳🥳 Sukses selalu WM 🥳. Pelayanan yang sangat memuaskan dan profesional.",
+    text_en: "The best! Thank you for helping me get my Korean visa approved on the first try 🥰 Keep up the great work WM 🥳. Very satisfying and professional service.",
+    text_ko: "최고예요! 한국 비자를 처음 신청에 바로 승인받을 수 있도록 도와주셔서 감사해요 🥰 WM 계속 번창하세요 🥳. 매우 만족스럽고 전문적인 서비스였습니다.",
+    text_zh: "太棒了！感谢帮我第一次申请韩国签证就获批了 🥰 WM 继续加油 🥳。服务非常令人满意，非常专业。",
     expanded: false,
   },
   {
@@ -378,6 +479,9 @@ const googleReviews = reactive([
     stars: 5,
     color: "#607D8B",
     text: "Sangat puas dengan pelayanan WELCOME MANADO. Kondisi kapal bersih dan terawat, tempat duduk nyaman, crew ramah dan helpful. Snorkeling equipment lengkap dan masih bagus. Lunch box dan welcomedrink juga enak. Pokoknya top deh!",
+    text_en: "Very satisfied with WELCOME MANADO's service. The boat was clean and well-maintained, comfortable seats, friendly and helpful crew. Snorkeling equipment was complete and in good condition. Lunch box and welcome drink were also delicious. Absolutely top notch!",
+    text_ko: "WELCOME MANADO 서비스에 매우 만족합니다. 배가 깨끗하고 잘 관리되어 있었고, 좌석이 편안하며 승무원이 친절하고 도움이 되었습니다. 스노클링 장비도 완비되어 있었고 상태도 좋았습니다. 도시락과 웰컴 드링크도 맛있었어요. 정말 최고입니다!",
+    text_zh: "对WELCOME MANADO的服务非常满意。船只干净整洁，座位舒适，船员友好热情。浮潜装备齐全且状态良好。午餐盒和欢迎饮料也很美味。总之非常棒！",
     expanded: false,
   },
   {
@@ -386,6 +490,9 @@ const googleReviews = reactive([
     stars: 5,
     color: "#4CAF50",
     text: "Best travel agency in Manado! They arranged everything perfectly for our family trip. From Bunaken diving to Tomohon highland tour. The guides are very professional and friendly. Highly recommended!",
+    text_en: "Best travel agency in Manado! They arranged everything perfectly for our family trip. From Bunaken diving to Tomohon highland tour. The guides are very professional and friendly. Highly recommended!",
+    text_ko: "마나도 최고의 여행사! 가족 여행을 위해 모든 것을 완벽하게 준비해 주었습니다. 부나켄 다이빙부터 토모혼 고원 투어까지. 가이드들이 매우 전문적이고 친절합니다. 강력 추천!",
+    text_zh: "马纳多最好的旅行社！他们为我们的家庭旅行安排了一切，从布纳肯潜水到托莫洪高原游览，导游非常专业友好。强烈推荐！",
     expanded: false,
   },
   {
@@ -394,6 +501,9 @@ const googleReviews = reactive([
     stars: 5,
     color: "#9C27B0",
     text: "마나도에서 최고의 여행 경험이었습니다! 부나켄 다이빙은 정말 환상적이었고, 가이드분들이 매우 친절하고 전문적이었습니다. 한국어 통역도 제공해주셔서 의사소통에 전혀 문제가 없었습니다.",
+    text_en: "It was the best travel experience in Manado! The Bunaken diving was absolutely fantastic, and the guides were very kind and professional. Korean interpretation was also provided, so there was no communication problem at all.",
+    text_ko: "마나도에서 최고의 여행 경험이었습니다! 부나켄 다이빙은 정말 환상적이었고, 가이드분들이 매우 친절하고 전문적이었습니다. 한국어 통역도 제공해주셔서 의사소통에 전혀 문제가 없었습니다.",
+    text_zh: "这是在马纳多最棒的旅行体验！布纳肯潜水绝对精彩，导游非常亲切专业。还提供了韩语翻译，完全没有沟通障碍。",
     expanded: false,
   },
   {
@@ -402,6 +512,9 @@ const googleReviews = reactive([
     stars: 5,
     color: "#FF5722",
     text: "Incredible experience! The Lembeh Strait diving was out of this world. Welcome Manado took care of every detail. Our guide knew exactly where to find all the rare macro critters. Can't wait to come back!",
+    text_en: "Incredible experience! The Lembeh Strait diving was out of this world. Welcome Manado took care of every detail. Our guide knew exactly where to find all the rare macro critters. Can't wait to come back!",
+    text_ko: "믿을 수 없는 경험이었습니다! 렘베 해협 다이빙은 정말 환상적이었어요. Welcome Manado가 모든 세부 사항을 챙겨주었습니다. 가이드가 희귀한 생물들을 어디서 찾아야 하는지 정확히 알고 있었어요. 꼭 다시 오고 싶습니다!",
+    text_zh: "难以置信的体验！蓝碧海峡的潜水简直超凡脱俗。Welcome Manado照顾到了每一个细节。我们的导游清楚地知道在哪里能找到所有罕见的微距生物。迫不及待想再来！",
     expanded: false,
   },
   {
@@ -410,9 +523,20 @@ const googleReviews = reactive([
     stars: 5,
     color: "#2196F3",
     text: "非常满意Welcome Manado的服务！从机场接机到酒店安排，再到每天的行程，一切都安排得井井有条。美纳多的海底世界真的太美了，布纳肯的珊瑚礁让人叹为观止。强烈推荐！",
+    text_en: "Very satisfied with Welcome Manado's service! From airport pickup to hotel arrangements and daily itineraries, everything was perfectly organized. The underwater world of Manado is truly beautiful, and the coral reefs of Bunaken are breathtaking. Highly recommended!",
+    text_ko: "Welcome Manado 서비스에 매우 만족합니다! 공항 픽업부터 호텔 예약, 매일의 일정까지 모든 것이 완벽하게 준비되었습니다. 마나도의 수중 세계는 정말 아름답고, 부나켄의 산호초는 숨막히게 아름답습니다. 강력 추천!",
+    text_zh: "非常满意Welcome Manado的服务！从机场接机到酒店安排，再到每天的行程，一切都安排得井井有条。美纳多的海底世界真的太美了，布纳肯的珊瑚礁让人叹为观止。强烈推荐！",
     expanded: false,
   },
 ]);
+
+const reviewText = (review) => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  if (loc.startsWith('en')) return review.text_en || review.text;
+  if (loc.startsWith('ko')) return review.text_ko || review.text;
+  if (loc.startsWith('zh')) return review.text_zh || review.text;
+  return review.text;
+};
 
 const scrollReviews = (direction) => {
   if (reviewsContainer.value) {
@@ -432,6 +556,7 @@ const fetchStorySection = async () => {
 
 onMounted(() => {
   fetchStorySection();
+  fetchTeamMembers();
   startAutoplay();
 });
 

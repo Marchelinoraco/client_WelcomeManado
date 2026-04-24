@@ -2,11 +2,20 @@
   <div class="min-h-screen bg-slate-50">
     <section class="relative overflow-hidden bg-slate-950 px-6 pb-16 pt-36 lg:px-10 lg:pb-24 lg:pt-44">
       <div class="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=2400&q=80"
-          class="h-full w-full object-cover opacity-25"
-          alt="Manado Tours"
-        />
+        <div class="w-full h-full relative bg-slate-950">
+          <template v-for="(img, index) in heroImages" :key="img">
+            <div
+              class="absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out"
+              :class="currentHeroIndex === index ? 'opacity-100' : 'opacity-0'"
+            >
+              <img
+                :src="img"
+                class="h-full w-full object-cover opacity-40"
+                alt="Manado Tours"
+              />
+            </div>
+          </template>
+        </div>
         <div class="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/55 to-slate-950"></div>
       </div>
 
@@ -57,7 +66,7 @@
         >
           <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
             <img
-              :src="categoryImage(category.slug)"
+              :src="category.image_url || categoryImage(category.slug)"
               :alt="category.name"
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -91,10 +100,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { ArrowRight, MapPin } from "lucide-vue-next";
-import { getLocalCategories } from "@/services/api";
+import { getLocalCategories, getHeroImages } from "@/services/api";
 import { autoTranslate } from "@/services/translate";
 import { stripHtml } from "@/utils/htmlText";
 import { dummyLocalCategories } from "./dummyLocalTours";
@@ -102,6 +111,13 @@ import { dummyLocalCategories } from "./dummyLocalTours";
 const { locale } = useI18n();
 const categories = ref([]);
 const loading = ref(false);
+
+// Hero carousel
+const heroImages = ref([
+  "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=2400&q=80",
+]);
+const currentHeroIndex = ref(0);
+let heroInterval = null;
 
 const fallbackImages = {
   "manado-city-tour":
@@ -117,6 +133,18 @@ const categoryImage = (slug) =>
   "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80";
 
 const categoryDescription = (category) => stripHtml(category?.description || "");
+
+const fetchHeroImages = async () => {
+  try {
+    const res = await getHeroImages();
+    const data = res.data?.data || [];
+    if (data.length > 0) {
+      heroImages.value = data.map((item) => item.image_url);
+    }
+  } catch {
+    // keep default
+  }
+};
 
 const fetchCategories = async () => {
   loading.value = true;
@@ -145,6 +173,30 @@ const fetchCategories = async () => {
   }
 };
 
-onMounted(fetchCategories);
+onMounted(() => {
+  fetchHeroImages();
+  fetchCategories();
+  heroInterval = setInterval(() => {
+    if (heroImages.value.length > 1) {
+      currentHeroIndex.value = (currentHeroIndex.value + 1) % heroImages.value.length;
+    }
+  }, 5000);
+});
+
+onUnmounted(() => {
+  if (heroInterval) clearInterval(heroInterval);
+});
+
 watch(locale, fetchCategories);
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
