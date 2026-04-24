@@ -522,16 +522,73 @@
           </div>
 
           <!-- Gallery Grid -->
-          <div v-if="loadingGallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="i in 6" :key="`skel-${i}`" class="h-72 rounded-[2rem] bg-slate-100 animate-pulse"></div>
+          <div v-if="loadingGallery" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div v-for="i in 6" :key="`skel-${i}`" class="h-64 rounded-[2rem] bg-slate-100 animate-pulse"></div>
+            </div>
           </div>
-          <div v-else-if="miniGalleryItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <GalleryItemCard
-              v-for="item in miniGalleryItems"
-              :key="`home-gal-${item.id}`"
-              :item="item"
-              @open="openGalleryItem"
-            />
+          <div v-else-if="miniGalleryItems.length > 0" class="space-y-6">
+            <!-- Row 1: YouTube videos (3 items) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div
+                v-for="item in miniYoutubeItems"
+                :key="`home-yt-${item.id}`"
+                class="group relative overflow-hidden rounded-[2rem] bg-slate-900 shadow-xl shadow-slate-200/60 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 cursor-pointer hover:-translate-y-1"
+                @click="openGalleryItem(item)"
+              >
+                <div class="relative aspect-video overflow-hidden">
+                  <img
+                    :src="`https://img.youtube.com/vi/${extractYoutubeId(item.youtube_url)}/hqdefault.jpg`"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                  <!-- Play Button -->
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
+                      <Play class="w-7 h-7 text-white ml-1" />
+                    </div>
+                  </div>
+                  <!-- YouTube badge -->
+                  <div class="absolute top-4 left-4">
+                    <div class="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                      <Play class="w-3 h-3" />
+                      YouTube
+                    </div>
+                  </div>
+                  <!-- Title -->
+                  <div class="absolute inset-x-0 bottom-0 p-5">
+                    <p class="text-white font-black text-base leading-tight truncate">{{ item.title }}</p>
+                    <p v-if="item.video_name" class="text-white/70 text-xs font-medium mt-1 truncate">{{ item.video_name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Images only (3 items) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div
+                v-for="item in miniImageItems"
+                :key="`home-img-${item.id}`"
+                class="group relative overflow-hidden rounded-[2rem] bg-slate-100 shadow-xl shadow-slate-200/60 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 cursor-pointer hover:-translate-y-1"
+                @click="openGalleryItem(item)"
+              >
+                <div class="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    :src="item.image_path"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                  <!-- Title -->
+                  <div class="absolute inset-x-0 bottom-0 p-5">
+                    <p class="text-white font-black text-base leading-tight truncate">{{ item.title }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div v-else class="text-center py-20 bg-slate-50 rounded-[3rem] border border-slate-100">
             <Camera class="w-10 h-10 text-slate-300 mx-auto mb-4" />
@@ -976,20 +1033,32 @@ const activeGalleryItem = ref(null);
 const fetchMiniGallery = async () => {
   loadingGallery.value = true;
   try {
-    const res = await getGalleryItems({ active: 1, per_page: 6 });
-    let dataList = [];
-    if (res?.data?.data && Array.isArray(res.data.data)) {
-        dataList = res.data.data;
-    } else if (res?.data?.data?.data && Array.isArray(res.data.data.data)) {
-        dataList = res.data.data.data;
-    }
-    miniGalleryItems.value = dataList.slice(0, 6);
+    const [ytRes, imgRes] = await Promise.all([
+      getGalleryItems({ active: 1, has_youtube: true, per_page: 3 }),
+      getGalleryItems({ active: 1, has_youtube: false, per_page: 3 }),
+    ]);
+
+    const extract = (res) => {
+      const d = res?.data?.data;
+      if (Array.isArray(d)) return d;
+      if (Array.isArray(d?.data)) return d.data;
+      return [];
+    };
+
+    miniGalleryItems.value = [...extract(ytRes), ...extract(imgRes)];
   } catch (e) {
     console.error("Gallery fetch failed", e);
   } finally {
     loadingGallery.value = false;
   }
 };
+
+const miniYoutubeItems = computed(() =>
+  miniGalleryItems.value.filter(i => i.youtube_url).slice(0, 3)
+);
+const miniImageItems = computed(() =>
+  miniGalleryItems.value.filter(i => !i.youtube_url).slice(0, 3)
+);
 
 const openGalleryItem = (it) => {
   activeGalleryItem.value = it;
