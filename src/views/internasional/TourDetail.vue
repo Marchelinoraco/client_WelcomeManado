@@ -61,11 +61,11 @@
               class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
               >{{ trip.airline }}</span
             >
-            <span
+            <!-- <span
               v-if="trip.route"
               class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
               >{{ trip.route }}</span
-            >
+            > -->
           </div>
 
           <h1
@@ -83,10 +83,13 @@
             <div class="uppercase tracking-widest text-xs">
               <span class="font-black mr-2">{{ $t("internationalTourDetail.period") }}:</span>
               <span v-if="!trip.departure_periods || trip.departure_periods.length === 0">-</span>
-              <span v-else-if="trip.departure_periods.length === 1">{{ trip.departure_periods[0] }}</span>
-              <ul v-else class="mt-2 space-y-1 ml-4 list-disc list-inside text-white/90">
-                <li v-for="(p, idx) in trip.departure_periods" :key="idx">{{ p }}</li>
-              </ul>
+              <span v-else class="inline-flex flex-wrap gap-2 mt-1">
+                <span
+                  v-for="(p, idx) in trip.departure_periods"
+                  :key="idx"
+                  class="px-3 py-1 bg-white/10 border border-white/20 rounded-lg text-white/90 font-bold text-[10px] tracking-widest"
+                >{{ p }}</span>
+              </span>
             </div>
           </div>
         </div>
@@ -154,6 +157,15 @@
                       </div>
                       <div class="text-sm font-black text-slate-900">
                         {{ formatCurrency(row.price_idr) }}
+                      </div>
+                    </div>
+                    <!-- Total row -->
+                    <div v-if="section.rows.length > 1" class="px-8 py-5 flex items-center justify-between bg-slate-50/80">
+                      <div class="text-sm font-black text-slate-700 uppercase tracking-widest">
+                        Total
+                      </div>
+                      <div class="text-sm font-black text-emerald-600">
+                        {{ formatCurrency(section.rows.reduce((sum, r) => sum + (Number(r.price_idr) || 0), 0)) }}
                       </div>
                     </div>
                   </div>
@@ -363,7 +375,7 @@
                     <span
                       class="mt-2 w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0"
                     ></span>
-                    <span>{{ item }}</span>
+                    <span class="tour-rich-content" v-html="normalizeDescriptionHtml(item)"></span>
                   </li>
                 </ul>
               </div>
@@ -384,7 +396,7 @@
                     <span
                       class="mt-2 w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"
                     ></span>
-                    <span>{{ item }}</span>
+                    <span class="tour-rich-content" v-html="normalizeDescriptionHtml(item)"></span>
                   </li>
                 </ul>
               </div>
@@ -423,13 +435,16 @@
                     <div
                       class="flex items-start justify-between text-xs font-black uppercase tracking-widest text-white/60"
                     >
-                      <span class="mt-0.5">{{ $t("internationalTourDetail.period") }}</span>
+                      <span class="mt-0.5 shrink-0 mr-4">{{ $t("internationalTourDetail.period") }}</span>
                       <div class="text-white text-right">
                         <span v-if="!trip.departure_periods || trip.departure_periods.length === 0">-</span>
-                        <span v-else-if="trip.departure_periods.length === 1">{{ trip.departure_periods[0] }}</span>
-                        <ul v-else class="space-y-1 text-right text-white/90">
-                          <li v-for="(p, idx) in trip.departure_periods" :key="idx">{{ p }}</li>
-                        </ul>
+                        <span v-else class="flex flex-wrap gap-1.5 justify-end">
+                          <span
+                            v-for="(p, idx) in trip.departure_periods"
+                            :key="idx"
+                            class="px-2.5 py-1 bg-white/10 border border-white/20 rounded-lg text-white/90 font-bold text-[10px] tracking-widest"
+                          >{{ p }}</span>
+                        </span>
                       </div>
                     </div>
                     <div
@@ -459,17 +474,27 @@
                   </div>
 
                   <p
-                    class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
+                    class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-1"
                   >
                     {{ $t("internationalTrips.currency") }}
                   </p>
-                  <div class="flex items-baseline gap-2 mb-10">
+                  <p class="text-white text-sm font-black mb-0.5">{{ $t("internationalTourDetail.totalPrice") }}</p>
+                  <p class="text-white/40 text-[10px] font-bold mb-4">{{ $t("internationalTourDetail.totalPriceNote") }}</p>
+                  <div class="flex items-baseline gap-2 mb-6">
                     <span class="text-5xl font-black tracking-tighter">{{
                       formatPrice(trip.price_idr)
                     }}</span>
                     <span class="text-white/40 text-sm font-bold">
                       {{ $t("tour.perPax") }}
                     </span>
+                  </div>
+
+                  <!-- Warning Note -->
+                  <div class="flex items-start gap-3 bg-yellow-400/10 border border-yellow-400/30 rounded-2xl px-5 py-4 mb-8">
+                    <span class="text-yellow-400 text-lg leading-none mt-0.5">⚠</span>
+                    <p class="text-yellow-200 text-xs font-black leading-relaxed">
+                      {{ $t("internationalTourDetail.paymentWarning") }}
+                    </p>
                   </div>
 
                   <a
@@ -648,7 +673,10 @@ const placeholderImage =
 const splitList = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value.filter(Boolean);
-  return String(value)
+  const str = String(value).trim();
+  // If it contains HTML tags, treat as a single rich-text item
+  if (hasHtmlContent(str)) return [str];
+  return str
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);

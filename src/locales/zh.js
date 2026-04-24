@@ -658,5 +658,8 @@ export default {
     available: "有余位",
     soldOut: "已售罄",
     airlines: "航空公司",
+    totalPrice: "旅游总价",
+    totalPriceNote: "（不含「不含费用」部分的项目）",
+    paymentWarning: "首付金额可能因预订日期与出发日期之间的时间而有所不同。",
   },
 };

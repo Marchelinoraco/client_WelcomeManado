@@ -691,6 +691,9 @@ export default {
     available: "Tersedia",
     soldOut: "Sold Out",
     airlines: "Airlines",
+    totalPrice: "Total Harga Tour",
+    totalPriceNote: "(belum termasuk komponen pada bagian \"Harga Belum Termasuk\")",
+    paymentWarning: "Jumlah pembayaran awal dapat berbeda tergantung jarak waktu antara tanggal booking dan tanggal keberangkatan.",
   },
   travelInfo: {
     hero: {

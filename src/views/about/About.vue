@@ -259,8 +259,11 @@
 
 <script setup>
 import { computed, ref, reactive, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Compass, ShieldCheck, Users, Star, Quote, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import { getAboutStorySection } from '@/services/api';
+
+const { t } = useI18n();
 
 const whyChooseUs = [
   { key: 'expert', icon: Compass },
@@ -279,19 +282,19 @@ const splitLabel = (value = "") => {
   };
 };
 
-const defaultExperience = computed(() => splitLabel($t('about.story.exp_years')));
-const defaultTravelers = computed(() => splitLabel($t('about.story.happy_travelers')));
+const defaultExperience = computed(() => splitLabel(t('about.story.exp_years')));
+const defaultTravelers = computed(() => splitLabel(t('about.story.happy_travelers')));
 
-const storyTitleLead = computed(() => storySection.value?.title_lead || $t('about.story.title1'));
-const storyTitleAccent = computed(() => storySection.value?.title_accent || $t('about.story.title2'));
-const storyParagraphOne = computed(() => storySection.value?.paragraph_one || `<p>${$t('about.story.p1')}</p>`);
-const storyParagraphTwo = computed(() => storySection.value?.paragraph_two || `<p>${$t('about.story.p2')}</p>`);
+const storyTitleLead = computed(() => storySection.value?.title_lead || t('about.story.title1'));
+const storyTitleAccent = computed(() => storySection.value?.title_accent || t('about.story.title2'));
+const storyParagraphOne = computed(() => storySection.value?.paragraph_one || `<p>${t('about.story.p1')}</p>`);
+const storyParagraphTwo = computed(() => storySection.value?.paragraph_two || `<p>${t('about.story.p2')}</p>`);
 const experienceValue = computed(() => storySection.value?.experience_value || defaultExperience.value.value);
 const experienceLabel = computed(() => storySection.value?.experience_label || defaultExperience.value.label);
 const travelersValue = computed(() => storySection.value?.travelers_value || defaultTravelers.value.value);
 const travelersLabel = computed(() => storySection.value?.travelers_label || defaultTravelers.value.label);
-const storySince = computed(() => storySection.value?.since_text || $t('about.story.since'));
-const storyPioneering = computed(() => storySection.value?.pioneering_text || $t('about.story.pioneering'));
+const storySince = computed(() => storySection.value?.since_text || t('about.story.since'));
+const storyPioneering = computed(() => storySection.value?.pioneering_text || t('about.story.pioneering'));
 const storyImage = computed(() => storySection.value?.image_url || defaultStoryImage);
 
 // ---- Testimonial Quotes Carousel ----

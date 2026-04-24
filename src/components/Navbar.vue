@@ -115,16 +115,62 @@
             >{{ $t("nav.gallery") }}</router-link
           >
 
-          <router-link
-            to="/travel-info"
-            class="px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
-            :class="
-              isScrolled
-                ? 'text-slate-600 hover:text-red-600'
-                : 'text-white/90 hover:text-white hover:bg-white/10'
-            "
-            >{{ $t("nav.travelInfo") }}</router-link
-          >
+          <!-- Travel Info Dropdown -->
+          <div class="relative group/travelinfo">
+            <button
+              class="flex items-center gap-1 px-1.5 lg:px-2.5 py-2 text-[10px] lg:text-[11px] font-bold tracking-normal uppercase transition-all rounded-xl hover:bg-slate-100/50 whitespace-nowrap"
+              :class="
+                isScrolled
+                  ? 'text-slate-600 hover:text-red-600'
+                  : 'text-white/90 hover:text-white hover:bg-white/10'
+              "
+            >
+              {{ $t("nav.travelInfo") }}
+              <ChevronDown class="w-3 h-3 transition-transform duration-300 group-hover/travelinfo:rotate-180" />
+            </button>
+
+            <div
+              class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-56 opacity-0 invisible group-hover/travelinfo:opacity-100 group-hover/travelinfo:visible transition-all duration-300 transform group-hover/travelinfo:translate-y-0 translate-y-3"
+            >
+              <div class="bg-white rounded-[1.75rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-50 p-2 flex flex-col gap-1">
+                <router-link
+                  to="/travel-info"
+                  class="flex items-center px-4 py-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all text-slate-600 hover:bg-red-50 hover:text-red-600"
+                >
+                  <MapPin class="w-3.5 h-3.5 mr-2.5 shrink-0" />
+                  {{ $t("nav.guide") }}
+                </router-link>
+                <router-link
+                  to="/travel-info/history-culture"
+                  class="flex items-center px-4 py-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all text-slate-600 hover:bg-red-50 hover:text-red-600"
+                >
+                  <Landmark class="w-3.5 h-3.5 mr-2.5 shrink-0" />
+                  {{ $t("nav.history") }}
+                </router-link>
+                <router-link
+                  to="/travel-info/food-cuisine"
+                  class="flex items-center px-4 py-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all text-slate-600 hover:bg-red-50 hover:text-red-600"
+                >
+                  <UtensilsCrossed class="w-3.5 h-3.5 mr-2.5 shrink-0" />
+                  {{ $t("nav.food") }}
+                </router-link>
+                <router-link
+                  to="/travel-info/shopping"
+                  class="flex items-center px-4 py-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all text-slate-600 hover:bg-red-50 hover:text-red-600"
+                >
+                  <ShoppingBag class="w-3.5 h-3.5 mr-2.5 shrink-0" />
+                  {{ $t("nav.shopping") }}
+                </router-link>
+                <router-link
+                  to="/travel-info/transportation"
+                  class="flex items-center px-4 py-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all text-slate-600 hover:bg-red-50 hover:text-red-600"
+                >
+                  <Bus class="w-3.5 h-3.5 mr-2.5 shrink-0" />
+                  {{ $t("nav.transport") }}
+                </router-link>
+              </div>
+            </div>
+          </div>
 
           <router-link
             to="/about"
@@ -299,7 +345,6 @@
                       { to: '/internasional', label: $t('nav.international') },
                       { to: '/gallery', label: $t('nav.gallery') },
                       { to: '/hotels', label: $t('nav.hotels') },
-                      { to: '/travel-info', label: $t('nav.travelInfo') },
                       { to: '/about', label: $t('nav.about') },
                     ]"
                     :key="link.to"
@@ -309,6 +354,31 @@
                   >
                     {{ link.label }}
                   </router-link>
+
+                  <!-- Travel Info Expandable -->
+                  <div>
+                    <button
+                      @click="isTravelInfoOpen = !isTravelInfoOpen"
+                      class="flex items-center justify-between w-full text-xl font-black text-slate-900 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors tracking-tight"
+                    >
+                      {{ $t("nav.travelInfo") }}
+                      <ChevronDown
+                        class="w-5 h-5 transition-transform duration-300"
+                        :class="isTravelInfoOpen ? 'rotate-180 text-red-600' : ''"
+                      />
+                    </button>
+                    <div v-if="isTravelInfoOpen" class="mt-3 ml-2 flex flex-col gap-2 border-l-2 border-red-100 pl-4">
+                      <router-link
+                        v-for="sub in travelInfoSubmenus"
+                        :key="sub.to"
+                        :to="sub.to"
+                        @click="isMobileMenuOpen = false; isTravelInfoOpen = false"
+                        class="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-500 transition-colors py-1"
+                      >
+                        {{ sub.label }}
+                      </router-link>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Dark Mode Toggle (Mobile) -->
@@ -394,15 +464,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, watch, computed } from "vue";
 import {
   ChevronRight,
+  ChevronDown,
   Menu,
   Palmtree,
   X,
   Languages,
   Sun,
   Moon,
+  MapPin,
+  Landmark,
+  UtensilsCrossed,
+  ShoppingBag,
+  Bus,
 } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import { useDarkMode } from "../composables/useDarkMode";
@@ -412,6 +488,15 @@ const { isDark, toggle: toggleDarkMode } = useDarkMode();
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
+const isTravelInfoOpen = ref(false);
+
+const travelInfoSubmenus = computed(() => [
+  { to: "/travel-info", label: t("nav.guide") },
+  { to: "/travel-info/history-culture", label: t("nav.history") },
+  { to: "/travel-info/food-cuisine", label: t("nav.food") },
+  { to: "/travel-info/shopping", label: t("nav.shopping") },
+  { to: "/travel-info/transportation", label: t("nav.transport") },
+]);
 
 const availableLanguages = [
   { code: "id", name: "Bahasa", flag: "🇮🇩" },
@@ -449,6 +534,7 @@ watch(isMobileMenuOpen, (val) => {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "";
+    isTravelInfoOpen.value = false;
   }
 });
 </script>

@@ -689,5 +689,8 @@ export default {
     available: "가능",
     soldOut: "매진",
     airlines: "항공사",
+    totalPrice: "총 투어 가격",
+    totalPriceNote: "(\"불포함 비용\" 항목의 구성 요소는 제외)",
+    paymentWarning: "초기 결제 금액은 예약일과 출발일 사이의 기간에 따라 달라질 수 있습니다.",
   },
 };

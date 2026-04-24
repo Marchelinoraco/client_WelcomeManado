@@ -111,10 +111,9 @@
         class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-10 items-stretch"
       >
         <!-- Hotel Card -->
-        <router-link
+        <article
           v-for="hotel in filteredHotels"
           :key="hotel.id"
-          :to="'/hotel/' + hotel.slug"
           class="group bg-white rounded-[2.25rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-900/10 transition-all duration-500 border border-slate-100 flex h-full flex-col hover:-translate-y-1"
         >
           <div class="relative aspect-[4/3] overflow-hidden">
@@ -193,16 +192,17 @@
                   {{ hotel._location || hotel.location }}
                 </div>
               </div>
-              <div
+              <router-link
+                :to="'/hotel/' + hotel.slug"
                 class="flex items-center justify-center w-14 h-14 bg-slate-50 rounded-2xl group-hover:bg-red-600 text-slate-400 group-hover:text-white transition-colors duration-300 shrink-0"
               >
                 <ArrowRight
                   class="w-6 h-6 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
                 />
-              </div>
+              </router-link>
             </div>
           </div>
-        </router-link>
+        </article>
       </div>
     </main>
   </div>
@@ -214,7 +214,6 @@ import { useI18n } from "vue-i18n";
 import { Star, MapPin, Building, ArrowRight, Search } from "lucide-vue-next";
 import { getHotels } from "@/services/api";
 import { translateText } from "@/services/translate";
-import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
 
@@ -228,7 +227,6 @@ const hotelCategories = [
   { key: "boutique", labelKey: "hotelsPage.categories.boutique" },
   { key: "ecoLodge", labelKey: "hotelsPage.categories.ecoLodge" },
 ];
-
 const categoryToKey = {
   Resort: "resort",
   "City Hotel": "cityHotel",
@@ -255,6 +253,17 @@ const getLocalizedDescriptionFromRaw = (hotel, loc) => {
   return hotel?.description || "";
 };
 
+const stripHtml = (value) =>
+  String(value || "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+
 const runWithConcurrency = async (items, limit, worker) => {
   const results = new Array(items.length);
   let index = 0;
@@ -273,7 +282,7 @@ const runWithConcurrency = async (items, limit, worker) => {
 };
 
 const fetchHotels = async () => {
-  const res = await getHotels({ per_page: 100 });
+  const res = await getHotels();
   const arr = Array.isArray(res.data?.data?.data)
     ? res.data.data.data
     : Array.isArray(res.data?.data)
@@ -327,6 +336,12 @@ const ensureTranslatedHotels = async () => {
   }
 
   const base = await fetchHotels();
+
+  if (lang === "en") {
+    translatedCache.set(lang, base);
+    displayedHotels.value = base;
+    return;
+  }
 
   const translated = await runWithConcurrency(base, 4, async (hotel) => {
     const [desc, loc] = await Promise.all([
