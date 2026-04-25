@@ -958,14 +958,25 @@ const internationalTours = computed(
 const fetchTours = async () => {
   loading.value = true;
   try {
-    const response = await getTours();
-    const rawData = response.data.data || {};
-    
-    // Hanya ambil 3 tour pertama dari setiap kategori untuk diterjemahkan
+    // Coba ambil featured tours dulu
+    const featuredRes = await getTours({ featured: true });
+    const featuredRaw = featuredRes.data.data || {};
+
+    // Fallback: jika salah satu kategori kosong, ambil latest biasa
+    const hasFeaturedLocal = (featuredRaw.local?.length || 0) > 0;
+    const hasFeaturedNational = (featuredRaw.national?.length || 0) > 0;
+    const hasFeaturedInternational = (featuredRaw.international?.length || 0) > 0;
+
+    let fallbackRaw = {};
+    if (!hasFeaturedLocal || !hasFeaturedNational || !hasFeaturedInternational) {
+      const fallbackRes = await getTours();
+      fallbackRaw = fallbackRes.data.data || {};
+    }
+
     const slicedData = {
-      local: rawData.local?.slice(0, 3) || [],
-      national: rawData.national?.slice(0, 3) || [],
-      international: rawData.international?.slice(0, 3) || [],
+      local: (hasFeaturedLocal ? featuredRaw.local : fallbackRaw.local)?.slice(0, 3) || [],
+      national: (hasFeaturedNational ? featuredRaw.national : fallbackRaw.national)?.slice(0, 3) || [],
+      international: (hasFeaturedInternational ? featuredRaw.international : fallbackRaw.international)?.slice(0, 3) || [],
     };
 
     if (locale.value !== "id") {
