@@ -748,4 +748,31 @@ export default {
       description: "찾으시는 기사가 존재하지 않거나 삭제되었습니다.",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "마나도 호텔",
+      badge: "숙박",
+      title1: "완벽한",
+      title2: "숙소 찾기",
+      description: "마나도와 북술라웨시 최고의 호텔, 리조트, 빌라, 부티크 숙소를 찾아보세요.",
+    },
+    search: {
+      placeholder: "호텔 검색...",
+    },
+    categories: {
+      all: "전체",
+      resort: "리조트",
+      cityHotel: "시티 호텔",
+      boutique: "부티크",
+      ecoLodge: "에코 롯지",
+      villa: "빌라",
+    },
+    empty: {
+      title: "호텔을 찾을 수 없습니다",
+      description: "검색어나 필터를 조정해 보세요.",
+    },
+    card: {
+      featured: "추천",
+    },
+  },
 };

@@ -759,4 +759,31 @@ export default {
       description: "Artikel yang Anda cari tidak ada atau telah dihapus.",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "Hotel di Manado",
+      badge: "Akomodasi",
+      title1: "Temukan",
+      title2: "Penginapan Terbaik",
+      description: "Temukan hotel, resort, villa, dan penginapan butik terbaik di Manado dan Sulawesi Utara.",
+    },
+    search: {
+      placeholder: "Cari hotel...",
+    },
+    categories: {
+      all: "Semua",
+      resort: "Resort",
+      cityHotel: "City Hotel",
+      boutique: "Boutique",
+      ecoLodge: "Eco Lodge",
+      villa: "Villa",
+    },
+    empty: {
+      title: "Hotel Tidak Ditemukan",
+      description: "Coba sesuaikan pencarian atau filter untuk menemukan yang Anda cari.",
+    },
+    card: {
+      featured: "Unggulan",
+    },
+  },
 };

@@ -713,6 +713,33 @@ export default {
     totalPriceNote: "(excluding components in the \"Excluded Costs\" section)",
     paymentWarning: "The initial payment amount may vary depending on the time between the booking date and the departure date.",
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "Hotels in Manado",
+      badge: "Accommodation",
+      title1: "Find Your",
+      title2: "Perfect Stay",
+      description: "Discover the best hotels, resorts, villas, and boutique stays in Manado and North Sulawesi.",
+    },
+    search: {
+      placeholder: "Search hotels...",
+    },
+    categories: {
+      all: "All",
+      resort: "Resort",
+      cityHotel: "City Hotel",
+      boutique: "Boutique",
+      ecoLodge: "Eco Lodge",
+      villa: "Villa",
+    },
+    empty: {
+      title: "No Hotels Found",
+      description: "Try adjusting your search or filter to find what you're looking for.",
+    },
+    card: {
+      featured: "Featured",
+    },
+  },
   blogPage: {
     hero: {
       badge: "Travel Stories",

@@ -717,4 +717,31 @@ export default {
       description: "您要查找的文章不存在或已被删除。",
     },
   },
+  hotelsPage: {
+    hero: {
+      imageAlt: "万鸦老酒店",
+      badge: "住宿",
+      title1: "寻找您的",
+      title2: "完美住所",
+      description: "探索万鸦老和北苏拉威西最好的酒店、度假村、别墅和精品住宿。",
+    },
+    search: {
+      placeholder: "搜索酒店...",
+    },
+    categories: {
+      all: "全部",
+      resort: "度假村",
+      cityHotel: "城市酒店",
+      boutique: "精品酒店",
+      ecoLodge: "生态小屋",
+      villa: "别墅",
+    },
+    empty: {
+      title: "未找到酒店",
+      description: "请尝试调整搜索或筛选条件。",
+    },
+    card: {
+      featured: "精选",
+    },
+  },
 };

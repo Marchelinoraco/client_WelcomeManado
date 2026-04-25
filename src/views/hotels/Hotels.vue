@@ -226,12 +226,14 @@ const hotelCategories = [
   { key: "cityHotel", labelKey: "hotelsPage.categories.cityHotel" },
   { key: "boutique", labelKey: "hotelsPage.categories.boutique" },
   { key: "ecoLodge", labelKey: "hotelsPage.categories.ecoLodge" },
+  { key: "villa", labelKey: "hotelsPage.categories.villa" },
 ];
 const categoryToKey = {
   Resort: "resort",
   "City Hotel": "cityHotel",
   Boutique: "boutique",
   "Eco Lodge": "ecoLodge",
+  Villa: "villa",
 };
 
 const translatedCache = new Map();
