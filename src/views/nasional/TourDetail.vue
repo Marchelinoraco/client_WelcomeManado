@@ -827,11 +827,7 @@ const summaryItems = computed(() => {
       icon: ClockIcon,
     },
     { label: t("tour.groupSize"), value: t("tour.pax"), icon: Users },
-    {
-      label: t("tour.language"),
-      value: t("tour.languageValue"),
-      icon: Compass,
-    },
+   
   ];
 });
 
@@ -851,7 +847,6 @@ const featureList = computed(() => {
   return [
     t("tour.expertGuide"),
     tour.value?.base_price ? t("tour.premiumAcc") : t("tour.safetyEquip"),
-    t("tour.fullInsurance"),
     t("tour.instantBooking"),
   ];
 });

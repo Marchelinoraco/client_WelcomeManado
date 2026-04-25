@@ -383,16 +383,90 @@ const splitLabel = (value = "") => {
 const defaultExperience = computed(() => splitLabel(t('about.story.exp_years')));
 const defaultTravelers = computed(() => splitLabel(t('about.story.happy_travelers')));
 
-const storyTitleLead = computed(() => storySection.value?.title_lead || t('about.story.title1'));
-const storyTitleAccent = computed(() => storySection.value?.title_accent || t('about.story.title2'));
-const storyParagraphOne = computed(() => storySection.value?.paragraph_one || `<p>${t('about.story.p1')}</p>`);
-const storyParagraphTwo = computed(() => storySection.value?.paragraph_two || `<p>${t('about.story.p2')}</p>`);
+const storyTitleLead = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return t('about.story.title1');
+  if (loc.startsWith('en')) return s.title_lead_en || s.title_lead || t('about.story.title1');
+  if (loc.startsWith('ko')) return s.title_lead_ko || s.title_lead || t('about.story.title1');
+  if (loc.startsWith('zh')) return s.title_lead_zh || s.title_lead || t('about.story.title1');
+  return s.title_lead || t('about.story.title1');
+});
+
+const storyTitleAccent = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return t('about.story.title2');
+  if (loc.startsWith('en')) return s.title_accent_en || s.title_accent || t('about.story.title2');
+  if (loc.startsWith('ko')) return s.title_accent_ko || s.title_accent || t('about.story.title2');
+  if (loc.startsWith('zh')) return s.title_accent_zh || s.title_accent || t('about.story.title2');
+  return s.title_accent || t('about.story.title2');
+});
+
+const storyParagraphOne = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return `<p>${t('about.story.p1')}</p>`;
+  if (loc.startsWith('en')) return s.paragraph_one_en || s.paragraph_one || `<p>${t('about.story.p1')}</p>`;
+  if (loc.startsWith('ko')) return s.paragraph_one_ko || s.paragraph_one || `<p>${t('about.story.p1')}</p>`;
+  if (loc.startsWith('zh')) return s.paragraph_one_zh || s.paragraph_one || `<p>${t('about.story.p1')}</p>`;
+  return s.paragraph_one || `<p>${t('about.story.p1')}</p>`;
+});
+
+const storyParagraphTwo = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return `<p>${t('about.story.p2')}</p>`;
+  if (loc.startsWith('en')) return s.paragraph_two_en || s.paragraph_two || `<p>${t('about.story.p2')}</p>`;
+  if (loc.startsWith('ko')) return s.paragraph_two_ko || s.paragraph_two || `<p>${t('about.story.p2')}</p>`;
+  if (loc.startsWith('zh')) return s.paragraph_two_zh || s.paragraph_two || `<p>${t('about.story.p2')}</p>`;
+  return s.paragraph_two || `<p>${t('about.story.p2')}</p>`;
+});
+
 const experienceValue = computed(() => storySection.value?.experience_value || defaultExperience.value.value);
-const experienceLabel = computed(() => storySection.value?.experience_label || defaultExperience.value.label);
+
+const experienceLabel = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return defaultExperience.value.label;
+  if (loc.startsWith('en')) return s.experience_label_en || s.experience_label || defaultExperience.value.label;
+  if (loc.startsWith('ko')) return s.experience_label_ko || s.experience_label || defaultExperience.value.label;
+  if (loc.startsWith('zh')) return s.experience_label_zh || s.experience_label || defaultExperience.value.label;
+  return s.experience_label || defaultExperience.value.label;
+});
+
 const travelersValue = computed(() => storySection.value?.travelers_value || defaultTravelers.value.value);
-const travelersLabel = computed(() => storySection.value?.travelers_label || defaultTravelers.value.label);
-const storySince = computed(() => storySection.value?.since_text || t('about.story.since'));
-const storyPioneering = computed(() => storySection.value?.pioneering_text || t('about.story.pioneering'));
+
+const travelersLabel = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return defaultTravelers.value.label;
+  if (loc.startsWith('en')) return s.travelers_label_en || s.travelers_label || defaultTravelers.value.label;
+  if (loc.startsWith('ko')) return s.travelers_label_ko || s.travelers_label || defaultTravelers.value.label;
+  if (loc.startsWith('zh')) return s.travelers_label_zh || s.travelers_label || defaultTravelers.value.label;
+  return s.travelers_label || defaultTravelers.value.label;
+});
+
+const storySince = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return t('about.story.since');
+  if (loc.startsWith('en')) return s.since_text_en || s.since_text || t('about.story.since');
+  if (loc.startsWith('ko')) return s.since_text_ko || s.since_text || t('about.story.since');
+  if (loc.startsWith('zh')) return s.since_text_zh || s.since_text || t('about.story.since');
+  return s.since_text || t('about.story.since');
+});
+
+const storyPioneering = computed(() => {
+  const loc = String(locale.value || 'id').toLowerCase();
+  const s = storySection.value;
+  if (!s) return t('about.story.pioneering');
+  if (loc.startsWith('en')) return s.pioneering_text_en || s.pioneering_text || t('about.story.pioneering');
+  if (loc.startsWith('ko')) return s.pioneering_text_ko || s.pioneering_text || t('about.story.pioneering');
+  if (loc.startsWith('zh')) return s.pioneering_text_zh || s.pioneering_text || t('about.story.pioneering');
+  return s.pioneering_text || t('about.story.pioneering');
+});
+
 const storyImage = computed(() => storySection.value?.image_url || defaultStoryImage);
 
 // ---- Testimonial Quotes Carousel ----

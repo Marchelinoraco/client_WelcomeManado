@@ -848,7 +848,6 @@ const featureList = computed(() => {
   return [
     t("tour.expertGuide"),
     tour.value?.base_price ? t("tour.premiumAcc") : t("tour.safetyEquip"),
-    t("tour.fullInsurance"),
     t("tour.instantBooking"),
   ];
 });
