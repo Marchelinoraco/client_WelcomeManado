@@ -674,10 +674,11 @@ const splitList = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value.filter(Boolean);
   const str = String(value).trim();
-  // If it contains HTML tags, treat as a single rich-text item
-  if (hasHtmlContent(str)) return [str];
-  return str
-    .split(",")
+  // Strip HTML tags before splitting so each item is plain text
+  const plain = stripHtml(str);
+  if (!plain) return [];
+  return plain
+    .split(/\n|,/)
     .map((s) => s.trim())
     .filter(Boolean);
 };
@@ -790,7 +791,9 @@ const translateTrip = async (tripData, targetLocale) => {
           (day.notes || []).map((n) =>
             n
               ? hasHtmlContent(n)
-                ? Promise.resolve(n)
+                ? autoTranslate(stripHtml(n), targetLocale).then((translated) =>
+                    translated ? plainTextToHtml(translated) : n,
+                  )
                 : autoTranslate(n, targetLocale)
               : n,
           ),

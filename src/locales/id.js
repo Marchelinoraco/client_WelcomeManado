@@ -634,6 +634,8 @@ export default {
       disclaimer:
         "* Harga dapat berubah sewaktu-waktu. Silakan hubungi kami untuk konfirmasi ketersediaan dan harga final.",
     },
+    inclusions: "Harga Termasuk",
+    exclusions: "Harga Tidak Termasuk",
     downloadItineraryPdf: "Download Itinerary (PDF)",
     viewDetails: "Lihat Detail",
     recommendedTitle: "Rekomendasi Tour Lainnya",

@@ -679,8 +679,8 @@ const fetchTour = async () => {
             rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
           ),
-          rawTour.inclusions && !hasHtmlContent(rawTour.inclusions) ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
-          rawTour.exclusions && !hasHtmlContent(rawTour.exclusions) ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
+          rawTour.inclusions ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
+          rawTour.exclusions ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
         ]);
 
       // Translate itineraries
@@ -688,9 +688,7 @@ const fetchTour = async () => {
         (rawTour.itineraries || []).map(async (it) => {
           const [itTitle, itDesc, itHotel, itMeals] = await Promise.all([
             autoTranslate(it.title, locale.value),
-            hasHtmlContent(it.description)
-              ? Promise.resolve(undefined)
-              : autoTranslate(stripHtml(it.description), locale.value),
+            autoTranslate(stripHtml(it.description), locale.value),
             autoTranslate(it.hotel_info, locale.value),
             autoTranslate(it.meals_info, locale.value),
           ]);

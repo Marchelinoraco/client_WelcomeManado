@@ -629,6 +629,8 @@ export default {
       disclaimer:
         "* 가격은 변동될 수 있습니다. 잔여 좌석과 최종 가격은 문의해 주세요.",
     },
+    inclusions: "포함 사항",
+    exclusions: "불포함 사항",
     downloadItineraryPdf: "일정 PDF 다운로드",
     startingFrom: "시작 가격",
     contactForPrice: "가격 문의",

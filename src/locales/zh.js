@@ -600,6 +600,8 @@ export default {
       priceHeader: "每人价格（IDR）",
       disclaimer: "* 价格可能随时调整，请联系我们确认余位与最终价格。",
     },
+    inclusions: "费用包含",
+    exclusions: "费用不含",
     downloadItineraryPdf: "下载行程（PDF）",
     startingFrom: "起价",
     contactForPrice: "联系获取价格",

@@ -635,6 +635,8 @@ export default {
       disclaimer:
         "* Prices may change at any time. Please contact us to confirm availability and final pricing.",
     },
+    inclusions: "Included",
+    exclusions: "Not Included",
     downloadItineraryPdf: "Download Itinerary (PDF)",
     startingFrom: "Starting From",
     contactForPrice: "Contact for Price",

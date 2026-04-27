@@ -333,19 +333,28 @@
                 </p>
 
                 <div class="mt-auto pt-6">
-                  <button
-                    type="button"
-                    class="w-full h-12 rounded-2xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-60"
-                    :class="
-                      v.available
-                        ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 active:scale-[0.99]'
-                        : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                    "
-                    :disabled="!v.available"
-                    @click="openBooking(v)"
-                  >
-                    {{ $t("transport.rentalSection.bookButton") }}
-                  </button>
+                  <div class="flex gap-2">
+                    <button
+                      type="button"
+                      class="flex-1 h-12 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
+                      @click="openDetail(v)"
+                    >
+                      Detail
+                    </button>
+                    <button
+                      type="button"
+                      class="flex-1 h-12 rounded-2xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-60"
+                      :class="
+                        v.available
+                          ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 active:scale-[0.99]'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      "
+                      :disabled="!v.available"
+                      @click="openBooking(v)"
+                    >
+                      {{ $t("transport.rentalSection.bookButton") }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </article>
@@ -575,6 +584,105 @@
         </div>
       </div>
 
+      <!-- Detail Modal -->
+      <div v-if="isDetailOpen && detailTransportation" class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" @click="closeDetail"></div>
+        <div class="flex min-h-full items-center justify-center px-4 py-8">
+          <div class="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden">
+
+          <!-- Gallery -->
+          <div class="relative bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden" style="min-height: 240px; max-height: 420px;">
+            <img
+              :src="detailImages[detailImageIndex] || transportationImage(detailTransportation)"
+              :alt="detailTransportation.name"
+              class="w-full h-full object-contain"
+              style="max-height: 420px;"
+            />
+
+            <!-- Close -->
+            <button type="button" @click="closeDetail"
+              class="absolute top-4 right-4 w-10 h-10 rounded-2xl bg-black/30 backdrop-blur text-white font-black hover:bg-black/50 transition-colors flex items-center justify-center z-10">
+              ✕
+            </button>
+
+            <!-- Availability badge -->
+            <div class="absolute top-4 left-4 z-10">
+              <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-widest border backdrop-blur"
+                :class="detailTransportation.available ? 'bg-emerald-500/20 text-emerald-700 border-emerald-300' : 'bg-red-500/20 text-red-700 border-red-300'">
+                <span class="h-2 w-2 rounded-full" :class="detailTransportation.available ? 'bg-emerald-500' : 'bg-red-500'"></span>
+                {{ detailTransportation.available ? $t('transport.rentalSection.availability.available') : $t('transport.rentalSection.availability.unavailable') }}
+              </span>
+            </div>
+
+            <!-- Image nav arrows -->
+            <template v-if="detailImages.length > 1">
+              <button type="button" @click="detailImageIndex = (detailImageIndex - 1 + detailImages.length) % detailImages.length"
+                class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur text-white flex items-center justify-center hover:bg-black/50 transition-colors text-lg font-bold z-10">
+                ‹
+              </button>
+              <button type="button" @click="detailImageIndex = (detailImageIndex + 1) % detailImages.length"
+                class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur text-white flex items-center justify-center hover:bg-black/50 transition-colors text-lg font-bold z-10">
+                ›
+              </button>
+            </template>
+
+            <!-- Dot indicators -->
+            <div v-if="detailImages.length > 1" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+              <button v-for="(_, idx) in detailImages" :key="idx" type="button"
+                @click="detailImageIndex = idx"
+                class="h-2 rounded-full transition-all"
+                :class="idx === detailImageIndex ? 'bg-white w-6' : 'bg-white/50 w-2'">
+              </button>
+            </div>
+          </div>
+
+          <!-- Thumbnail strip -->
+          <div v-if="detailImages.length > 1" class="flex gap-2 px-5 pt-4 overflow-x-auto">
+            <button v-for="(img, idx) in detailImages" :key="idx" type="button"
+              @click="detailImageIndex = idx"
+              class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all"
+              :class="idx === detailImageIndex ? 'border-red-600' : 'border-transparent opacity-50 hover:opacity-100'">
+              <img :src="img" class="w-full h-full object-cover" />
+            </button>
+          </div>
+
+          <!-- Content -->
+          <div class="p-6">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h2 class="text-xl font-black text-slate-900 dark:text-white">{{ detailTransportation.name }}</h2>
+                <p class="text-slate-500 dark:text-slate-400 font-bold text-sm mt-1">{{ detailTransportation.type || '-' }}</p>
+              </div>
+              <div v-if="detailTransportation.price" class="text-right flex-shrink-0">
+                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Harga</div>
+                <div class="text-lg font-black text-red-600 mt-0.5">{{ formatIdr(detailTransportation.price) }}</div>
+                <div class="text-[10px] text-slate-400 font-bold">/ hari</div>
+              </div>
+            </div>
+
+            <p v-if="transportationDescription(detailTransportation)" class="text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-sm">
+              {{ transportationDescription(detailTransportation) }}
+            </p>
+          </div>
+
+          <!-- Footer -->
+          <div class="px-6 pb-6 flex gap-3">
+            <button type="button" @click="closeDetail"
+              class="flex-1 h-12 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+              Tutup
+            </button>
+            <button type="button"
+              class="flex-1 h-12 rounded-2xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-60"
+              :class="detailTransportation.available ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-600/20' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'"
+              :disabled="!detailTransportation.available"
+              @click="() => { closeDetail(); openBooking(detailTransportation); }">
+              {{ $t('transport.rentalSection.bookButton') }}
+            </button>
+          </div>
+        </div>
+        </div>
+      </div>
+
       <div class="mt-20 lg:mt-24 mb-12 text-center max-w-3xl mx-auto">
         <div
           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40"
@@ -692,6 +800,31 @@ const fetchHeroImages = async () => {
 const isBookingOpen = ref(false);
 const selectedTransportation = ref(null);
 const bookingSubmitting = ref(false);
+
+// Detail modal
+const isDetailOpen = ref(false);
+const detailTransportation = ref(null);
+const detailImageIndex = ref(0);
+
+const detailImages = computed(() => {
+  const v = detailTransportation.value;
+  if (!v) return [];
+  const imgs = Array.isArray(v.images) && v.images.length ? v.images : [];
+  if (imgs.length) return imgs;
+  const single = transportationImage(v);
+  return single ? [single] : [];
+});
+
+const openDetail = (v) => {
+  detailTransportation.value = v;
+  detailImageIndex.value = 0;
+  isDetailOpen.value = true;
+};
+
+const closeDetail = () => {
+  isDetailOpen.value = false;
+  detailTransportation.value = null;
+};
 const bookingForm = ref({
   customer_name: "",
   customer_phone: "",
