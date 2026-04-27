@@ -647,7 +647,7 @@ const plainTextToHtml = (value) => {
 
   return escaped
     .split(/\n{2,}/)
-    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+    .map((paragraph) => `<p style="text-align:justify">${paragraph.replace(/\n/g, "<br>")}</p>`)
     .join("");
 };
 
@@ -1070,6 +1070,7 @@ const formatCurrency = (price) => {
 
 .tour-rich-content :deep(p) {
   margin: 0 0 1rem;
+  text-align: unset;
 }
 
 .tour-rich-content :deep(ul),

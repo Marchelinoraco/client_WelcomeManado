@@ -98,7 +98,7 @@
             </div>
 
             <div
-              class="prose prose-slate mt-8 max-w-none prose-headings:font-black prose-p:text-slate-600 prose-p:leading-8 prose-li:text-slate-600"
+              class="travel-content mt-8 max-w-none"
               v-html="itemDescriptionHtml"
             ></div>
           </div>
@@ -396,3 +396,132 @@ watch([itemTitle, itemExcerpt, heroImage], () => {
 
 onMounted(fetchItem);
 </script>
+
+<style scoped>
+.travel-content :deep(h2) {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: rgb(15 23 42);
+  margin: 2rem 0 0.875rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.travel-content :deep(h3) {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: rgb(15 23 42);
+  margin: 1.5rem 0 0.75rem;
+  line-height: 1.3;
+}
+.travel-content :deep(p) {
+  margin: 0 0 1.25rem;
+  line-height: 1.9;
+  color: rgb(71 85 105);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.travel-content :deep(ul),
+.travel-content :deep(ol) {
+  margin: 0 0 1.25rem 1.5rem;
+  color: rgb(71 85 105);
+}
+.travel-content :deep(ul) {
+  list-style-type: disc;
+}
+.travel-content :deep(ol) {
+  list-style-type: decimal;
+}
+.travel-content :deep(li) {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+  font-weight: 500;
+}
+.travel-content :deep(blockquote) {
+  border-left: 4px solid rgb(239 68 68);
+  padding: 0.875rem 1.5rem;
+  margin: 1.5rem 0;
+  background: rgb(254 242 242);
+  border-radius: 0 1rem 1rem 0;
+  color: rgb(71 85 105);
+  font-style: italic;
+  font-weight: 500;
+}
+.travel-content :deep(a) {
+  color: rgb(220 38 38);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.travel-content :deep(a:hover) {
+  color: rgb(185 28 28);
+}
+.travel-content :deep(strong) {
+  font-weight: 800;
+  color: rgb(15 23 42);
+}
+.travel-content :deep(em) {
+  font-style: italic;
+}
+.travel-content :deep(s) {
+  text-decoration: line-through;
+  color: rgb(148 163 184);
+}
+.travel-content :deep(u) {
+  text-decoration: underline;
+}
+
+/* ── Images ── */
+.travel-content :deep(figure.image) {
+  display: block;
+  clear: both;
+  margin: 1.5rem auto;
+  max-width: 100%;
+}
+.travel-content :deep(figure.image img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+.travel-content :deep(figure.image figcaption) {
+  font-size: 0.85rem;
+  color: rgb(100 116 139);
+  margin-top: 0.5rem;
+  font-style: italic;
+  text-align: center;
+}
+.travel-content :deep(figure.image.image-style-align-left) {
+  float: left;
+  margin-right: 1.5rem;
+  margin-left: 0;
+  max-width: 50%;
+}
+.travel-content :deep(figure.image.image-style-align-right) {
+  float: right;
+  margin-left: 1.5rem;
+  margin-right: 0;
+  max-width: 50%;
+}
+.travel-content :deep(figure.image.image-style-align-center),
+.travel-content :deep(figure.image.image-style-block-align-center) {
+  margin-left: auto;
+  margin-right: auto;
+}
+.travel-content :deep(figure.image.image-style-side) {
+  float: right;
+  margin-left: 1.5rem;
+  max-width: 50%;
+}
+.travel-content :deep(span.image-inline) {
+  display: inline-block;
+}
+.travel-content :deep(span.image-inline img) {
+  border-radius: 0.5rem;
+  width: auto;
+}
+.travel-content :deep(img) {
+  max-width: 100%;
+  border-radius: 1rem;
+}
+</style>

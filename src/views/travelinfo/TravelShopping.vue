@@ -149,11 +149,10 @@
                 {{ titleByLocale(it) }}
               </h3>
 
-              <p
-                class="text-slate-500 text-sm font-medium leading-relaxed mb-8"
-              >
-                {{ descriptionByLocale(it) }}
-              </p>
+              <div
+                class="card-desc text-slate-500 text-sm font-medium leading-relaxed mb-8"
+                v-html="descriptionByLocale(it)"
+              ></div>
 
               <div
                 class="mt-auto w-full flex items-center justify-between pt-6 border-t border-slate-100 group-hover:border-red-100 transition-colors"
@@ -184,7 +183,6 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { getTravelInfoItems, getHeroImages } from "@/services/api";
-import { stripHtml } from "@/utils/htmlText";
 
 const { locale } = useI18n();
 const router = useRouter();
@@ -233,14 +231,10 @@ const titleByLocale = (it) => {
 
 const descriptionByLocale = (it) => {
   const loc = String(locale.value || "id").toLowerCase();
-  const description = loc.startsWith("en")
-    ? it?.description_en || it?.description || ""
-    : loc.startsWith("ko")
-      ? it?.description_ko || it?.description || ""
-      : loc.startsWith("zh")
-        ? it?.description_zh || it?.description || ""
-        : it?.description || "";
-  return stripHtml(description);
+  if (loc.startsWith("en")) return it?.description_en || it?.description || "";
+  if (loc.startsWith("ko")) return it?.description_ko || it?.description || "";
+  if (loc.startsWith("zh")) return it?.description_zh || it?.description || "";
+  return it?.description || "";
 };
 
 const goToDetail = (it) => {
@@ -279,3 +273,28 @@ onUnmounted(() => {
   if (heroInterval) clearInterval(heroInterval)
 })
 </script>
+
+<style scoped>
+.card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-desc :deep(p) {
+  margin: 0 0 0.5rem;
+  line-height: 1.7;
+}
+.card-desc :deep(p:last-child) {
+  margin-bottom: 0;
+}
+.card-desc :deep(ul),
+.card-desc :deep(ol) {
+  margin: 0 0 0.5rem 1.25rem;
+}
+.card-desc :deep(ul) { list-style-type: disc; }
+.card-desc :deep(ol) { list-style-type: decimal; }
+.card-desc :deep(strong) { font-weight: 700; }
+.card-desc :deep(h2),
+.card-desc :deep(h3) { font-size: 0.875rem; font-weight: 700; }
+</style>

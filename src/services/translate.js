@@ -39,6 +39,15 @@ export const autoTranslate = async (text, targetLang) => {
   return translateText(text, targetLang, 'id');
 };
 
+/**
+ * Translate teks ke bahasa Indonesia dari bahasa apapun (auto-detect source).
+ * Digunakan ketika admin mengisi konten dalam bahasa Inggris tapi user pilih Indonesia.
+ */
+export const translateToId = async (text) => {
+  if (!text) return text;
+  return translateText(text, 'id', 'auto');
+};
+
 // Helper function to handle special characters in URL
 function encodeBreadcrumb(text) {
   return encodeURIComponent(text);

@@ -557,7 +557,7 @@ import {
   X,
 } from "lucide-vue-next";
 import { getNationalTourDetail, getNationalTours } from "@/services/api";
-import { autoTranslate } from "@/services/translate";
+import { autoTranslate, translateToId } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
 import { stripHtml } from "@/utils/htmlText";
 import { dummyNasionalTours } from "./dummyNasionalTours";
@@ -602,7 +602,7 @@ const plainTextToHtml = (value) => {
 
   return escaped
     .split(/\n{2,}/)
-    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+    .map((paragraph) => `<p style="text-align:justify">${paragraph.replace(/\n/g, "<br>")}</p>`)
     .join("");
 };
 
@@ -727,12 +727,47 @@ const fetchTour = async () => {
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     } else {
+      // locale === "id": translate konten ke Indonesia (admin mungkin input bahasa Inggris)
+      const rawDesc = getLocalizedDescriptionFromRaw(rawTour, "id");
+
+      const [translatedTitle, translatedDesc, translatedLocation, translatedInclusions, translatedExclusions] =
+        await Promise.all([
+          translateToId(rawTour.title),
+          translateToId(stripHtml(rawDesc)),
+          translateToId(rawTour.location || "Manado, Sulawesi Utara"),
+          rawTour.inclusions ? translateToId(stripHtml(rawTour.inclusions)) : Promise.resolve(undefined),
+          rawTour.exclusions ? translateToId(stripHtml(rawTour.exclusions)) : Promise.resolve(undefined),
+        ]);
+
+      const processedItineraries = await Promise.all(
+        (rawTour.itineraries || []).map(async (it) => {
+          const [itTitle, itDesc, itHotel, itMeals] = await Promise.all([
+            translateToId(it.title),
+            translateToId(stripHtml(it.description)),
+            translateToId(it.hotel_info),
+            translateToId(it.meals_info),
+          ]);
+          return {
+            ...it,
+            title: itTitle ?? it.title,
+            descriptionHtml: itDesc ? plainTextToHtml(itDesc) : normalizeDescriptionHtml(it.description),
+            hotel_info: itHotel ?? it.hotel_info,
+            meals_info: itMeals ?? it.meals_info,
+          };
+        }),
+      );
+
       tour.value = {
         ...rawTour,
-        description: getLocalizedDescriptionFromRaw(rawTour, locale.value),
-        descriptionHtml: normalizeDescriptionHtml(
-          getLocalizedDescriptionFromRaw(rawTour, locale.value),
-        ),
+        title: translatedTitle ?? rawTour.title,
+        description: translatedDesc ?? rawDesc,
+        descriptionHtml: translatedDesc
+          ? plainTextToHtml(translatedDesc)
+          : normalizeDescriptionHtml(rawDesc),
+        location: translatedLocation ?? rawTour.location,
+        inclusions: translatedInclusions ?? rawTour.inclusions,
+        exclusions: translatedExclusions ?? rawTour.exclusions,
+        itineraries: processedItineraries,
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     }
@@ -938,6 +973,7 @@ const closeImageModal = () => {
 
 .tour-rich-content :deep(p) {
   margin: 0 0 1rem;
+  text-align: unset;
 }
 
 .tour-rich-content :deep(ul),
