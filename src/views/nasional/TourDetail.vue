@@ -557,7 +557,7 @@ import {
   X,
 } from "lucide-vue-next";
 import { getNationalTourDetail, getNationalTours } from "@/services/api";
-import { autoTranslate, translateToId } from "@/services/translate";
+import { autoTranslate, translateToId, translateHtml, translateHtmlToId } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
 import { stripHtml } from "@/utils/htmlText";
 import { dummyNasionalTours } from "./dummyNasionalTours";
@@ -612,25 +612,11 @@ const normalizeDescriptionHtml = (value) =>
 // Translate HTML content preserving list structure
 const translateHtmlContent = async (html, targetLang) => {
   if (!html) return html;
-  if (/<li>/i.test(html)) {
-    const items = [];
-    const liRegex = /<li>([\s\S]*?)<\/li>/gi;
-    let match;
-    while ((match = liRegex.exec(html)) !== null) {
-      const text = stripHtml(match[1]);
-      const translated = targetLang === "id"
-        ? await translateToId(text)
-        : await autoTranslate(text, targetLang);
-      items.push(translated || text);
-    }
-    const tag = /<ol/i.test(html) ? "ol" : "ul";
-    return `<${tag}>${items.map(i => `<li>${i}</li>`).join("")}</${tag}>`;
+  // Translate HTML directly — preserves all formatting tags (bold, italic, lists, etc.)
+  if (targetLang === "id") {
+    return await translateHtmlToId(html);
   }
-  const plain = stripHtml(html);
-  const translated = targetLang === "id"
-    ? await translateToId(plain)
-    : await autoTranslate(plain, targetLang);
-  return plainTextToHtml(translated || plain);
+  return await translateHtml(html, targetLang, 'auto');
 };
 
 const galleryImages = computed(() => {
