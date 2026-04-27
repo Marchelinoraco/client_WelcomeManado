@@ -609,6 +609,30 @@ const plainTextToHtml = (value) => {
 const normalizeDescriptionHtml = (value) =>
   hasHtmlContent(value) ? String(value || "") : plainTextToHtml(value);
 
+// Translate HTML content preserving list structure
+const translateHtmlContent = async (html, targetLang) => {
+  if (!html) return html;
+  if (/<li>/i.test(html)) {
+    const items = [];
+    const liRegex = /<li>([\s\S]*?)<\/li>/gi;
+    let match;
+    while ((match = liRegex.exec(html)) !== null) {
+      const text = stripHtml(match[1]);
+      const translated = targetLang === "id"
+        ? await translateToId(text)
+        : await autoTranslate(text, targetLang);
+      items.push(translated || text);
+    }
+    const tag = /<ol/i.test(html) ? "ol" : "ul";
+    return `<${tag}>${items.map(i => `<li>${i}</li>`).join("")}</${tag}>`;
+  }
+  const plain = stripHtml(html);
+  const translated = targetLang === "id"
+    ? await translateToId(plain)
+    : await autoTranslate(plain, targetLang);
+  return plainTextToHtml(translated || plain);
+};
+
 const galleryImages = computed(() => {
   const urls = (tour.value?.galleries || [])
     .map((g) => g.image_path)
@@ -685,8 +709,8 @@ const fetchTour = async () => {
             rawTour.location || "Manado, Sulawesi Utara",
             locale.value,
           ),
-          rawTour.inclusions ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
-          rawTour.exclusions ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
+          rawTour.inclusions ? translateHtmlContent(rawTour.inclusions, locale.value) : Promise.resolve(undefined),
+          rawTour.exclusions ? translateHtmlContent(rawTour.exclusions, locale.value) : Promise.resolve(undefined),
         ]);
 
       // Translate itineraries
@@ -735,8 +759,8 @@ const fetchTour = async () => {
           translateToId(rawTour.title),
           translateToId(stripHtml(rawDesc)),
           translateToId(rawTour.location || "Manado, Sulawesi Utara"),
-          rawTour.inclusions ? translateToId(stripHtml(rawTour.inclusions)) : Promise.resolve(undefined),
-          rawTour.exclusions ? translateToId(stripHtml(rawTour.exclusions)) : Promise.resolve(undefined),
+          rawTour.inclusions ? translateHtmlContent(rawTour.inclusions, "id") : Promise.resolve(undefined),
+          rawTour.exclusions ? translateHtmlContent(rawTour.exclusions, "id") : Promise.resolve(undefined),
         ]);
 
       const processedItineraries = await Promise.all(
@@ -979,6 +1003,14 @@ const closeImageModal = () => {
 .tour-rich-content :deep(ul),
 .tour-rich-content :deep(ol) {
   margin: 0 0 1rem 1.5rem;
+}
+
+.tour-rich-content :deep(ul) {
+  list-style-type: disc;
+}
+
+.tour-rich-content :deep(ol) {
+  list-style-type: decimal;
 }
 
 .tour-rich-content :deep(li) {

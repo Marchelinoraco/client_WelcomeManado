@@ -7,430 +7,348 @@
     </div>
 
     <div v-else-if="tour" class="pb-32 animate-fade-in">
-        <!-- Premium Hero Header -->
-        <header>
-          <ImageCarousel
-            v-model="galleryIndex"
-            :images="galleryImages"
-            :alt="tour.title"
-            main-class="h-[70vh] lg:h-[85vh] flex items-end overflow-hidden"
-            img-class="scale-105 animate-subtle-zoom"
-            :overlay="true"
-            :show-thumbnails="false"
+      <!-- Premium Hero Header -->
+      <header
+        class="relative h-[70vh] lg:h-[85vh] flex items-end overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"
+        ></div>
+        <img
+          :src="heroImage"
+          class="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom cursor-zoom-in"
+          :alt="tour.title"
+          @click="openImageModal(heroImage)"
+        />
+
+        <div class="absolute top-6 right-6 z-20">
+          <button
+            type="button"
+            class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+            @click.stop="openImageModal(heroImage)"
+            aria-label="Open image"
           >
-            <div class="absolute top-6 right-6 z-30">
-              <button
-                type="button"
-                class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
-                @click.stop="openImageModal(galleryImages[galleryIndex])"
-                aria-label="Open image"
-              >
-                ⤢
-              </button>
-            </div>
+            ⤢
+          </button>
+        </div>
+
+        <div
+          class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
+        >
+          <div
+            class="flex flex-wrap items-center gap-4 mb-8 animate-fade-in-up"
+          >
+            <span
+              class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
+              >{{ tour.category?.name }}</span
+            >
+            <span
+              class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
+            >
+              <template v-if="tour.duration_hours">
+                {{ tour.duration_hours }} {{ $t("tour.hours") }}
+              </template>
+              <template v-else>
+                {{ tour.duration_days }} {{ $t("tour.days") }} /
+                {{ tour.duration_nights }} {{ $t("tour.nights") }}
+              </template>
+            </span>
+          </div>
+
+          <h1
+            class="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8 animate-fade-in-up delay-100 uppercase"
+          >
+            {{ tour.title }}
+          </h1>
+
+          <div
+            class="flex items-center text-white/80 text-sm font-bold animate-fade-in-up delay-200"
+          >
             <div
-              class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 w-full pb-20 lg:pb-32"
+              class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
+            >
+              <MapPinIcon class="w-5 h-5 text-red-400" />
+            </div>
+            <span class="uppercase tracking-widest text-xs">{{
+              tour.location || $t("common.defaultLocation")
+            }}</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Layout -->
+      <main
+        class="max-w-7xl mx-auto px-6 lg:px-10 mt-20 lg:-mt-24 relative z-30"
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <!-- Left Column: Details -->
+          <div class="lg:col-span-8 space-y-24">
+            <!-- Quick Summary Cards -->
+            <div
+              class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in-up delay-300"
             >
               <div
-                class="flex flex-wrap items-center gap-4 mb-8 animate-fade-in-up"
-              >
-                <span
-                  class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-red-600/20"
-                  >{{ tour.category?.name }}</span
-                >
-                <span
-                  class="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl"
-                >
-                  <template v-if="tour.duration_hours">
-                    {{ tour.duration_hours }} {{ $t("tour.hours") }}
-                  </template>
-                  <template v-else>
-                    {{ tour.duration_days }} {{ $t("tour.days") }} /
-                    {{ tour.duration_nights }} {{ $t("tour.nights") }}
-                  </template>
-                </span>
-              </div>
-
-              <h1
-                class="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8 animate-fade-in-up delay-100 uppercase"
-              >
-                {{ tour.title }}
-              </h1>
-
-              <div
-                class="flex items-center text-white/80 text-sm font-bold animate-fade-in-up delay-200"
+                v-for="item in summaryItems"
+                :key="item.label"
+                class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group"
               >
                 <div
-                  class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mr-4 border border-white/10"
+                  class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors"
                 >
-                  <MapPinIcon class="w-5 h-5 text-red-400" />
+                  <component :is="item.icon" class="w-6 h-6" />
                 </div>
-                <span class="uppercase tracking-widest text-xs">{{
-                  tour.location || $t("common.defaultLocation")
-                }}</span>
+                <p
+                  class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"
+                >
+                  {{ item.label }}
+                </p>
+                <p class="text-sm font-black text-slate-900">
+                  {{ item.value }}
+                </p>
               </div>
             </div>
-          </ImageCarousel>
-        </header>
 
-        <!-- Content Layout -->
-        <main
-          class="max-w-7xl mx-auto px-6 lg:px-10 mt-20 lg:-mt-24 relative z-30"
-        >
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-            <!-- Left Column: Details -->
-            <div class="lg:col-span-8 space-y-24">
-              <!-- Quick Summary Cards -->
-              <div
-                class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in-up delay-300"
-              >
-                <div
-                  v-for="item in summaryItems"
-                  :key="item.label"
-                  class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group"
+            <!-- Overview -->
+            <section class="animate-fade-in-up delay-400">
+              <div class="flex items-center space-x-4 mb-8">
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                <h2
+                  class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
                 >
-                  <div
-                    class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors"
+                  {{ $t("tour.experienceDetails") }}
+                </h2>
+              </div>
+              <div
+                class="tour-rich-content text-slate-500 leading-[1.8] text-lg font-medium"
+                v-html="tour.descriptionHtml"
+              ></div>
+
+              <div v-if="tour.itinerary_pdf_path" class="mt-10">
+                <a
+                  :href="tour.itinerary_pdf_path"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center px-8 py-4 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all hover:scale-105 shadow-xl shadow-slate-900/20"
+                >
+                  <Download class="w-4 h-4 mr-3" />
+                  {{ $t("tour.downloadItineraryPdf") }}
+                </a>
+              </div>
+            </section>
+
+            <!-- Visual Journey (Carousel) -->
+            <section
+              v-if="galleryImages.length > 1"
+              class="animate-fade-in-up delay-500"
+            >
+              <div class="flex items-center space-x-4 mb-10">
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                <h2
+                  class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+                >
+                  {{ $t("tour.visualJourney") }}
+                </h2>
+              </div>
+              <ImageCarousel
+                v-model="galleryIndex"
+                :images="galleryImages"
+                :alt="tour.title"
+                main-class="aspect-[4/3] md:aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm"
+                thumbnail-class="w-20 h-20 sm:w-24 sm:h-24"
+                :show-controls="galleryImages.length > 1"
+                :show-counter="galleryImages.length > 1"
+              >
+                <div class="absolute top-6 right-6 z-30">
+                  <button
+                    type="button"
+                    class="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-white font-black hover:bg-white/20 transition-colors"
+                    @click.stop="openImageModal(galleryImages[galleryIndex])"
+                    aria-label="Open image"
                   >
-                    <component :is="item.icon" class="w-6 h-6" />
-                  </div>
-                  <p
-                    class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"
-                  >
-                    {{ item.label }}
-                  </p>
-                  <p class="text-sm font-black text-slate-900">
-                    {{ item.value }}
-                  </p>
+                    ⤢
+                  </button>
                 </div>
+              </ImageCarousel>
+            </section>
+
+            <!-- Itinerary: Modern Timeline -->
+            <section
+              v-if="tour.itineraries?.length"
+              class="animate-fade-in-up delay-600"
+            >
+              <div class="flex items-center space-x-4 mb-12">
+                <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                <h2
+                  class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
+                >
+                  {{ $t("tour.plannedItinerary") }}
+                </h2>
               </div>
 
-              <!-- Overview -->
-              <section class="animate-fade-in-up delay-400">
-                <div class="flex items-center space-x-4 mb-8">
-                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
-                  <h2
-                    class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
-                  >
-                    {{ $t("tour.experienceDetails") }}
-                  </h2>
-                </div>
+              <div class="space-y-12">
                 <div
-                  class="tour-rich-content text-slate-500 leading-[1.8] text-lg font-medium"
-                  v-html="tour.descriptionHtml"
-                ></div>
-
-                <div v-if="tour.itinerary_pdf_path" class="mt-10">
-                  <a
-                    :href="tour.itinerary_pdf_path"
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-flex items-center px-8 py-4 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all hover:scale-105 shadow-xl shadow-slate-900/20"
-                  >
-                    <Download class="w-4 h-4 mr-3" />
-                    {{ $t("tour.downloadItineraryPdf") }}
-                  </a>
-                </div>
-              </section>
-
-              <!-- Price Breakdown Table -->
-              <section
-                v-if="false && tour.price_details?.length"
-                class="animate-fade-in-up delay-450"
-              >
-                <div class="flex items-center space-x-4 mb-8">
-                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
-                  <h2
-                    class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
-                  >
-                    {{ $t("tour.priceBreakdownTitle") }}
-                  </h2>
-                </div>
-
-                <div
-                  class="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm"
+                  v-for="item in tour.itineraries"
+                  :key="item.id"
+                  class="group relative flex gap-8 lg:gap-12"
                 >
-                  <table class="w-full text-left border-collapse">
-                    <thead>
-                      <tr class="bg-slate-50">
-                        <th
-                          class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100"
-                        >
-                          {{ $t("tour.priceBreakdown.paxHeader") }}
-                        </th>
-                        <th
-                          class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 text-right"
-                        >
-                          {{ $t("tour.priceBreakdown.priceHeader") }}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(price, idx) in tour.price_details"
-                        :key="idx"
-                        class="hover:bg-red-50/30 transition-colors group"
-                      >
-                        <td
-                          class="px-8 py-5 text-sm font-bold text-slate-600 border-b border-slate-50 group-last:border-0"
-                        >
-                          {{ price.pax_range }}
-                        </td>
-                        <td
-                          class="px-8 py-5 text-sm font-black text-red-600 border-b border-slate-50 text-right group-last:border-0"
-                        >
-                          {{ formatPrice(price.price_per_pax) }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="px-8 py-4 bg-red-50/50 border-t border-slate-100">
-                    <p class="text-[10px] font-bold text-red-600/70 italic">
-                      {{ $t("tour.priceBreakdown.disclaimer") }}
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Gallery Grid -->
-              <section
-                v-if="tour.galleries?.length > 1"
-                class="animate-fade-in-up delay-500"
-              >
-                <div class="flex items-center space-x-4 mb-10">
-                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
-                  <h2
-                    class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
-                  >
-                    {{ $t("tour.visualJourney") }}
-                  </h2>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
+                  <!-- Timeline Line -->
                   <div
-                    v-for="(img, idx) in galleryPreview"
-                    :key="idx"
-                    class="relative aspect-square rounded-[2rem] overflow-hidden group cursor-pointer border border-slate-100"
-                    @click="
-                      galleryIndex = idx;
-                      openImageModal(img.image_path);
-                    "
-                  >
-                    <img
-                      :src="img.image_path"
-                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div
-                      class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                    ></div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Itinerary: Modern Timeline -->
-              <section
-                v-if="tour.itineraries?.length"
-                class="animate-fade-in-up delay-600"
-              >
-                <div class="flex items-center space-x-4 mb-12">
-                  <div class="w-12 h-1 bg-red-600 rounded-full"></div>
-                  <h2
-                    class="text-2xl font-black text-slate-900 uppercase tracking-tighter"
-                  >
-                    {{ $t("tour.plannedItinerary") }}
-                  </h2>
-                </div>
-
-                <div class="space-y-12">
-                  <div
-                    v-for="item in tour.itineraries"
-                    :key="item.id"
-                    class="group relative flex gap-8 lg:gap-12"
-                  >
-                    <!-- Timeline Line -->
-                    <div
-                      class="absolute left-[23px] top-12 bottom-0 w-px bg-slate-100 group-last:hidden"
-                    ></div>
-
-                    <!-- Day Badge -->
-                    <div class="relative flex-shrink-0">
-                      <div
-                        class="w-12 h-12 rounded-2xl bg-white border-2 border-red-600 flex items-center justify-center text-red-600 font-black text-sm shadow-xl shadow-red-600/10 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
-                      >
-                        {{ item.day_number }}
-                      </div>
-                    </div>
-
-                    <!-- Content Card -->
-                    <div
-                      class="bg-white p-8 lg:p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all flex-1"
-                    >
-                      <div
-                        class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
-                      >
-                        <h3
-                          class="text-xl font-black text-slate-900 uppercase tracking-tight"
-                        >
-                          {{ item.title }}
-                        </h3>
-                        <div class="flex flex-wrap gap-3">
-                          <span
-                            v-if="item.meals_info"
-                            class="inline-flex items-center px-4 py-1.5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-widest rounded-xl"
-                          >
-                            <UtensilsIcon class="w-3 h-3 mr-2" />
-                            {{ item.meals_info }}
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        class="tour-rich-content text-slate-500 text-sm leading-relaxed font-medium mb-8"
-                        v-html="item.descriptionHtml || normalizeDescriptionHtml(item.description)"
-                      ></div>
-
-                      <div
-                        v-if="item.hotel_info"
-                        class="inline-flex items-center p-4 bg-slate-50 rounded-2xl border border-slate-100"
-                      >
-                        <div
-                          class="w-10 h-10 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm"
-                        >
-                          <HotelIcon class="w-5 h-5 text-red-600" />
-                        </div>
-                        <div>
-                          <p
-                            class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5"
-                          >
-                            {{ $t("tour.accommodation") }}
-                          </p>
-                          <p class="text-sm font-black text-slate-800">
-                            {{ item.hotel_info }}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-
-            <!-- Right Column: Premium Booking Card -->
-            <div class="lg:col-span-4">
-              <div class="sticky top-32 space-y-8 animate-fade-in-up delay-700">
-                <!-- Modern Price Card -->
-                <div
-                  class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-red-900/40 relative overflow-hidden group"
-                >
-                  <!-- Background Decoration -->
-                  <div
-                    class="absolute -top-20 -right-20 w-64 h-64 bg-red-600/20 rounded-full blur-[80px] group-hover:bg-red-600/30 transition-colors"
+                    class="absolute left-[23px] top-12 bottom-0 w-px bg-slate-100 group-last:hidden"
                   ></div>
 
-                  <div class="relative z-10">
-                    <span
-                      class="px-4 py-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
-                      >{{ $t("tour.bestPrice") }}</span
+                  <!-- Day Badge -->
+                  <div class="relative flex-shrink-0">
+                    <div
+                      class="w-12 h-12 rounded-2xl bg-white border-2 border-red-600 flex items-center justify-center text-red-600 font-black text-sm shadow-xl shadow-red-600/10 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
                     >
+                      {{ item.day_number }}
+                    </div>
+                  </div>
 
-                    <div v-if="false && tour.base_price">
-                      <p
-                        class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
+                  <!-- Content Card -->
+                  <div
+                    class="bg-white p-8 lg:p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all flex-1"
+                  >
+                    <div
+                      class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+                    >
+                      <h3
+                        class="text-xl font-black text-slate-900 uppercase tracking-tight"
                       >
-                        {{ $t("tour.investment") }}
-                      </p>
-                      <div class="flex items-baseline gap-2 mb-10">
-                        <span class="text-xs font-black text-red-400">IDR</span>
-                        <span class="text-5xl font-black tracking-tighter">{{
-                          formatPrice(tour.base_price)
-                        }}</span>
-                        <span class="text-white/40 text-sm font-bold">
-                          {{ $t("tour.perPax") }}
+                        {{ item.title }}
+                      </h3>
+                      <div class="flex flex-wrap gap-3">
+                        <span
+                          v-if="item.meals_info"
+                          class="inline-flex items-center px-4 py-1.5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-widest rounded-xl"
+                        >
+                          <UtensilsIcon class="w-3 h-3 mr-2" />
+                          {{ item.meals_info }}
                         </span>
                       </div>
                     </div>
-                    <div v-else class="mb-10">
-                      <p
-                        class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
-                      >
-                        {{ $t("tour.pricingInfo") }}
-                      </p>
-                      <h3
-                        class="text-2xl font-black text-white uppercase tracking-tight"
-                      >
-                        {{ $t("tour.contactInquiry") }}
-                      </h3>
-                    </div>
+                    <div
+                      class="tour-rich-content text-slate-500 text-sm leading-relaxed font-medium mb-8"
+                      v-html="item.descriptionHtml || normalizeDescriptionHtml(item.description)"
+                    ></div>
 
-                    <!-- Features List -->
-                    <div class="space-y-5 mb-12">
+                    <div
+                      v-if="item.hotel_info"
+                      class="inline-flex items-center p-4 bg-slate-50 rounded-2xl border border-slate-100"
+                    >
                       <div
-                        v-for="feat in featureList"
-                        :key="feat"
-                        class="flex items-center text-sm font-bold text-white/70"
+                        class="w-10 h-10 rounded-xl bg-white flex items-center justify-center mr-4 shadow-sm"
                       >
-                        <div
-                          class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center mr-4 flex-shrink-0"
+                        <HotelIcon class="w-5 h-5 text-red-600" />
+                      </div>
+                      <div>
+                        <p
+                          class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5"
                         >
-                          <CheckIcon class="w-3 h-3 text-red-400" />
-                        </div>
-                        {{ feat }}
+                          {{ $t("tour.accommodation") }}
+                        </p>
+                        <p class="text-sm font-black text-slate-800">
+                          {{ item.hotel_info }}
+                        </p>
                       </div>
                     </div>
-
-                    <button
-                      v-if="false && tour.base_price"
-                      class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/40 active:scale-95 flex items-center justify-center group/btn mb-4"
-                    >
-                      {{ $t("tour.reserveSpot") }}
-                      <ArrowRight
-                        class="ml-3 w-5 h-5 group/btn:translate-x-1 transition-transform"
-                      />
-                    </button>
-
-                    <a
-                      :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
-                      target="_blank"
-                      class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/20 active:scale-95 flex items-center justify-center group/wa"
-                    >
-                      <MessageCircle class="mr-3 w-5 h-5" />
-                      {{ $t("tour.chatWA") }}
-                    </a>
-
-                    <p
-                      class="text-center text-[10px] text-white/30 mt-6 font-bold uppercase tracking-widest"
-                    >
-                      {{ $t("tour.securePayment") }}
-                    </p>
                   </div>
                 </div>
+              </div>
+            </section>
+          </div>
 
-                <!-- Help Card -->
+          <!-- Right Column: Premium Booking Card -->
+          <div class="lg:col-span-4">
+            <div class="sticky top-32 space-y-8 animate-fade-in-up delay-700">
+              <!-- Modern Price Card -->
+              <div
+                class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-red-900/40 relative overflow-hidden group"
+              >
                 <div
-                  class="bg-red-50 p-8 rounded-[2.5rem] border border-red-100 group hover:bg-red-100 transition-colors"
-                >
-                  <div class="flex items-center space-x-4">
-                    <div
-                      class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-red-600 shadow-sm group-hover:scale-110 transition-transform"
+                  class="absolute -top-20 -right-20 w-64 h-64 bg-red-600/20 rounded-full blur-[80px] group-hover:bg-red-600/30 transition-colors"
+                ></div>
+
+                <div class="relative z-10">
+                  <span
+                    class="px-4 py-1.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl mb-8 inline-block"
+                    >{{ $t("tour.bestPrice") }}</span
+                  >
+
+                  <div class="mb-10">
+                    <p
+                      class="text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-3"
                     >
-                      <StarIcon class="w-7 h-7" />
-                    </div>
-                    <div>
-                      <h4
-                        class="text-sm font-black text-red-900 uppercase tracking-widest mb-1"
+                      {{ $t("tour.pricingInfo") }}
+                    </p>
+                    <h3
+                      class="text-2xl font-black text-white uppercase tracking-tight"
+                    >
+                      {{ $t("tour.contactInquiry") }}
+                    </h3>
+                  </div>
+
+                  <!-- Features List -->
+                  <div class="space-y-5 mb-12">
+                    <div
+                      v-for="feat in featureList"
+                      :key="feat"
+                      class="flex items-center text-sm font-bold text-white/70"
+                    >
+                      <div
+                        class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center mr-4 flex-shrink-0"
                       >
-                        {{ $t("tour.tailoredJourney") }}
-                      </h4>
-                      <p
-                        class="text-xs font-bold text-red-600/70 leading-relaxed"
-                      >
-                        {{ $t("tour.customizeTour") }}
-                      </p>
+                        <CheckIcon class="w-3 h-3 text-red-400" />
+                      </div>
+                      {{ feat }}
                     </div>
+                  </div>
+
+                  <a
+                    :href="`https://wa.me/6282173738822?text=Halo%20Welcome%20Manado,%20saya%20ingin%20bertanya%20tentang%20paket%20tour:%20${tour.title}`"
+                    target="_blank"
+                    class="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-black rounded-[2rem] transition-all uppercase tracking-[0.2em] text-xs shadow-2xl shadow-red-600/20 active:scale-95 flex items-center justify-center group/wa"
+                  >
+                    <MessageCircle class="mr-3 w-5 h-5" />
+                    {{ $t("tour.chatWA") }}
+                  </a>
+
+                  <p
+                    class="text-center text-[10px] text-white/30 mt-6 font-bold uppercase tracking-widest"
+                  >
+                    {{ $t("tour.securePayment") }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Help Card -->
+              <div
+                class="bg-red-50 p-8 rounded-[2.5rem] border border-red-100 group hover:bg-red-100 transition-colors"
+              >
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-red-600 shadow-sm group-hover:scale-110 transition-transform"
+                  >
+                    <StarIcon class="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h4
+                      class="text-sm font-black text-red-900 uppercase tracking-widest mb-1"
+                    >
+                      {{ $t("tour.tailoredJourney") }}
+                    </h4>
+                    <p
+                      class="text-xs font-bold text-red-600/70 leading-relaxed"
+                    >
+                      {{ $t("tour.customizeTour") }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </main>
+        </div>
+      </main>
 
       <!-- Inclusions & Exclusions -->
       <section
@@ -443,18 +361,19 @@
               <CheckIcon class="w-6 h-6 mr-3 text-emerald-600" />
               {{ $t("tour.inclusions") }}
             </h3>
-            <div class="tour-rich-content text-emerald-800 text-sm prose prose-emerald prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
+            <div class="tour-rich-content text-emerald-800 text-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.inclusions)"></div>
           </div>
           <div v-if="tour.exclusions" class="bg-red-50 rounded-3xl p-8 border border-red-100">
             <h3 class="text-xl font-black text-red-900 mb-6 flex items-center">
               <X class="w-6 h-6 mr-3 text-red-600" />
               {{ $t("tour.exclusions") }}
             </h3>
-            <div class="tour-rich-content text-red-800 text-sm prose prose-red prose-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
+            <div class="tour-rich-content text-red-800 text-sm leading-relaxed" v-html="normalizeDescriptionHtml(tour.exclusions)"></div>
           </div>
         </div>
       </section>
 
+      <!-- Recommended Tours -->
       <section
         v-if="recommendedTours.length"
         class="max-w-7xl mx-auto px-6 lg:px-10 mt-24"
@@ -501,6 +420,7 @@
       </a>
     </div>
 
+    <!-- Image Modal -->
     <div
       v-if="isImageModalOpen"
       class="fixed inset-0 z-[200] flex items-center justify-center p-6"
@@ -538,22 +458,13 @@ import {
   Utensils as UtensilsIcon,
   Star as StarIcon,
   Check as CheckIcon,
-  Plane as PlaneIcon,
-  ArrowRight,
-  ShieldCheck,
   Users,
-  Compass,
   MessageCircle,
-  Phone,
-  Share2,
-  Facebook,
-  Instagram,
-  Mail,
   Download,
   X,
 } from "lucide-vue-next";
 import { getLocalTourDetail, getLocalTours } from "@/services/api";
-import { autoTranslate } from "@/services/translate";
+import { autoTranslate, translateToId } from "@/services/translate";
 import { applySeo } from "@/utils/seo";
 import { stripHtml } from "@/utils/htmlText";
 import { dummyLocalTours } from "./dummyLocalTours";
@@ -590,12 +501,10 @@ const hasHtmlContent = (value) => /<[^>]+>/.test(String(value || ""));
 const plainTextToHtml = (value) => {
   const text = String(value || "").trim();
   if (!text) return "";
-
   const escaped = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-
   return escaped
     .split(/\n{2,}/)
     .map((paragraph) => `<p style="text-align:justify">${paragraph.replace(/\n/g, "<br>")}</p>`)
@@ -605,25 +514,43 @@ const plainTextToHtml = (value) => {
 const normalizeDescriptionHtml = (value) =>
   hasHtmlContent(value) ? String(value || "") : plainTextToHtml(value);
 
+const translateHtmlContent = async (html, targetLang) => {
+  if (!html) return html;
+  if (/<li>/i.test(html)) {
+    const items = [];
+    const liRegex = /<li>([\s\S]*?)<\/li>/gi;
+    let match;
+    while ((match = liRegex.exec(html)) !== null) {
+      const text = stripHtml(match[1]);
+      const translated = targetLang === "id"
+        ? await translateToId(text)
+        : await autoTranslate(text, targetLang);
+      items.push(translated || text);
+    }
+    const tag = /<ol/i.test(html) ? "ol" : "ul";
+    return `<${tag}>${items.map(i => `<li>${i}</li>`).join("")}</${tag}>`;
+  }
+  const plain = stripHtml(html);
+  const translated = targetLang === "id"
+    ? await translateToId(plain)
+    : await autoTranslate(plain, targetLang);
+  return plainTextToHtml(translated || plain);
+};
+
 const galleryImages = computed(() => {
   const urls = (tour.value?.galleries || [])
     .map((g) => g.image_path)
     .filter(Boolean);
   return urls.length
     ? urls
-    : [
-        "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80",
-      ];
+    : ["https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80"];
 });
+
+const heroImage = computed(() => galleryImages.value[0]);
 
 const normalizePriceDetails = (list) => {
   if (!Array.isArray(list)) return [];
-  if (
-    list.length &&
-    Object.prototype.hasOwnProperty.call(list[0], "pax_range")
-  ) {
-    return list;
-  }
+  if (list.length && Object.prototype.hasOwnProperty.call(list[0], "pax_range")) return list;
   return list.map((p) => ({
     pax_range: p.label || p.type || "-",
     price_per_pax: Number(p.total ?? p.base_price ?? p.price ?? 0),
@@ -634,13 +561,11 @@ const fetchTour = async () => {
   loading.value = true;
   try {
     let rawTour;
-
     try {
       const response = await getLocalTourDetail(route.params.slug);
       rawTour = response.data.data;
-    } catch (apiError) {
-      rawTour =
-        dummyLocalTours.find((t) => t.slug === route.params.slug) || null;
+    } catch {
+      rawTour = dummyLocalTours.find((t) => t.slug === route.params.slug) || null;
     }
 
     if (!rawTour) {
@@ -648,8 +573,7 @@ const fetchTour = async () => {
       recommendedTours.value = [];
       applySeo({
         title: "Detail Tour Lokal Manado",
-        description:
-          "Lihat detail paket tour lokal Manado lengkap dengan itinerary, durasi, dan informasi penting lainnya.",
+        description: "Lihat detail paket tour lokal Manado lengkap dengan itinerary, durasi, dan informasi penting lainnya.",
         url: route.fullPath,
         type: "article",
       });
@@ -666,7 +590,6 @@ const fetchTour = async () => {
       const hasAdminLocalizedDescription =
         localizedDescription && localizedDescription !== (rawTour.description || "");
 
-      // Translate main tour info
       const [translatedTitle, translatedDesc, translatedLocation, translatedInclusions, translatedExclusions] =
         await Promise.all([
           autoTranslate(rawTour.title, locale.value),
@@ -675,15 +598,11 @@ const fetchTour = async () => {
             : hasHtmlContent(rawTour.description)
             ? Promise.resolve(undefined)
             : autoTranslate(stripHtml(rawTour.description), locale.value),
-          autoTranslate(
-            rawTour.location || "Manado, Sulawesi Utara",
-            locale.value,
-          ),
-          rawTour.inclusions ? autoTranslate(stripHtml(rawTour.inclusions), locale.value) : Promise.resolve(undefined),
-          rawTour.exclusions ? autoTranslate(stripHtml(rawTour.exclusions), locale.value) : Promise.resolve(undefined),
+          autoTranslate(rawTour.location || "Manado, Sulawesi Utara", locale.value),
+          rawTour.inclusions ? translateHtmlContent(rawTour.inclusions, locale.value) : Promise.resolve(undefined),
+          rawTour.exclusions ? translateHtmlContent(rawTour.exclusions, locale.value) : Promise.resolve(undefined),
         ]);
 
-      // Translate itineraries
       const translatedItineraries = await Promise.all(
         (rawTour.itineraries || []).map(async (it) => {
           const [itTitle, itDesc, itHotel, itMeals] = await Promise.all([
@@ -719,12 +638,46 @@ const fetchTour = async () => {
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     } else {
+      const rawDesc = getLocalizedDescriptionFromRaw(rawTour, "id");
+
+      const [translatedTitle, translatedDesc, translatedLocation, translatedInclusions, translatedExclusions] =
+        await Promise.all([
+          translateToId(rawTour.title),
+          translateToId(stripHtml(rawDesc)),
+          translateToId(rawTour.location || "Manado, Sulawesi Utara"),
+          rawTour.inclusions ? translateHtmlContent(rawTour.inclusions, "id") : Promise.resolve(undefined),
+          rawTour.exclusions ? translateHtmlContent(rawTour.exclusions, "id") : Promise.resolve(undefined),
+        ]);
+
+      const processedItineraries = await Promise.all(
+        (rawTour.itineraries || []).map(async (it) => {
+          const [itTitle, itDesc, itHotel, itMeals] = await Promise.all([
+            translateToId(it.title),
+            translateToId(stripHtml(it.description)),
+            translateToId(it.hotel_info),
+            translateToId(it.meals_info),
+          ]);
+          return {
+            ...it,
+            title: itTitle ?? it.title,
+            descriptionHtml: itDesc ? plainTextToHtml(itDesc) : normalizeDescriptionHtml(it.description),
+            hotel_info: itHotel ?? it.hotel_info,
+            meals_info: itMeals ?? it.meals_info,
+          };
+        }),
+      );
+
       tour.value = {
         ...rawTour,
-        description: getLocalizedDescriptionFromRaw(rawTour, locale.value),
-        descriptionHtml: normalizeDescriptionHtml(
-          getLocalizedDescriptionFromRaw(rawTour, locale.value),
-        ),
+        title: translatedTitle ?? rawTour.title,
+        description: translatedDesc ?? rawDesc,
+        descriptionHtml: translatedDesc
+          ? plainTextToHtml(translatedDesc)
+          : normalizeDescriptionHtml(rawDesc),
+        location: translatedLocation ?? rawTour.location,
+        inclusions: translatedInclusions ?? rawTour.inclusions,
+        exclusions: translatedExclusions ?? rawTour.exclusions,
+        itineraries: processedItineraries,
         price_details: normalizePriceDetails(rawTour.price_details),
       };
     }
@@ -732,7 +685,7 @@ const fetchTour = async () => {
     applySeo({
       title: tour.value.title,
       description: stripHtml(tour.value.description),
-      image: galleryImages.value[0],
+      image: heroImage.value,
       url: route.fullPath,
       type: "article",
     });
@@ -744,36 +697,30 @@ const fetchTour = async () => {
         return list;
       } catch {
         return dummyLocalTours.filter((t) => {
-          const slug =
-            typeof t.category === "string" ? t.category : t.category?.slug;
+          const slug = typeof t.category === "string" ? t.category : t.category?.slug;
           return slug && slug === categorySlug;
         });
       }
     };
 
     const list = await fetchRecommended();
-    const base = list
-      .filter((t) => t?.slug && t.slug !== rawTour.slug)
-      .slice(0, 3);
+    const base = list.filter((t) => t?.slug && t.slug !== rawTour.slug).slice(0, 3);
 
     if (locale.value !== "id" && base.length) {
       const translated = await Promise.all(
         base.map(async (it) => {
-          const [title, description, location, categoryName] =
-            await Promise.all([
-              autoTranslate(it.title || "", locale.value),
-              autoTranslate(stripHtml(it.description || ""), locale.value),
-              autoTranslate(it.location || "", locale.value),
-              autoTranslate(it.category?.name || "", locale.value),
-            ]);
+          const [title, description, location, categoryName] = await Promise.all([
+            autoTranslate(it.title || "", locale.value),
+            autoTranslate(stripHtml(it.description || ""), locale.value),
+            autoTranslate(it.location || "", locale.value),
+            autoTranslate(it.category?.name || "", locale.value),
+          ]);
           return {
             ...it,
             title,
             description,
             location,
-            category: it.category
-              ? { ...it.category, name: categoryName }
-              : it.category,
+            category: it.category ? { ...it.category, name: categoryName } : it.category,
           };
         }),
       );
@@ -793,62 +740,22 @@ const fetchTour = async () => {
 onMounted(fetchTour);
 watch(locale, fetchTour);
 
-
-const displayImages = computed(() => {
-  return galleryImages.value;
-});
-
-const galleryPreview = computed(() => {
-  return (tour.value?.galleries || []).slice(0, 5);
-});
-
 const summaryItems = computed(() => {
   let durationValue = `${tour.value?.duration_days} ${t("tour.days")} / ${tour.value?.duration_nights} ${t("tour.nights")}`;
-  if (tour.value?.duration_hours_min && tour.value?.duration_hours_max) {
-    durationValue = `${tour.value.duration_hours_min}-${tour.value.duration_hours_max} ${t("tour.hours")}`;
-  } else if (tour.value?.duration_hours) {
+  if (tour.value?.duration_hours) {
     durationValue = `${tour.value.duration_hours} ${t("tour.hours")}`;
   }
-
   return [
-    {
-      label: t("tour.duration"),
-      value: durationValue,
-      icon: ClockIcon,
-    },
+    { label: t("tour.duration"), value: durationValue, icon: ClockIcon },
     { label: t("tour.groupSize"), value: t("tour.pax"), icon: Users },
-    // {
-    //   label: t("tour.language"),
-    //   value: t("tour.languageValue"),
-    //   icon: Compass,
-    // },
-    // {
-    //   label: t("tour.insurance"),
-    //   value: t("tour.included"),
-    //   icon: ShieldCheck,
-    // },
   ];
 });
 
-const formatPrice = (price) => {
-  const localeMap = {
-    id: "id-ID",
-    en: "en-US",
-    zh: "zh-CN",
-    ko: "ko-KR",
-  };
-  return new Intl.NumberFormat(localeMap[locale.value] || "en-US").format(
-    price,
-  );
-};
-
-const featureList = computed(() => {
-  return [
-    t("tour.expertGuide"),
-    tour.value?.base_price ? t("tour.premiumAcc") : t("tour.safetyEquip"),
-    t("tour.instantBooking"),
-  ];
-});
+const featureList = computed(() => [
+  t("tour.expertGuide"),
+  t("tour.safetyEquip"),
+  t("tour.instantBooking"),
+]);
 
 const openImageModal = (src) => {
   if (!src) return;
@@ -864,72 +771,39 @@ const closeImageModal = () => {
 
 <style scoped>
 @keyframes subtle-zoom {
-  from {
-    transform: scale(1.05);
-  }
-  to {
-    transform: scale(1.15);
-  }
+  from { transform: scale(1.05); }
+  to { transform: scale(1.15); }
 }
 .animate-subtle-zoom {
   animation: subtle-zoom 30s infinite alternate ease-in-out;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
 }
 
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in-up {
   animation: fade-in-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-.delay-100 {
-  animation-delay: 0.1s;
-}
-.delay-200 {
-  animation-delay: 0.2s;
-}
-.delay-300 {
-  animation-delay: 0.3s;
-}
-.delay-400 {
-  animation-delay: 0.4s;
-}
-.delay-500 {
-  animation-delay: 0.5s;
-}
-.delay-600 {
-  animation-delay: 0.6s;
-}
-.delay-700 {
-  animation-delay: 0.7s;
-}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
 
 @keyframes bounce-slow {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 .animate-bounce-slow {
   animation: bounce-slow 3s infinite ease-in-out;
@@ -939,11 +813,19 @@ const closeImageModal = () => {
   margin: 0 0 1rem;
   text-align: unset;
 }
-
+.tour-rich-content :deep(ul),
+.tour-rich-content :deep(ol) {
+  margin: 0 0 1rem 1.5rem;
+}
+.tour-rich-content :deep(ul) {
+  list-style-type: disc;
+}
+.tour-rich-content :deep(ol) {
+  list-style-type: decimal;
+}
 .tour-rich-content :deep(li) {
   margin-bottom: 0.5rem;
 }
-
 .tour-rich-content :deep(h1),
 .tour-rich-content :deep(h2),
 .tour-rich-content :deep(h3),
@@ -953,14 +835,8 @@ const closeImageModal = () => {
   line-height: 1.2;
   margin: 0 0 1rem;
 }
-
 .tour-rich-content :deep(a) {
   color: rgb(220 38 38);
   text-decoration: underline;
 }
 </style>
-
-.tour-rich-content :deep(ul),
-.tour-rich-content :deep(ol) {
-  margin: 0 0 1rem 1.5rem;
-}
