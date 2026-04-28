@@ -164,6 +164,10 @@ export const getTransportations = async (params = {}) => {
   return api.get("/transportations", { params });
 };
 
+export const getTransportDestinations = async (params = {}) => {
+  return api.get("/transport-destinations", { params });
+};
+
 export const createTransportationBooking = async (payload) => {
   if (USE_DUMMY) {
     return { data: { data: { id: 0, ...payload } } };

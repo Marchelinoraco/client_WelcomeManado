@@ -711,11 +711,23 @@
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
+        <!-- Loading skeleton -->
+        <template v-if="destinationsLoading">
+          <div v-for="i in 4" :key="i" class="animate-pulse bg-white/90 dark:bg-slate-900/80 rounded-[2rem] p-6 border border-slate-200/70 dark:border-slate-800">
+            <div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full mb-5"></div>
+            <div class="h-5 w-3/4 bg-slate-100 dark:bg-slate-800 rounded-xl mb-3"></div>
+            <div class="h-4 w-full bg-slate-100 dark:bg-slate-800 rounded-xl mb-2"></div>
+            <div class="h-4 w-5/6 bg-slate-100 dark:bg-slate-800 rounded-xl"></div>
+          </div>
+        </template>
+
         <!-- Destination Card -->
         <article
-          v-for="(dest, index) in transportDestinations"
-          :key="index"
-          class="group bg-white/90 dark:bg-slate-900/80 rounded-[2rem] p-6 shadow-sm dark:shadow-slate-950/30 hover:shadow-xl hover:shadow-red-900/10 dark:hover:shadow-black/40 transition-all duration-500 border border-slate-200/70 dark:border-slate-800 flex flex-col items-start text-left"
+          v-else
+          v-for="dest in transportDestinations"
+          :key="dest.id"
+          class="group bg-white/90 dark:bg-slate-900/80 rounded-[2rem] p-6 shadow-sm dark:shadow-slate-950/30 hover:shadow-xl hover:shadow-red-900/10 dark:hover:shadow-black/40 transition-all duration-500 border border-slate-200/70 dark:border-slate-800 flex flex-col items-start text-left cursor-pointer"
+          @click="openDestDetail(dest)"
         >
           <div
             class="w-12 h-12 bg-gradient-to-br from-red-50 to-white dark:from-red-500/10 dark:to-slate-900 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 border border-red-100 dark:border-red-900/30"
@@ -726,13 +738,13 @@
           <h3
             class="text-xl font-black text-slate-900 dark:text-white leading-tight mb-3 group-hover:text-red-600 transition-colors"
           >
-            {{ $t("transport.items." + dest.key) }}
+            {{ destTitle(dest) }}
           </h3>
 
           <p
             class="text-slate-500 dark:text-slate-300 text-sm font-medium leading-relaxed mb-6 line-clamp-4"
           >
-            {{ $t("transport.items." + dest.key + "_desc") }}
+            {{ stripHtml(destDescription(dest)) }}
           </p>
 
           <div
@@ -752,6 +764,61 @@
           </div>
         </article>
       </div>
+
+      <!-- Destination Detail Modal -->
+      <div v-if="isDestDetailOpen && activeDestination" class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" @click="closeDestDetail"></div>
+        <div class="flex min-h-full items-center justify-center px-4 py-8">
+          <div class="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden">
+
+            <!-- Cover Image (jika ada image_url dari admin) -->
+            <div v-if="activeDestination.image_url" class="relative w-full h-64 bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
+              <img
+                :src="activeDestination.image_url"
+                :alt="destTitle(activeDestination)"
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+              <button type="button" @click="closeDestDetail"
+                class="absolute top-4 right-4 w-10 h-10 rounded-2xl bg-black/30 backdrop-blur text-white font-black hover:bg-black/50 transition-colors flex items-center justify-center">
+                ✕
+              </button>
+              <h2 class="absolute bottom-5 left-6 right-16 text-xl font-black text-white leading-tight drop-shadow">
+                {{ destTitle(activeDestination) }}
+              </h2>
+            </div>
+
+            <!-- Header (tanpa gambar) -->
+            <div v-else class="flex items-start justify-between gap-4 p-8 pb-6 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-red-50 to-white dark:from-red-500/10 dark:to-slate-900 rounded-full flex items-center justify-center border border-red-100 dark:border-red-900/30 flex-shrink-0">
+                  <Map class="w-6 h-6 text-red-600" />
+                </div>
+                <h2 class="text-xl font-black text-slate-900 dark:text-white leading-tight">
+                  {{ destTitle(activeDestination) }}
+                </h2>
+              </div>
+              <button type="button" @click="closeDestDetail"
+                class="w-10 h-10 rounded-2xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 font-black flex items-center justify-center flex-shrink-0 transition-colors">
+                ✕
+              </button>
+            </div>
+
+            <!-- CKEditor HTML Content -->
+            <div class="p-10 overflow-y-auto max-h-[65vh]">
+              <div :class="['ck-content', isDark ? 'ck-dark' : '']" v-html="destDescription(activeDestination)"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-8 pb-8 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <button type="button" @click="closeDestDetail"
+                class="w-full h-12 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -769,21 +836,69 @@ import {
   Phone,
   CalendarDays,
 } from "lucide-vue-next";
-import { transportDestinations } from "@/data/manadoTransport";
 import {
   createTransportationBooking,
   getTransportations,
+  getTransportDestinations,
   getHeroImages,
 } from "@/services/api";
 import { stripHtml } from "@/utils/htmlText";
+import { useDarkMode } from "@/composables/useDarkMode";
 
 const { t, locale } = useI18n();
+const { isDark } = useDarkMode();
 
 const transportations = ref([]);
 const loading = ref(false);
 const errorMessage = ref("");
 const searchQuery = ref("");
 const selectedAvailability = ref("all");
+
+// Transport Destinations (dynamic from API)
+const transportDestinations = ref([]);
+const destinationsLoading = ref(false);
+
+// Destination detail modal
+const isDestDetailOpen = ref(false);
+const activeDestination = ref(null);
+
+const openDestDetail = (dest) => {
+  activeDestination.value = dest;
+  isDestDetailOpen.value = true;
+};
+
+const closeDestDetail = () => {
+  isDestDetailOpen.value = false;
+  activeDestination.value = null;
+};
+
+const fetchTransportDestinations = async () => {
+  destinationsLoading.value = true;
+  try {
+    const res = await getTransportDestinations({ active: true });
+    transportDestinations.value = res.data?.data || [];
+  } catch {
+    transportDestinations.value = [];
+  } finally {
+    destinationsLoading.value = false;
+  }
+};
+
+const destTitle = (dest) => {
+  const loc = String(locale.value || "id").toLowerCase();
+  if (loc.startsWith("en")) return dest.title_en || dest.title || "";
+  if (loc.startsWith("ko")) return dest.title_ko || dest.title || "";
+  if (loc.startsWith("zh")) return dest.title_zh || dest.title || "";
+  return dest.title || "";
+};
+
+const destDescription = (dest) => {
+  const loc = String(locale.value || "id").toLowerCase();
+  if (loc.startsWith("en")) return dest.description_en || dest.description || "";
+  if (loc.startsWith("ko")) return dest.description_ko || dest.description || "";
+  if (loc.startsWith("zh")) return dest.description_zh || dest.description || "";
+  return dest.description || "";
+};
 
 const heroImages = ref(['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2400&q=80'])
 const currentHeroIndex = ref(0)
@@ -1055,6 +1170,7 @@ watch([searchQuery, selectedAvailability], () => {
 
 onMounted(() => {
   fetchTransportations()
+  fetchTransportDestinations()
   fetchHeroImages()
   heroInterval = setInterval(() => {
     if (heroImages.value.length > 1) {
@@ -1067,3 +1183,167 @@ onUnmounted(() => {
   if (heroInterval) clearInterval(heroInterval)
 })
 </script>
+
+<style scoped>
+.ck-content {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #475569;
+}
+
+.ck-dark {
+  color: #cbd5e1;
+}
+
+.ck-content :deep(h1),
+.ck-content :deep(h2),
+.ck-content :deep(h3),
+.ck-content :deep(h4) {
+  font-weight: 900;
+  color: #0f172a;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.ck-dark :deep(h1),
+.ck-dark :deep(h2),
+.ck-dark :deep(h3),
+.ck-dark :deep(h4) {
+  color: #f1f5f9;
+}
+
+.ck-content :deep(h1) { font-size: 1.5rem; }
+.ck-content :deep(h2) { font-size: 1.25rem; }
+.ck-content :deep(h3) { font-size: 1.1rem; }
+
+.ck-content :deep(p) {
+  margin-bottom: 0.85em;
+}
+
+.ck-content :deep(ul),
+.ck-content :deep(ol) {
+  padding-left: 1.5rem;
+  margin-bottom: 0.85em;
+}
+
+.ck-content :deep(ul) { list-style-type: disc; }
+.ck-content :deep(ol) { list-style-type: decimal; }
+
+.ck-content :deep(li) {
+  margin-bottom: 0.3em;
+}
+
+.ck-content :deep(li::marker) {
+  color: #dc2626;
+}
+
+.ck-content :deep(strong) {
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ck-dark :deep(strong) {
+  color: #f1f5f9;
+}
+
+.ck-content :deep(em) {
+  font-style: italic;
+}
+
+.ck-content :deep(a) {
+  color: #dc2626;
+  text-decoration: none;
+}
+
+.ck-content :deep(a:hover) {
+  text-decoration: underline;
+}
+
+.ck-content :deep(blockquote) {
+  border-left: 3px solid #dc2626;
+  padding-left: 1rem;
+  margin: 1em 0;
+  color: #64748b;
+  font-style: italic;
+}
+
+.ck-dark :deep(blockquote) {
+  color: #94a3b8;
+  border-left-color: #ef4444;
+}
+
+.ck-content :deep(img) {
+  max-width: 100%;
+  border-radius: 1rem;
+  margin: 0.75em 0;
+  display: block;
+}
+
+.ck-content :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  font-size: 0.85rem;
+}
+
+.ck-content :deep(th),
+.ck-content :deep(td) {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.ck-dark :deep(th),
+.ck-dark :deep(td) {
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.ck-content :deep(th) {
+  background: #f8fafc;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ck-dark :deep(th) {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.ck-dark :deep(td) {
+  background: #0f172a;
+}
+
+.ck-content :deep(hr) {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 1.25em 0;
+}
+
+.ck-dark :deep(hr) {
+  border-top-color: #334155;
+}
+
+/* CKEditor figure/image wrapper */
+.ck-content :deep(figure) {
+  margin: 0.75em 0;
+}
+
+.ck-content :deep(figure img) {
+  max-width: 100%;
+  border-radius: 1rem;
+  display: block;
+}
+
+.ck-content :deep(figcaption) {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 0.4em;
+}
+
+.ck-dark :deep(figcaption) {
+  color: #64748b;
+}
+</style>
